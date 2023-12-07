@@ -1,0 +1,226 @@
+// Silo dialog sequence files
+
+!sentences
+{
+
+	Hindattacks secretwar/spzs5_whew spzs6_shoothind
+
+	End_mission secretwar/spzs5_gohome
+
+	
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%default_CT
+{
+	@CT2Style
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+
+%Final_kaboom
+{
+	#firetargets="mortar_blast10",
+		pause = .2
+
+	#firetargets="mortar_blast11",
+		pause = .2
+
+	#firetargets="mortar_blast12",
+		pause = .2
+
+	#firetargets="mortar_blast13",
+		pause = .2
+
+	#firetargets="mortar_blast14",
+		pause = .2
+
+	#firetargets="mortar_blast15",
+		pause = .2
+
+	#firetargets="mortar_blast16",
+		pause = .2
+
+	#firetargets="mortar_blast17",
+		pause = .2
+	
+	#firetargets="mortar_blast18",
+		pause = .2
+
+	#firetargets="mortar_blast19",
+		pause = .2
+
+	#firetargets="mortar_blast20",
+		pause = .2
+
+	#firetargets="mortar_blast21",
+		pause = .2
+
+	#firetargets="mortar_blast22",
+		pause = .2
+
+	#firetargets="mortar_blast23",
+		pause = .2
+
+	#firetargets="mortar_blast24",
+		pause = .2
+
+	#firetargets="mortar_blast25",
+		pause = .2
+
+	#firetargets="mortar_blast26",
+		pause = .2
+
+	#firetargets="mortar_blast27",
+		pause = .2
+	
+	#firetargets="mortar_blast28",
+		pause = .2
+
+	#firetargets="mortar_blast29",
+		pause = .2
+
+	#firetargets="mortar_blast30",
+		pause = .2
+
+	#firetargets="mortar_blast31",
+		pause = .2
+
+	#firetargets="mortar_blast32",
+		pause = .2
+
+	#firetargets="mortar_blast33",
+		pause = .2
+
+	#firetargets="mortar_blast34",
+		pause = .2
+
+	#firetargets="mortar_blast35",
+		pause = .2
+
+	#firetargets="mortar_blast36",
+		pause = .2
+
+	#firetargets="mortar_blast37",
+		pause = .2
+	
+	#firetargets="mortar_blast38",
+		pause = .2
+
+	#firetargets="mortar_blast39",
+		pause = .2
+
+	#firetargets="mortar_blast40",
+		pause = .2
+
+	#firetargets="mortar_blast41",
+		pause = .2
+
+	#firetargets="mortar_blast42",
+		pause = .2
+
+	#firetargets="mortar_blast43",
+		pause = .2
+
+	#firetargets="mortar_blast44",
+		pause = .2
+
+	#firetargets="mortar_blast45",
+		pause = .2
+
+	#firetargets="mortar_blast46",
+		pause = .2
+
+	#firetargets="mortar_blast47",
+		pause = .2
+	
+	#firetargets="mortar_blast48",
+		pause = .2
+
+	#firetargets="mortar_blast49",
+		pause = .2
+	
+	#firetargets="mortar_blast50",
+		pause = .2
+
+	#firetargets="mortar_blast51",
+		pause = .2
+
+	#firetargets="mortar_blast52",
+		pause = .2
+
+	#firetargets="mortar_blast53",
+		pause = .2
+
+	#firetargets="mortar_blast54",
+		pause = .2
+
+	#firetargets="mortar_blast55",
+		pause = .2
+
+	#firetargets="mortar_blast56",
+		pause = .2
+
+	#firetargets="mortar_blast57",
+		pause = .2
+	
+	#firetargets="mortar_blast58",
+		pause = .2
+
+	#firetargets="mortar_blast59",
+		pause = .2
+
+	#firetargets="mortar_blast60",
+		pause = .2
+
+	#firetargets = "OBJ8"
+
+	@default_CT	#sound=Hindattacks,
+		channel = 1  
+		// text="WHOOHOO!!!! ... OH NO we are not in the clear yet! 
+		// Get that Hind off our backs right now!!"
+		
+	
+
+	#firetargets="mortar_blast61",
+		pause = 2.5
+
+	#firetargets="mortar_blast62",
+		pause = .2
+	
+	#firetargets="mortar_blast63",
+		pause = .2
+
+	#firetargets="mortar_blast64",
+		pause = .2
+
+	#firetargets="mortar_blast65",
+		pause = .2
+
+	#pause = 4
+	
+	@ObjectiveStyle
+	#text = "#OBJ9_SILO_NEW"
+	#firetargets = "OBJ9"
+
+} 
+
+%End
+{
+	@default_CT	#sound=End_mission,
+		channel = 1  
+		// text="Let's get home!  Bystro! Step on it!"
+	#firetargets = "OBJ9"
+}
+
+%Mission_success
+{
+	@titlestyle
+	#text =	"#GENERIC_SUCCESS"
+}

@@ -1,0 +1,83 @@
+// Ice Breaker dialog sequence files
+
+!sentences
+{
+	CNC_01_heading0 thinice/cnc_hiaway.wav
+	CNC_02_heading0 thinice/cnc_exworkcredit.wav
+
+	GRNDGUY0	brecon/rg9_intruder.wav
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%SAS_Commander
+{
+	@RadioStyle
+}
+
+%T_talking02
+{
+	@T2Style
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+
+%sequence01
+{
+	
+	#firetargets = "OBJ2"
+	#pause = 1
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@SAS_Commander	#sound=CNC_01_heading
+
+	#pause = 4
+
+	#firetargets = "show_bomb"
+
+	#pause = 1
+
+	// new mission objective
+	@ObjectiveStyle
+	#text = "#OBJ3_THIN_NEW"
+	#firetargets = "OBJ3"
+
+}
+
+%sequence02
+{
+	#firetargets = "OBJ3"
+	#pause = 1
+	$channel = 2
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@SAS_Commander	#sound=CNC_02_heading
+}
+
+%wave_guy1
+{
+	#pause = 1
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	$speaker=Final_battleguys
+	@T_talking02	#sound=GRNDGUY
+}
+
+%wave_guy3
+{
+	#pause = 1
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	$speaker=Final_battleguys2
+	@T_talking02	#sound=GRNDGUY
+}
+
+%Mission_success
+{
+	@titlestyle
+	#text =	"#GENERIC_SUCCESS"
+}

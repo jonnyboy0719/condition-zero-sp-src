@@ -1,0 +1,300 @@
+// Silo dialog sequence files
+
+!sentences
+{
+	// ==============================================================
+	// Start of the level
+	// ==============================================================
+
+	silo_1_Firstseq0 secretwar/spzc_seccodeno
+	// wav_time_4.133
+	// silo_2_Firstseq0 secretwar/firstseq02
+	// wav_time_
+	silo_3_Firstseq0 secretwar/spzc_rcbomb
+	// wav_time_3.125
+	silo_4_Firstseq0 secretwar/spzsy_yessir
+	// wav_time_0.678
+
+
+	silo_1_outsideseq0 secretwar/spzc_everout
+	// wav_time_0.678
+	silo_2_outsideseq0 secretwar/spzc_fanout
+	// wav_time_1.311
+	silo_3_outsideseq0 secretwar/spzs1_tooq
+	// wav_time_4.382
+
+	// ==============================================================
+	// Cant open Front door.
+	// ==============================================================
+
+	silo_blowtorch_me0 secretwar/spzc_dooro spzc_cuttor
+
+	// ==============================================================
+	// Inside building
+	// ==============================================================
+
+	silo_1_InsideB0 secretwar/spzs1_empower
+	// wav_time_3.727
+	silo_2_InsideB0 secretwar/spzc_tryc
+	// wav_time_1.325
+	silo_3_InsideB0 secretwar/spzs1_mops
+	// wav_time_2.791
+	silo_4_InsideB0 secretwar/spzs1_comein
+	// wav_time_1.059
+	silo_5_InsideB0 secretwar/spzs1_nores
+	// wav_time_0.989
+	silo_6_InsideB0 secretwar/spzc_startdoor
+	// wav_time_2.752
+	silo_7_InsideB0 secretwar/spzc_bunker
+	// wav_time_3.805
+
+
+	// ==============================================================
+	// Inside Room of death
+	// ==============================================================
+
+	silo_1_Attacked0 secretwar/spzc_underatt
+	silo_2_Attacked0 secretwar/spzc_terrcell
+
+
+	// ==============================================================
+	// Inside Room of death
+	// ==============================================================
+
+	silo_1_dontshoot0 secretwar/sect1_therefire
+	// wav_time_
+	silo_2_dontshoot0 secretwar/sect2_nyetfool
+	// wav_time_
+
+	// ==============================================================
+	// to warn player about falling platform	
+	// ==============================================================
+
+	silo_1_fdump0 secretwar/spzc_fueld
+
+
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%Commander_com
+{
+	@RadioStyle
+}
+
+%Russian_Commander
+{
+	@CT3Style
+}
+
+%Yuri
+{
+	@CT1Style
+}
+
+%default_CT
+{
+	@CT2Style
+}
+
+%Yelling_t01
+{
+	@T1Style
+}
+
+%Yelling_t02
+{
+	@T2Style
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+%Start_sequence
+{
+	#pause = 7
+	#firetargets = "hud_on"		// Turn the hud on
+	#firetargets = "weapon_equip1"	// Give the player the majority of their weapons (EX: flashbang, nightvision, radio, USP, grenade, radio) 
+	#pause = 0.1			// Wait for the first weapon equip to kick in.
+	#firetargets = "weapon_equip2"	// This only contains the primary weapon we want the player to start with in the level (EX: M4A1)
+	#pause = 2
+	
+
+	
+}
+
+%sequence01
+{
+	@Russian_Commander	#sound=silo_1_Firstseq, 
+		speaker=gg1,
+		channel = 1,
+		pause = 6.133 // LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Hmm, the doors aren't responding.and my 
+		//	security code isn't working."
+
+	@Russian_Commander	#sound=silo_3_Firstseq, 
+		speaker=gg1, listener	= gg3,
+		channel = 3,
+		pause = 3.125 // LOCALIZE_WAVFILE_LENGTH_ADJUST
+		#firetargets="Blowtorch_door_talk" 
+		// text="Yuri, Use your RC bombs to open this door."
+
+	@Yuri	#sound=silo_4_Firstseq, 
+		speaker=gg3, listener	= gg1,
+		channel = 4, 
+		firetargets="Blowtorch_door_talk_yuri",
+		pause = 0.678 // LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Yes Sir."
+
+	#pause = 8
+
+	#firetargets="run2"
+}
+
+%sequence02
+{
+	#pause = 4
+
+	#firetargets="mine_triggers_off",
+		pause = 3
+
+	#firetargets="make_guy_opendoor"
+}
+
+%sequence03
+{
+
+	
+	@Yuri	#sound=silo_1_InsideB, 
+		speaker=gg3 
+		// text="This is strange, the facility is on emergency power."
+
+	#pause = 6
+	
+
+}
+
+%sequence04
+{
+
+	@Russian_Commander	#sound=silo_2_InsideB, 
+		speaker=gg1, listener	= gg3,
+		channel = 1,
+		pause = 1.325	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Try the comm system..."
+
+	@Yuri	#sound=silo_3_InsideB, 
+		speaker=gg3,
+		channel = 2,
+		pause = 2.791	// LOCALIZE_WAVFILE_LENGTH_ADJUST 
+		// text="This is Russian military to missile ops, respond.."
+
+	@Yuri	#sound=silo_4_InsideB, 
+		speaker=gg3,
+		channel = 3,
+		pause = 4.059	// LOCALIZE_WAVFILE_LENGTH_ADJUST + add 3 seconds for pause
+		// text="Come in missile ops.."
+
+	@Yuri	#sound=silo_5_InsideB, 
+		speaker=gg3,
+		channel = 4,
+		pause = 0.989	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="No response."
+
+	@Russian_Commander	#sound=silo_6_InsideB, 
+		speaker=gg1, listener	= player,
+		channel = 5,
+		pause = 2.752	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		#firetargets="run_more_yuri_lasttime" 
+		// text="Everybody, lets get started on this door." 
+
+	@ObjectiveStyle
+	#text = "#OBJ1_SILO_NEW"
+	#firetargets = "OBJ1"
+
+	@Russian_Commander	#sound=silo_7_InsideB, 
+		speaker=gg1, listener	= player,
+		channel = 6
+		// text="You get over to the bunker building and turn 
+		// the power generators back on."
+
+}
+
+%sequence05
+{
+	#pause = 4
+
+	@Commander_com	#sound=silo_1_Attacked, 
+		pause = 25	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="We are under attack by a large group of armed 
+		// individuals, two men are already down and we are retreating 
+		// deeper into the silo.  You need to locate another entry 
+		// into the silo and get to our position"
+
+	@ObjectiveStyle
+	#text = "#OBJ2_SILO_NEW"
+	#firetargets = "OBJ2"
+
+	@Commander_com	#sound=silo_2_Attacked 
+		//text="Looks like there are two terror cells fighting 
+		//in the silo over control of the nuke.  One group is trying 
+		//to steal it, another is trying to launch it.  We are blocked 
+		//off and can't get to the control center, you are closer than 
+		//anybody else right now and need to get to that control 
+		//center immediately!"
+
+}
+
+%sequence06
+{
+
+	@Yelling_t01	#sound=silo_1_dontshoot,
+		speaker=dont_shootguy01,
+		channel = 1,
+		pause = 2 
+		// text="There they are!  Fire!" // LOCALIZE_ME
+
+	@Yelling_t02	#sound=silo_2_dontshoot,
+		speaker=dont_shootguy02, 
+		channel = 2
+		// text="Nyet you fool!  Don't fire near the feul truck! Der' mo!" // LOCALIZE_ME
+	
+	#pause = 1.8
+
+	#firetargets = "startfight1_musicGO"
+}
+
+%sequence07
+{
+
+	@Commander_com	#sound=silo_1_fdump,
+		channel = 1,
+		pause = 1.5 
+		//text="Be advised, a fuel dump just went up in a firefight, 
+		//you've got heavy debris coming down from above."
+
+}
+
+%sequence_quiet
+{
+
+	@default_CT	#sound=silo_3_outsideseq,
+		speaker=Quiet_guy01,
+		channel = 1 
+		//text="Strange, its quiet - too quiet..."
+
+}
+
+// =====================================================================
+// Mission Fails Operative failed to escape from silo in time.
+// =====================================================================
+
+%Mission_failed01
+{
+	@FailureStyle
+	#text = "#Silo02_failed01" // LOCALIZE_ME
+
+}

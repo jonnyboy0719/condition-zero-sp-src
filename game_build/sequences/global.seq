@@ -1,0 +1,300 @@
+
+// Global text styles:
+//
+// CT1Style		Counter-terrorist #1 (green, channel 1)
+// CT2Style		Counter-terrorist #2 (green, channel 2)
+// CT3Style		Counter-terrorist #3 (green, channel 3)
+// T1Style		Terrorist #1         (red, channel 1)
+// T2Style		Terrorist #2         (red, channel 2)
+// T3Style		Terrorist #3         (red, channel 3)
+// NPC1Style	NPC #1               (yellow, channel 1)
+// NPC2Style	NPC #2               (yellow, channel 2)
+// NPC3Style	NPC #3               (yellow, channel 3)
+// RadioStyle	Radio commands       (blue, channel 1)
+// TitleStyle	Mission title        (white, channel 8)
+// SubtitleStyle Subtitle for mission(white, channel 9)
+// SignStyle	Signs				 (orange, channel 10)
+//
+// Speaker1Style Legacy
+// Speaker2Style Legacy
+// Speaker3Style Legacy
+
+
+//---------------------------------------------------------------------------
+// Credit Style 1
+//---------------------------------------------------------------------------
+%Credits1Style
+{
+	$position = 0.05 0.85
+	$fadein = 2, holdtime = 2, fadeout = 2
+	$color = 255 255 255, color2 = 0 0 0, effect = 0
+	$channel = 1
+}
+
+
+//---------------------------------------------------------------------------
+// Credit Style 2
+//---------------------------------------------------------------------------
+%Credits4Style
+{
+	$position = 0.70 0.85
+	$fadein = 2, holdtime = 2, fadeout = 2
+	$color = 255 255 255, color2 = 0 0 0, effect = 0
+	$channel = 2
+}
+
+//---------------------------------------------------------------------------
+// Credit Style 3
+//---------------------------------------------------------------------------
+%Credits3Style
+{
+	$position = 0.05 0.90
+	$fadein = 2, holdtime = 2, fadeout = 2
+	$color = 255 255 255, color2 = 0 0 0, effect = 0
+	$channel = 3
+}
+
+
+//---------------------------------------------------------------------------
+// Credit Style 4
+//---------------------------------------------------------------------------
+%Credits2Style
+{
+	$position = 0.70 0.90
+	$fadein = 2, holdtime = 2, fadeout = 2
+	$color = 255 255 255, color2 = 0 0 0, effect = 0
+	$channel = 4
+}
+
+
+
+
+
+
+//---------------------------------------------------------------------------
+// CT1 Style -- Counter-terrorist #1
+//---------------------------------------------------------------------------
+%CT1Style
+{
+	$position = 0.05 0.70
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 127 255 0, color2 = 128 128 128, effect = 0
+	$channel = 1
+}
+
+//---------------------------------------------------------------------------
+// CT 2 Style -- Counter-terrorist #2
+//---------------------------------------------------------------------------
+%CT2Style
+{
+	$position = 0.10 0.75
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 127 255 0, color2 = 128 128 128, effect = 0
+	$channel = 2
+}
+
+//---------------------------------------------------------------------------
+// CT 3 Style -- Counter-terrorist #3
+//---------------------------------------------------------------------------
+%CT3Style
+{
+	$position = 0.05 0.80
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 127 255 0, color2 = 128 128 128, effect = 0
+	$channel = 3
+}
+
+
+
+
+
+//---------------------------------------------------------------------------
+// T1 Style -- Dialog Terrorist #1
+//---------------------------------------------------------------------------
+%T1Style
+{
+	$position = 0.05 0.70
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 128 128, color2 = 128 128 128, effect = 0
+	$channel = 1
+}
+
+//---------------------------------------------------------------------------
+// T2 Style -- Dialog Terrorist #2
+//---------------------------------------------------------------------------
+%T2Style
+{
+	$position = 0.10 0.75
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 128 128, color2 = 128 128 128, effect = 0
+	$channel = 2
+}
+
+//---------------------------------------------------------------------------
+// T3 Style -- Dialog Terrorist #3
+//---------------------------------------------------------------------------
+%T3Style
+{
+	$position = 0.05 0.80
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 128 128, color2 = 128 128 128, effect = 0
+	$channel = 3
+}
+
+
+
+
+
+//---------------------------------------------------------------------------
+// NPC1 Style -- Dialog NPC #1
+//---------------------------------------------------------------------------
+%NPC1Style
+{
+	$position = 0.05 0.70
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 220 128, color2 = 128 128 128, effect = 0
+	$channel = 1
+}
+
+//---------------------------------------------------------------------------
+// NPC2 Style -- Dialog NPC #2
+//---------------------------------------------------------------------------
+%NPC2Style
+{
+	$position = 0.10 0.75
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 220 128, color2 = 128 128 128, effect = 0
+	$channel = 2
+}
+
+//---------------------------------------------------------------------------
+// NPC3 Style -- Dialog NPC #3
+//---------------------------------------------------------------------------
+%NPC3Style
+{
+	$position = 0.05 0.80
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 220 128, color2 = 128 128 128, effect = 0
+	$channel = 3
+}
+
+
+
+
+
+//---------------------------------------------------------------------------
+// Radio Channel
+//---------------------------------------------------------------------------
+%RadioStyle
+{
+	$position = 0.10 0.85
+	$fadein = 0.10, holdtime = -1, fadeout = 0.5
+	$color = 128 255 255, color2 = 128 255 255, effect = 0
+	$channel = 0
+	$speaker = none
+}
+
+
+
+
+//---------------------------------------------------------------------------
+// Title of the mission
+//---------------------------------------------------------------------------
+%TitleStyle
+{
+	$position = -1 -1
+	$fadein = 0.10, holdtime = -1, fadeout = 0.5
+	$color = 255 255 255, color2 = 128 128 128, effect = 2
+	$channel = 1
+}
+
+
+//---------------------------------------------------------------------------
+// Failure message of the mission
+//---------------------------------------------------------------------------
+%FailureStyle
+{
+	$position = -1 -1
+	$fadein = 0.025, holdtime = -1, fadeout = 0.5
+	$color = 255 255 255, color2 = 128 128 128, effect = 2
+	$channel = 1
+}
+
+
+
+//---------------------------------------------------------------------------
+// Subtitle of the mission
+//---------------------------------------------------------------------------
+%SubtitleStyle
+{
+	$position = 0.10 0.87
+	$fadein = 0.10, holdtime = -1, fadeout = 0.5
+	$color = 255 255 255, color2 = 128 128 128, effect = 2
+	$channel = 2
+}
+
+
+
+
+//---------------------------------------------------------------------------
+// Sign translation Style
+//---------------------------------------------------------------------------
+%SignStyle
+{
+	$position = 0.4 0.5
+	$fadein = 0.1, holdtime = -1, fadeout = 0.5
+	$color = 255 255 255, color2 = 128 128 128, effect = 0
+	$channel = 3
+}
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------
+// Speaker 1 Style
+//---------------------------------------------------------------------------
+%Speaker1Style
+{
+	$position = 0.05 0.70
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 255 127 0, color2 = 0 0 255, effect = 0
+	$channel = 1
+}
+
+//---------------------------------------------------------------------------
+// Speaker 2 Style
+//---------------------------------------------------------------------------
+%Speaker2Style
+{
+	$position = 0.10 0.75
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 127 255 0, color2 = 0 0 255, effect = 0
+	$channel = 2
+}
+
+//---------------------------------------------------------------------------
+// Speaker 3 Style
+//---------------------------------------------------------------------------
+%Speaker3Style
+{
+	$position = 0.5 0.80
+	$fadein = 0.01, holdtime = -1, fadeout = 0.5
+	$color = 127 255 0, color2 = 0 0 255, effect = 0
+	$channel = 3
+}
+
+//---------------------------------------------------------------------------
+// Speaker 3 Style
+//---------------------------------------------------------------------------
+%ObjectiveStyle
+{
+	$position = -1 0.1
+	$fadein = 0.005, holdtime = 3.5, fadeout = 1.0
+	$color = 0 128 255, color2 = 0 64 192, effect = 2
+	$channel = 3
+}

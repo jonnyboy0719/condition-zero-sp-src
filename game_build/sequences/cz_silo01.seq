@@ -1,0 +1,123 @@
+// Silo dialog sequence files
+
+!sentences
+{
+	// ==============================================================
+	// Silo Dialog
+	// ==============================================================
+	// ==============================================================
+	// Mission Breifing
+	// ==============================================================
+
+	silo_1_sequence0 secretwar/spzc_attent
+	// wav_time_2.466
+	silo_2_sequence0 secretwar/spzc_standproc
+	// wav_time_3.458
+	silo_3_sequence0 secretwar/spzss_groan
+	// wav_time_3.675
+	silo_4_sequence0 secretwar/spzc_byorder
+	// wav_time_24.125
+	silo_5_sequence0 secretwar/spzc_rountine
+	// wav_time_15.621
+	silo_6_sequence0 secretwar/spzs1_badfeel
+	// wav_time_1.949
+	silo_7_sequence0 secretwar/spzs2_always
+	// wav_time_3.981
+	silo_8_sequence0 secretwar/spzs1_mother
+	// wav_time_2.647
+	silo_9_sequence0 secretwar/spzc_arrdest
+	// wav_time_3.114
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%Russian_Commander
+{
+	@CT3Style
+}
+
+%Groan_guys
+{
+	@CT1Style
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+%sequence01
+{
+	#pause = .2
+	
+	#firetargets = "env_fade"		// Env_fade that fades from, with a 15 sec holdtime, and a duration of 4	
+
+	@TitleStyle
+	#text = "#SILO_TITLE"
+	#pause = 5			// This pause ensures that the title is on screen long enough for dramatic effect, and for any level sounds to start making an impact
+
+	@SubtitleStyle
+	#text = "#Silo_SUBTITLE"
+	#pause = 10
+
+	@Russian_Commander	#sound=silo_1_sequence,
+	speaker=sarge_guy,
+	pause = 2.466	// LOCALIZE_WAVFILE_LENGTH_ADJUST	
+	// text="Attention!  Everybody listen up!"
+
+	@Russian_Commander	#sound=silo_2_sequence,
+	speaker=sarge_guy,
+	pause = 3.458	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	// text="Ok, time to go over the standard procedure."
+
+	// #sound=silo_3_sequence, 
+	// speaker=gg4 
+	
+	@Groan_guys	#sound=silo_3_sequence, 
+	speaker=gg3,
+	pause = 3.675	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	// text="(Groans from soldiers.)" 
+
+	@Russian_Commander	#sound=silo_4_sequence,
+	speaker=sarge_guy, listener	= player,
+	pause = 26.125	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	//text="(ahem) By order of the Russian nuclear disarmament 
+	//treaty, we have been commissioned to disarm and dismantle 
+	//the former soviet nuclear missile silo site 6 of regiment 42."
+
+	@Russian_Commander	#sound=silo_5_sequence,
+	speaker=sarge_guy, listener	= gg3,
+	pause = 16.621	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	//text="This should be a routine clean and disarm, but I want
+	//	everyone to be on their toes. Apparently the support 
+	//	staff housed in site 6 have been out of contact for nearly
+	//	24 hours.  Most likely a failed comm system, but I don't 
+	//	want to make any mistakes this time."
+	
+
+	@Russian_Commander	#sound=silo_6_sequence,
+	speaker=gg3,
+	pause = 1.949	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	// text="I've got a bad feeling about this one."
+
+	@Russian_Commander	#sound=silo_7_sequence, 
+	speaker=gg6, listener	= gg3,
+	pause = 3.981	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	// text="You always have a bad feeling, raz'yoba! Haha!"
+
+	@Russian_Commander	#sound=silo_8_sequence, 
+	speaker=gg3, listener	= gg6,
+	pause = 2.647	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	// text="Well, when I'm writing home to your 
+	// mother we'll see!"
+
+	@Russian_Commander	#sound=silo_9_sequence, 
+	speaker=sarge_guy, listener	= gg3
+	// text="We should be arriving at our destination 
+	// in a few minutes."
+	
+	#pause = 3.114	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+	#firetargets = "end_time"
+
+}

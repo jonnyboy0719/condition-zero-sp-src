@@ -1,0 +1,32 @@
+//--------------------------------------------------------
+
+"GAME_SAVED"			"GAME SAVED"
+"GENERIC_SUCCESS"		"MISSION SUCCESSFUL"
+"GENERIC_FAILED"		"MISSION FAILED"
+"OBJECTIVES"			"MISSION OBJECTIVES"
+
+//--------------------------------------------------------
+// Weapon switching
+
+"Switch_To_BurstFire"	"Switched to Burst-Fire mode"
+"Switch_To_SemiAuto"	"Switched to semi-automatic"
+"Switch_To_FullAuto"	"Switched to automatic"
+
+//--------------------------------------------------------
+// Thin Ice
+"THINICE_TITLE"			"Thin Ice"
+"ThinIce_SUBTITLE"		"18:48 HOURS
+Aboard the S.S. Gilder
+Arctic Ocean"
+
+"OBJ1_THIN_NEW"			"NEW OBJECTIVE: Locate and disable vessels engines"
+"OBJ2_THIN_NEW"			"NEW OBJECTIVE: Proceed to bridge and steer the vessel away from shore"
+"OBJ3_THIN_NEW"			"NEW OBJECTIVE: Prevent terrorists from escaping"
+
+"OBJ1_THIN"				"[%OBJ%] OBJECTIVE: Locate and disable vessels engines"
+"OBJ2_THIN"				"[%OBJ%] OBJECTIVE: Proceed to bridge and steer the vessel away from shore"
+"OBJ3_THIN"				"[%OBJ%] OBJECTIVE: Prevent terrorists from escaping"
+
+//--------------------------------------------------------
+// Silo
+"SILO_TITLE"			"U STINKY"

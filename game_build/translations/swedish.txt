@@ -1,0 +1,28 @@
+//--------------------------------------------------------
+
+"GAME_SAVED"			"SPARATS..."
+"GENERIC_SUCCESS"		"UPPDRAGET LYCKADS"
+"GENERIC_FAILED"		"UPPDRAGET MISSLYCKADES"
+"OBJECTIVES"			"UPPDRAGETS OBJEKTIV"
+
+//--------------------------------------------------------
+// Weapon switching
+
+"Switch_To_BurstFire"	"Ändrads till Burst-Fire mode"
+"Switch_To_SemiAuto"	"Ändrads till semi-automatiskt"
+"Switch_To_FullAuto"	"Ändrads till automatiskt"
+
+//--------------------------------------------------------
+// Thin Ice
+"THINICE_TITLE"			"Tunn Is"
+"ThinIce_SUBTITLE"		"TID: 18:48
+PLATS: Ombord S.S. Gilder
+Arktiska havet"
+
+"OBJ1_THIN_NEW"			"NYTT OBJECTIV: Lokera och stäng av båtens motorer"
+"OBJ2_THIN_NEW"			"NYTT OBJECTIV: Gå vidare till bryggan och styr båten ifrån kusten"
+"OBJ3_THIN_NEW"			"NYTT OBJECTIV: Stoppa terroristerna från att smita undan"
+
+"OBJ1_THIN"				"[%OBJ%] OBJECTIV: Lokera och stäng av båtens motorer"
+"OBJ2_THIN"				"[%OBJ%] OBJECTIV: Gå vidare till bryggan och styr båten ifrån kusten"
+"OBJ3_THIN"				"[%OBJ%] OBJECTIV: Stoppa terroristerna från att smita undan"

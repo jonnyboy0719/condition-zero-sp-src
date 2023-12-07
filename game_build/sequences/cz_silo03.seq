@@ -1,0 +1,121 @@
+// Silo dialog sequence files
+
+!sentences
+{
+
+	silo_1_KillUri0 ambience/fallscream
+
+	// ==============================================================
+	// Warn player about the launching 
+	// ==============================================================
+
+	silo_1_launch0 secretwar/sws_15m
+	// wav_time_6.467
+	silo_2_launch0 secretwar/spzc_ctrlrm
+	// wav_time_2.880
+
+	// ==============================================================
+	// Controls are damaged you must get the bomb and head to the elevator
+	// ==============================================================
+
+	silo_1_damagedCON0 secretwar/spzs4_ctrldam
+	// wav_time_5.073
+	silo_2_damagedCON0 secretwar/spzc_unders
+	// wav_time_14.954
+	silo_3_damagedCON0 secretwar/spzc_elbomb
+
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%Commander_com
+{
+	@RadioStyle
+}
+
+%Russian_Commander
+{
+	@CT3Style
+}
+
+%Yuri
+{
+	@CT1Style
+}
+
+%default_CT
+{
+	@CT2Style
+}
+
+%Loud_speaker
+{
+	@SignStyle
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+%Silo_launchtime
+{
+	@Loud_speaker	#sound=silo_1_launch, 
+		pause = 6.467	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="ICBM launch in 15 minutes, 
+		// target acquired and locked."
+
+	@Commander_com	#sound=silo_2_launch  
+		// text="Get to the control room and disable 
+		// that targeting system!"
+
+}
+
+%sequence01
+{
+	#firetargets = "OBJ2"
+	
+	@default_CT	#sound=silo_1_damagedCON, 
+		speaker=Teamguy01,
+		pause = 5.073	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Sir!  We can't disable the launch from here, the 
+		// controls were damaged in the firefight."
+
+	@Commander_com	#sound=silo_2_damagedCON, 
+		pause = 14.954	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Understood, our only chance to stop that missile 
+		// is to plant explosives at the exposed fuel lines leading 
+		// to the rocket jets.  The radio bombs were with Uri, he was 
+		// shot down on the top tier of the missile silo catwalk, 
+		// you'll have to retrieve the explosives from Uri's body."
+
+}
+
+%OBJ4
+{
+	@ObjectiveStyle
+	#text = "#OBJ4_SILO_NEW"
+	// #firetargets = "OBJ4"
+
+}
+
+%sequence02
+{
+	#firetargets = "OBJ4"
+	@Commander_com	#sound=silo_3_damagedCON  
+		// text="Get to the elevator immediately with those bombs!"
+	
+	#pause = 2
+	
+	@ObjectiveStyle
+	#text = "#OBJ5_SILO_NEW"
+	#firetargets = "OBJ5"
+}
+
+%fall_scream
+{
+	@Yuri	#sound=silo_1_KillUri,
+		speaker=Yuri  
+		// text="AAAARRRRRGGHGGHG!!!"
+}

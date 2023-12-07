@@ -1,0 +1,44 @@
+// Ice Breaker dialog sequence files
+
+!sentences
+{
+	GRNDGUY0	brecon/rg9_intruder.wav
+	SECRET0		highrise/hightl_death.wav
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%T_talking02
+{
+	@T2Style
+	$speaker	= grenadeguy
+	$listener	= player
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+%secret
+{
+	#pause = 1
+	#firetargets = "kill_target"
+	#pause = 1.2
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@RadioStyle	#sound=SECRET
+}
+
+%wave_guy1
+{
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@T_talking02	#sound=GRNDGUY
+}
+
+%Squigy_cat
+{
+	// #text="My CaTS Are FuZZY!!!!!"
+}

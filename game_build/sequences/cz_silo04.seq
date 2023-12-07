@@ -1,0 +1,385 @@
+// Silo dialog sequence files
+
+!sentences
+{
+	// ==============================================================
+	// Plant the bomb on the feul line!
+	// ==============================================================
+
+	silo_1_Plantthebomb0 secretwar/spzc_plant
+
+	// ==============================================================
+	// last sequence with commander
+	// ==============================================================
+
+	silo_1_laststand0 secretwar/spzc_giveb
+	// wav_time_1.704
+	silo_2_laststand0 secretwar/spzc_radios
+	// wav_time_9.243
+	silo_3_laststand0 secretwar/spzc_go
+	// wav_time_0.628
+	silo_4_laststand0 secretwar/spzc_doorblow
+	// wav_time_3.749
+	silo_5_laststand0 secretwar/spzc_outtime
+	// wav_time_3.331
+
+	silo_1_Getontruck0 secretwar/spzs5_wehavegetout
+	// wav_time_1.400
+	silo_2_Getontruck0 secretwar/spzs6_everytruck
+
+	// ==============================================================
+	// ICBM count down
+	// ==============================================================
+
+	ICBM5m0 secretwar/sws_5m
+
+	ICBM2m0 secretwar/sws_2m
+
+	ICBM1m0 secretwar/sws_1m
+
+	ICBM30s0 secretwar/sws_30s
+
+	ICBM10s0 secretwar/sws_10s
+
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%Commander_com
+{
+	@RadioStyle
+}
+
+%Russian_Commander
+{
+	@CT3Style
+}
+
+%Yuri
+{
+	@CT1Style
+}
+
+%default_CT
+{
+	@CT2Style
+}
+
+%Loud_speaker
+{
+	@SignStyle
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+%TimeCounter01
+{
+	@Loud_speaker	#sound=ICBM5m,
+	  	pause = 180
+		// text="ICBM launch in 5 minutes."
+
+}
+
+%TimeCounter03
+{
+	@Loud_speaker	#sound=ICBM1m, 
+		pause = 120 
+		// text="ICBM launch in 1 minute."
+
+	@Loud_speaker	#sound=ICBM30s, 
+		pause = 60 
+		// text="ICBM launch in 30 seconds."
+
+	@Loud_speaker	#sound=ICBM10s, 
+		pause = 10 
+		// text="ICBM launch in 10 seconds."
+
+	// #text="out of time! You are a Losar!!!"
+
+	#firetargets="failed2"
+
+}
+
+%BIGBOSS
+{
+
+	#firetargets="TimeCounter_final",
+		pause = 3
+
+	@ObjectiveStyle
+	#text = "#OBJ6_SILO_NEW"
+	#firetargets = "OBJ6"
+
+	@Russian_Commander	#sound=silo_1_Plantthebomb,
+		speaker=Sarge_guy  
+		// text="Commander: Hurry up!  Plant those bombs on the fuel line!"
+
+}
+
+%BIGBOSS2
+{
+	#firetargets = "OBJ6"
+	
+	@Russian_Commander	#sound=silo_1_laststand,
+		speaker=Sarge_guy,
+		pause = 2  
+		// text="Give me that bomb detonator!"
+		
+	@ObjectiveStyle
+	#text = "#OBJ7_SILO_NEW"
+	#firetargets = "OBJ7"
+
+	#text = "#Silo04_givebomb"
+}
+
+%BIGBOSS3
+{
+	#firetargets = "OBJ7"
+
+	@ObjectiveStyle
+	#text = "#OBJ8_SILO_NEW"
+	#firetargets = "OBJ8"
+	
+	@Russian_Commander	#sound=silo_2_laststand,
+		speaker=Sarge_guy,
+		pause = 9.243	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Get out of here, The radio signal won't penetrate 
+		// through the blast doors, I'm going to detonate the bombs 
+		// from here and make sure nobody disarms these bombs!"
+
+
+	
+
+	@Russian_Commander	#sound=silo_3_laststand,
+		speaker=Sarge_guy,
+		pause = 0.628	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="Go!!!"
+
+	@Russian_Commander	#sound=silo_4_laststand,
+		speaker=Sarge_guy,
+		pause = 3.749	// LOCALIZE_WAVFILE_LENGTH_ADJUST
+		// text="When those doors close, I'm blowing this place!  
+		// Get out of here!"
+
+
+	@Russian_Commander	#sound=silo_5_laststand,
+		speaker=Sarge_guy,
+		pause = 3.331	// LOCALIZE_WAVFILE_LENGTH_ADJUST  
+		// text="You're out of time!  Get out!"
+
+}
+
+
+%Letsgetoutofhere
+{
+	#killtargets = "failed1"
+	#killtargets = "failed2"
+
+	@default_CT	#sound=silo_1_Getontruck,
+		speaker=truckguy1,
+		pause = 2  
+		// text="We have to get out of here!"
+
+	@default_CT	#sound=silo_2_Getontruck,
+		speaker=truckguy1  
+		// text="Everybody into the truck, now!"
+
+}
+
+%large_blast
+{
+	#firetargets="mortar_blast10",
+		pause = .2
+
+	#firetargets="mortar_blast11",
+		pause = .2
+
+	#firetargets="mortar_blast12",
+		pause = .2
+
+	#firetargets="mortar_blast13",
+		pause = .2
+
+	#firetargets="mortar_blast14",
+		pause = .2
+
+	#firetargets="mortar_blast15",
+		pause = .2
+
+	#firetargets="mortar_blast16",
+		pause = .2
+
+	#firetargets="mortar_blast17",
+		pause = .2
+	
+	#firetargets="mortar_blast18",
+		pause = .2
+
+	#firetargets="mortar_blast19",
+		pause = .2
+
+	#firetargets="mortar_blast20",
+		pause = .2
+
+	#firetargets="mortar_blast21",
+		pause = .2
+
+	#firetargets="mortar_blast22",
+		pause = .2
+
+	#firetargets="mortar_blast23",
+		pause = .2
+
+	#firetargets="mortar_blast24",
+		pause = .2
+
+	#firetargets="mortar_blast25",
+		pause = .2
+
+	#firetargets="mortar_blast26",
+		pause = .2
+
+	#firetargets="mortar_blast27",
+		pause = .2
+	
+	#firetargets="mortar_blast28",
+		pause = .2
+
+	#firetargets="mortar_blast29",
+		pause = .2
+
+	#firetargets="mortar_blast30",
+		pause = .2
+
+	#firetargets="mortar_blast31",
+		pause = .2
+
+	#firetargets="mortar_blast32",
+		pause = .2
+
+	#firetargets="mortar_blast33",
+		pause = .2
+
+	#firetargets="mortar_blast34",
+		pause = .2
+
+	#firetargets="mortar_blast35",
+		pause = .2
+
+	#firetargets="mortar_blast36",
+		pause = .2
+
+	#firetargets="mortar_blast37",
+		pause = .2
+	
+	#firetargets="mortar_blast38",
+		pause = .2
+
+	#firetargets="mortar_blast39",
+		pause = .2
+
+	#firetargets="mortar_blast40",
+		pause = .2
+
+	#firetargets="mortar_blast41",
+		pause = .2
+
+	#firetargets="mortar_blast42",
+		pause = .2
+
+	#firetargets="mortar_blast43",
+		pause = .2
+
+	#firetargets="mortar_blast44",
+		pause = .2
+
+	#firetargets="mortar_blast45",
+		pause = .2
+
+	#firetargets="mortar_blast46",
+		pause = .2
+
+	#firetargets="mortar_blast47",
+		pause = .2
+	
+	#firetargets="mortar_blast48",
+		pause = .2
+
+	#firetargets="mortar_blast49",
+		pause = .2
+	
+	#firetargets="mortar_blast50",
+		pause = .2
+
+	#firetargets="mortar_blast51",
+		pause = .2
+
+	#firetargets="mortar_blast52",
+		pause = .2
+
+	#firetargets="mortar_blast53",
+		pause = .2
+
+	#firetargets="mortar_blast54",
+		pause = .2
+
+	#firetargets="mortar_blast55",
+		pause = .2
+
+	#firetargets="mortar_blast56",
+		pause = .2
+
+	#firetargets="mortar_blast57",
+		pause = .2
+	
+	#firetargets="mortar_blast58",
+		pause = .2
+
+	#firetargets="mortar_blast59",
+		pause = .2
+
+	#firetargets="mortar_blast60",
+		pause = .2
+
+	#firetargets="mortar_blast61",
+		pause = 2.5
+
+	#firetargets="mortar_blast62",
+		pause = .2
+	
+	#firetargets="mortar_blast63",
+		pause = .2
+
+	#firetargets="mortar_blast64",
+		pause = .2
+
+	#firetargets="mortar_blast65",
+		pause = .2
+
+}
+
+// =====================================================================
+// Mission Fails Operative failed to escape from silo in time.
+// =====================================================================
+
+%Mission_failed01
+{
+	#killtargets = "end_map"
+	#pause = 1.2
+	@FailureStyle
+	#text =	"#Silo04_failed01" // LOCALIZE_ME
+
+}
+
+%Mission_failed02
+{
+	#killtargets = "end_map"
+	#pause = 1.2
+	@FailureStyle
+	#text =	"#Silo04_failed02" // LOCALIZE_ME
+
+}

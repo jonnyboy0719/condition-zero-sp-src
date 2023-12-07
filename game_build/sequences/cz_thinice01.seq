@@ -1,0 +1,113 @@
+// Ice Breaker dialog sequence files
+
+!sentences
+{
+	//===========================
+	// CNC over radio
+	//===========================
+	CNC_01_seq0 thinice/cnc_terrnav.wav
+	CNC_02_seq0 thinice/cnc_toowellrm.wav
+	CNC_03_seq0 thinice/cnc_onemans.wav
+	CNC_04_seq0 thinice/CNCseq04.wav
+	CNC_05_seq0 thinice/cnc_sinkup.wav
+
+	CNC_01_engines0 thinice/cnc_engdis.wav
+}
+
+//---------------------------------------------------------------------------
+// NPC, CT, and T speakers.
+//---------------------------------------------------------------------------
+
+%SAS_Commander
+{
+	@RadioStyle
+}
+
+//---------------------------------------------------------------------------
+// NPC Dialog
+//---------------------------------------------------------------------------
+
+// Opening_Sequence			// Triggered as soon as the level starts
+%sequence01
+{
+	#pause = .2
+	#firetargets = "hud_off"		// Turns the hud off 
+	#firetargets = "freeze_player"	// Calls the IRS
+	#pause = 1
+	
+	#firetargets = "env_fade"		// Env_fade that fades from, with a 15 sec holdtime, and a duration of 4	
+
+	#firetargets = "map_start_music_now"
+
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@SAS_Commander	#sound=CNC_01_seq
+
+	@TitleStyle
+	#text = "#THINICE_TITLE"
+	#pause = 5			
+	@SubtitleStyle
+	#text = "#ThinIce_SUBTITLE"
+	#pause = 3
+
+	#pause = 3
+
+	#firetargets = "env_fade"
+
+	$channel = 3
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@SAS_Commander	#sound=CNC_02_seq
+	#pause = 3.5
+	
+	#firetargets = "env_fade"
+	
+	$channel = 4	
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@SAS_Commander	#sound=CNC_03_seq  	
+	#pause = 4
+
+	//$channel = 1
+	//$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	//@SAS_Commander	#sound=CNC_04_seq
+	//#text="If an icebreaker of that size hits at that speed, 
+	// 		its reactor will definitely go critical!", position = -1 .6
+
+	#firetargets = "weapon_equip1"	// Give the player the majority of their weapons (EX: flashbang, nightvision, radio, USP, grenade, radio) 
+	#pause = 0.1			// Wait for the first weapon equip to kick in.
+	#firetargets = "weapon_equip2"	// This only contains the primary weapon we want the player to start with in the level (EX: M4A1)
+
+	#pause = 1
+	#firetargets = "hud_on"		// Turn the hud on	
+	#firetargets = "freeze_player"
+	
+	
+	// new mission objective
+	#pause = 2
+	@ObjectiveStyle
+	#text = "#OBJ1_THIN_NEW"
+	#firetargets = "OBJ1"
+
+	#pause = 6.5
+	$channel = 2
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	#sound=CNC_05_seq
+}
+
+%sequence02
+{
+	
+	#firetargets = "OBJ1"
+	#pause = 3
+	$channel = 1
+	$fadein = 1.5, holdtime = 4, fadeout = 0.5
+	@SAS_Commander	#sound=CNC_01_engines 
+	
+	#pause = 9
+	
+	// new mission objective
+	@ObjectiveStyle
+	#text = "#OBJ2_THIN_NEW"
+	
+	#firetargets = "OBJ2"
+	
+}
