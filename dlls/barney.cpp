@@ -495,6 +495,10 @@ void CBarney::Spawn()
 	m_flFieldOfView = VIEW_FIELD_WIDE; // NOTE: we need a wide field of view so npc will notice player and say hello
 	m_MonsterState = MONSTERSTATE_NONE;
 
+	// Make sure we aren't in coughing or flashbanged state
+	m_bCoughing = false;
+	m_bFlashBanged = false;
+
 	int iHeadPicker = pev->body;
 	pev->body = 0;
 

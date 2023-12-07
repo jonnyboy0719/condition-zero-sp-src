@@ -900,6 +900,10 @@ void CHGrunt::Spawn()
 	m_flNextPainTime = gpGlobals->time;
 	m_iSentence = HGRUNT_SENT_NONE;
 
+	// Make sure we aren't in coughing or flashbanged state
+	m_bCoughing = false;
+	m_bFlashBanged = false;
+
 	m_afCapability = bits_CAP_SQUAD | bits_CAP_TURN_HEAD | bits_CAP_DOORS_GROUP;
 
 	m_fEnemyEluded = false;
