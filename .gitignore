@@ -7,3 +7,8 @@
 # Make sure we ignore compiled dlls
 game_build/cl_dlls
 game_build/dlls
+
+# No compiled maps, .map or cached files (.jmx and .wa_)
+*.map
+*.jmx
+*.bsp
