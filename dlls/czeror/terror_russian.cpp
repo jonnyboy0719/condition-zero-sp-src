@@ -14,6 +14,7 @@
 /// </summary>
 class CTerrorRussian_Pistol : public CZeroHumanBase_Pistol
 {
+	DEFINE_BASE( CZeroHumanBase_Pistol );
 public:
 	void StartMonster() override;
 	void Spawn() override;
@@ -27,7 +28,7 @@ LINK_ENTITY_TO_CLASS(monster_terrorist_russian_pistol, CTerrorRussian_Pistol);
 
 void CTerrorRussian_Pistol::StartMonster()
 {
-	CBarney::StartMonster();
+	CBase::StartMonster();
 	// They have their weapons drawn at start
 	SetBodygroup(GUN_GROUP, BARNEY_BODY_GUNDRAWN);
 	m_fGunDrawn = true;
@@ -40,14 +41,14 @@ void CTerrorRussian_Pistol::Spawn()
 	pev->team = CSDSTeams::TEAM_TERROR1;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);
-	CBarney::Spawn();
+	CBase::Spawn();
 	SET_MODEL(ENT(pev), "models/czero/t_russian_p.mdl");
 	SetUse(NULL);
 }
 
 void CTerrorRussian_Pistol::Precache()
 {
-	CBarney::Precache();
+	CBase::Precache();
 	PRECACHE_MODEL("models/czero/t_russian_p.mdl");
 	PRECACHE_SOUND("weapons/glock18-2.wav"); // Single
 }
@@ -109,7 +110,7 @@ void CTerrorRussian_Pistol::Killed(entvars_t* pevAttacker, int iGib)
 	m_hTargetEnt = NULL;
 	// Don't finish that sentence
 	StopTalking();
-	CBaseMonster::Killed(pevAttacker, iGib);
+	CBase::Killed(pevAttacker, iGib);
 }
 
 
@@ -118,6 +119,7 @@ void CTerrorRussian_Pistol::Killed(entvars_t* pevAttacker, int iGib)
 /// </summary>
 class CTerrorRussian_Grunt : public CZeroHumanBase
 {
+	DEFINE_BASE( CZeroHumanBase );
 public:
 	void StartMonster() override;
 	void Spawn() override;
@@ -129,7 +131,7 @@ LINK_ENTITY_TO_CLASS(monster_terrorist_russian_grenader, CTerrorRussian_Grunt);
 
 void CTerrorRussian_Grunt::StartMonster()
 {
-	CHGrunt::StartMonster();
+	CBase::StartMonster();
 	UTIL_SetSize(pev, VEC_HUMAN_HULL_MIN, VEC_HUMAN_HULL_MAX);
 	SetupDeathAnimation();
 }
@@ -140,13 +142,13 @@ void CTerrorRussian_Grunt::Spawn()
 	m_VoiceLang = CSDSLanguage::LANG_RU;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);
 	SetWeapons();
-	CHGrunt::Spawn();
+	CBase::Spawn();
 	SET_MODEL(ENT(pev), "models/czero/t_russian.mdl");
 }
 
 void CTerrorRussian_Grunt::Precache()
 {
-	CHGrunt::Precache();
+	CBase::Precache();
 	PRECACHE_MODEL("models/czero/t_russian.mdl");
 	PRECACHE_SOUND("weapons/ak47-npc1.wav");
 	PRECACHE_SOUND("weapons/ak47-npc2.wav");
@@ -221,7 +223,7 @@ void CTerrorRussian_Grunt::HandleAnimEvent(MonsterEvent_t* pEvent)
 		break;
 
 		default:
-			CZeroHumanBase::HandleAnimEvent(pEvent);
+			CBase::HandleAnimEvent(pEvent);
 		break;
 	}
 }
