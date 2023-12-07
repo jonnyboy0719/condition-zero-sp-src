@@ -147,25 +147,13 @@
     <ClCompile Include="..\..\dlls\h_export.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\headcrab.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\healthkit.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\monstermaker.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\hornet.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\islave.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\items.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\leech.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\lights.cpp">
@@ -256,9 +244,6 @@
       <Filter>Source Files\game_shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\world.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\xen.cpp">
       <Filter>Source Files\dlls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_debug.cpp">
@@ -387,9 +372,6 @@
     <ClCompile Include="..\..\dlls\czeror\terror_arctic.cpp">
       <Filter>Source Files\dlls\npcs\czeror_enemies_fallback</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\TriggerEndMission.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\czeror\terror_russian.cpp">
       <Filter>Source Files\dlls\npcs\czeror_enemies_fallback</Filter>
     </ClCompile>
@@ -408,9 +390,6 @@
     <ClCompile Include="..\..\dlls\ak47.cpp">
       <Filter>Source Files\dlls\weapons</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\TriggerObjective.cpp">
-      <Filter>Source Files\dlls</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\czeror\czero_human_base.cpp">
       <Filter>Source Files\dlls\npcs\czeror_enemies_fallback</Filter>
     </ClCompile>
@@ -427,6 +406,27 @@
       <Filter>Source Files\dlls\czero</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\czeror\trigger_killtarget.cpp">
+      <Filter>Source Files\dlls\czero</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\hornet.cpp">
+      <Filter>Source Files\dlls\npcs\aliens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\headcrab.cpp">
+      <Filter>Source Files\dlls\npcs\aliens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\islave.cpp">
+      <Filter>Source Files\dlls\npcs\aliens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\leech.cpp">
+      <Filter>Source Files\dlls\npcs\aliens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\xen.cpp">
+      <Filter>Source Files\dlls\npcs\aliens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\TriggerObjective.cpp">
+      <Filter>Source Files\dlls\czero</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\TriggerEndMission.cpp">
       <Filter>Source Files\dlls\czero</Filter>
     </ClCompile>
   </ItemGroup>
