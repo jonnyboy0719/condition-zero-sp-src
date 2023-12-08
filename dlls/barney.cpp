@@ -33,12 +33,14 @@
 LINK_ENTITY_TO_CLASS(monster_police, CBarney);
 
 TYPEDESCRIPTION CBarney::m_SaveData[] =
-	{
-		DEFINE_FIELD(CBarney, m_fGunDrawn, FIELD_BOOLEAN),
-		DEFINE_FIELD(CBarney, m_painTime, FIELD_TIME),
-		DEFINE_FIELD(CBarney, m_checkAttackTime, FIELD_TIME),
-		DEFINE_FIELD(CBarney, m_lastAttackCheck, FIELD_BOOLEAN),
-		DEFINE_FIELD(CBarney, m_flPlayerDamage, FIELD_FLOAT),
+{
+	DEFINE_FIELD(CBarney, m_bCoughing, FIELD_BOOLEAN),
+	DEFINE_FIELD(CBarney, m_bFlashBanged, FIELD_BOOLEAN),
+	DEFINE_FIELD(CBarney, m_fGunDrawn, FIELD_BOOLEAN),
+	DEFINE_FIELD(CBarney, m_painTime, FIELD_TIME),
+	DEFINE_FIELD(CBarney, m_checkAttackTime, FIELD_TIME),
+	DEFINE_FIELD(CBarney, m_lastAttackCheck, FIELD_BOOLEAN),
+	DEFINE_FIELD(CBarney, m_flPlayerDamage, FIELD_FLOAT),
 };
 
 IMPLEMENT_SAVERESTORE(CBarney, CTalkMonster);
