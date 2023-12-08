@@ -38,7 +38,7 @@ void CTerrorArtic_Pistol::StartMonster()
 
 void CTerrorArtic_Pistol::Spawn()
 {
-	pev->team = CSDSTeams::TEAM_TERROR2;
+	pev->team = CSDSTeams::TEAM_TERROR_ARTIC;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
 	m_TeamVoice = CSDSTeamVoice::VOICE_T;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);
@@ -138,7 +138,7 @@ void CTerrorArtic_Grunt::StartMonster()
 
 void CTerrorArtic_Grunt::Spawn()
 {
-	pev->team = CSDSTeams::TEAM_TERROR2;
+	pev->team = CSDSTeams::TEAM_TERROR_ARTIC;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
 	m_TeamVoice = CSDSTeamVoice::VOICE_T;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);

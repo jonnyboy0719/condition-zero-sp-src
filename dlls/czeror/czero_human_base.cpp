@@ -27,47 +27,7 @@ IMPLEMENT_SAVERESTORE(CZeroHumanBase, CHGrunt);
 
 int CZeroHumanBase_Pistol::IRelationship(CBaseEntity* pTarget)
 {
-	CSDSTeams target_team = CZero::GetEnemyTeam(pTarget);
-	switch ( pev->team )
-	{
-		case TEAM_CIV:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_TERROR2 )
-				return R_FR;
-			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
-				return R_AL;
-		}
-		break;
-		case TEAM_CT:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_TERROR2 )
-				return R_NM;
-			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
-				return R_AL;
-		}
-		break;
-		case TEAM_TERROR1:
-		{
-			if ( target_team == TEAM_TERROR2 || target_team == TEAM_CT )
-				return R_NM;
-			else if ( target_team == TEAM_TERROR1 )
-				return R_AL;
-			else if ( target_team == TEAM_CIV )
-				return R_NO;
-		}
-		break;
-		case TEAM_TERROR2:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_CT )
-				return R_NM;
-			else if ( target_team == TEAM_TERROR2 )
-				return R_AL;
-			else if ( target_team == TEAM_CIV )
-				return R_NO;
-		}
-		break;
-	}
-	return R_NO;
+	return CZero::GetTeamRelationShip(this, pTarget);
 }
 
 void CZeroHumanBase_Pistol::TalkInit()
@@ -130,47 +90,7 @@ void CZeroHumanBase_Pistol::OnSentenceSay( BarneySay say )
 
 int CZeroHumanBase::IRelationship(CBaseEntity* pTarget)
 {
-	CSDSTeams target_team = CZero::GetEnemyTeam(pTarget);
-	switch ( pev->team )
-	{
-		case TEAM_CIV:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_TERROR2 )
-				return R_FR;
-			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
-				return R_AL;
-		}
-		break;
-		case TEAM_CT:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_TERROR2 )
-				return R_NM;
-			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
-				return R_AL;
-		}
-		break;
-		case TEAM_TERROR1:
-		{
-			if ( target_team == TEAM_TERROR2 || target_team == TEAM_CT )
-				return R_NM;
-			else if ( target_team == TEAM_TERROR1 )
-				return R_AL;
-			else if ( target_team == TEAM_CIV )
-				return R_NO;
-		}
-		break;
-		case TEAM_TERROR2:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_CT )
-				return R_NM;
-			else if ( target_team == TEAM_TERROR2 )
-				return R_AL;
-			else if ( target_team == TEAM_CIV )
-				return R_NO;
-		}
-		break;
-	}
-	return R_DL;
+	return CZero::GetTeamRelationShip(this, pTarget);
 }
 
 void CZeroHumanBase::DeathSound()
@@ -308,4 +228,49 @@ CSDSTeams CZero::GetEnemyTeam(CBaseEntity* pEnemy)
 	if (FClassnameIs(pEnemy->pev, "player"))
 			return TEAM_CT;
 	return (CSDSTeams)pEnemy->pev->team;
+}
+
+int CZero::GetTeamRelationShip(CBaseEntity* me, CBaseEntity* target)
+{
+	CSDSTeams target_team = CZero::GetEnemyTeam(target);
+	switch ( me->pev->team )
+	{
+		case TEAM_CIV:
+		{
+			if ( target_team == TEAM_TERROR_RUSSIAN || target_team == TEAM_TERROR_ARTIC )
+				return R_FR;
+			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
+				return R_AL;
+		}
+		break;
+		case TEAM_CT:
+		{
+			if ( target_team == TEAM_TERROR_RUSSIAN || target_team == TEAM_TERROR_ARTIC )
+				return R_NM;
+			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
+				return R_AL;
+		}
+		break;
+		case TEAM_TERROR_RUSSIAN:
+		{
+			if ( target_team == TEAM_TERROR_ARTIC || target_team == TEAM_CT )
+				return R_NM;
+			else if ( target_team == TEAM_TERROR_RUSSIAN )
+				return R_AL;
+			else if ( target_team == TEAM_CIV )
+				return R_NO;
+		}
+		break;
+		case TEAM_TERROR_ARTIC:
+		{
+			if ( target_team == TEAM_TERROR_RUSSIAN || target_team == TEAM_CT )
+				return R_NM;
+			else if ( target_team == TEAM_TERROR_ARTIC )
+				return R_AL;
+			else if ( target_team == TEAM_CIV )
+				return R_NO;
+		}
+		break;
+	}
+	return R_DL;
 }

@@ -38,7 +38,7 @@ void CTerrorRussian_Pistol::StartMonster()
 
 void CTerrorRussian_Pistol::Spawn()
 {
-	pev->team = CSDSTeams::TEAM_TERROR1;
+	pev->team = CSDSTeams::TEAM_TERROR_RUSSIAN;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
 	m_TeamVoice = CSDSTeamVoice::VOICE_T;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);
@@ -139,7 +139,7 @@ void CTerrorRussian_Grunt::StartMonster()
 
 void CTerrorRussian_Grunt::Spawn()
 {
-	pev->team = CSDSTeams::TEAM_TERROR1;
+	pev->team = CSDSTeams::TEAM_TERROR_RUSSIAN;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
 	m_TeamVoice = CSDSTeamVoice::VOICE_T;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);

@@ -33,14 +33,15 @@ enum CSDSTeams
 {
 	TEAM_CT = 0,		// Player ally (or player)
 	TEAM_CIV,			// Civillian, ignored
-	TEAM_TERROR1,		// Terror Team 1
-	TEAM_TERROR2,		// Terror Team 2
+	TEAM_TERROR_RUSSIAN,	// Terror Team 1 (terror_russian)
+	TEAM_TERROR_ARTIC,		// Terror Team 2 (terror_artic)
 };
 
 namespace CZero
 {
 	const char *GetVoiceLang( const char *szSentence, CSDSLanguage lang, CSDSTeamVoice team );
 	CSDSTeams GetEnemyTeam(CBaseEntity* pEnemy);
+	int GetTeamRelationShip(CBaseEntity *me, CBaseEntity *target);
 }
 
 class CZeroHumanBase_Pistol : public CBarney

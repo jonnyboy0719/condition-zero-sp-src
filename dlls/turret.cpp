@@ -1152,47 +1152,7 @@ int CBaseTurret::Classify()
 
 int CBaseTurret::IRelationship(CBaseEntity* pTarget)
 {
-	CSDSTeams target_team = CZero::GetEnemyTeam(pTarget);
-	switch ( pev->team )
-	{
-		case TEAM_CIV:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_TERROR2 )
-				return R_FR;
-			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
-				return R_AL;
-		}
-		break;
-		case TEAM_CT:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_TERROR2 )
-				return R_NM;
-			else if ( target_team == TEAM_CIV || target_team == TEAM_CT )
-				return R_AL;
-		}
-		break;
-		case TEAM_TERROR1:
-		{
-			if ( target_team == TEAM_TERROR2 || target_team == TEAM_CT )
-				return R_NM;
-			else if ( target_team == TEAM_TERROR1 )
-				return R_AL;
-			else if ( target_team == TEAM_CIV )
-				return R_NO;
-		}
-		break;
-		case TEAM_TERROR2:
-		{
-			if ( target_team == TEAM_TERROR1 || target_team == TEAM_CT )
-				return R_NM;
-			else if ( target_team == TEAM_TERROR2 )
-				return R_AL;
-			else if ( target_team == TEAM_CIV )
-				return R_NO;
-		}
-		break;
-	}
-	return R_DL;
+	return CZero::GetTeamRelationShip(this, pTarget);
 }
 
 
