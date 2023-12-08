@@ -115,6 +115,14 @@ bool FBoxVisible(entvars_t* pevLooker, entvars_t* pevTarget, Vector& vecTargetOr
 #define bits_MEMORY_CUSTOM2 (1 << 30)	   // Monster-specific memory
 #define bits_MEMORY_CUSTOM1 (1 << 31)	   // Monster-specific memory
 
+// Grenade states, used by CT and T NPC's
+enum GrenadeState
+{
+	State_None,
+	State_Flashed,
+	State_Smoked
+};
+
 // trigger conditions for scripted AI
 // these MUST match the CHOICES interface in halflife.fgd for the base monster
 enum

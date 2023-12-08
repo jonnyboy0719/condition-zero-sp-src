@@ -161,8 +161,8 @@ public:
 	int m_iShotgunShell;
 
 	int m_iSentence;
-	bool m_bFlashBanged;
-	bool m_bCoughing;
+
+	int m_GrenadeState;
 
 	static const char* pGruntSentences[];
 };

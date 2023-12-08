@@ -34,8 +34,7 @@ LINK_ENTITY_TO_CLASS(monster_police, CBarney);
 
 TYPEDESCRIPTION CBarney::m_SaveData[] =
 {
-	DEFINE_FIELD(CBarney, m_bCoughing, FIELD_BOOLEAN),
-	DEFINE_FIELD(CBarney, m_bFlashBanged, FIELD_BOOLEAN),
+	DEFINE_FIELD(CBarney, m_GrenadeState, FIELD_INTEGER),
 	DEFINE_FIELD(CBarney, m_fGunDrawn, FIELD_BOOLEAN),
 	DEFINE_FIELD(CBarney, m_painTime, FIELD_TIME),
 	DEFINE_FIELD(CBarney, m_checkAttackTime, FIELD_TIME),
@@ -498,8 +497,7 @@ void CBarney::Spawn()
 	m_MonsterState = MONSTERSTATE_NONE;
 
 	// Make sure we aren't in coughing or flashbanged state
-	m_bCoughing = false;
-	m_bFlashBanged = false;
+	m_GrenadeState = GrenadeState::State_None;
 
 	int iHeadPicker = pev->body;
 	pev->body = 0;
@@ -778,15 +776,17 @@ Schedule_t* CBarney::GetSchedule()
 	// Check the events
 	if (!HasConditions(bits_COND_ENEMY_DEAD))
 	{
-		if ( m_bCoughing )
+		if ( m_GrenadeState > GrenadeState::State_None )
 		{
-			m_bCoughing = false;
-			return GetScheduleOfType( SCHED_CZERO_SMOKEGRENADE_COUGHING );
-		}
-		if ( m_bFlashBanged )
-		{
-			m_bFlashBanged = false;
-			return GetScheduleOfType( SCHED_CZERO_FLASHBANGED );
+			Schedule_t *ret = nullptr;
+			switch ( m_GrenadeState )
+			{
+				case GrenadeState::State_Flashed: ret = GetScheduleOfType( SCHED_CZERO_FLASHBANGED ); break;
+				case GrenadeState::State_Smoked: ret = GetScheduleOfType( SCHED_CZERO_SMOKEGRENADE_COUGHING ); break;
+			}
+			m_GrenadeState = GrenadeState::State_None;
+			if ( ret )
+				return ret;
 		}
 	}
 
@@ -973,8 +973,8 @@ void CBarney::OnSentenceSay( BarneySay say )
 
 void CBarney::OnNPCCoughing()
 {
-	if ( m_bCoughing ) return;
-	m_bCoughing = true;
+	if ( m_GrenadeState > GrenadeState::State_None ) return;
+	m_GrenadeState = GrenadeState::State_Smoked;
 	if ( IsMoving() )
 	{
 		TaskComplete();
@@ -986,8 +986,8 @@ void CBarney::OnNPCCoughing()
 
 void CBarney::OnNPCFlashed()
 {
-	if ( m_bFlashBanged ) return;
-	m_bFlashBanged = true;
+	if ( m_GrenadeState > GrenadeState::State_None ) return;
+	m_GrenadeState = GrenadeState::State_Flashed;
 	if ( IsMoving() )
 	{
 		TaskComplete();
