@@ -40,6 +40,7 @@ void CTerrorArtic_Pistol::Spawn()
 {
 	pev->team = CSDSTeams::TEAM_TERROR2;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
+	m_TeamVoice = CSDSTeamVoice::VOICE_T;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);
 	CBase::Spawn();
 	SET_MODEL(ENT(pev), "models/czero/t_arctic_p.mdl");
@@ -139,6 +140,7 @@ void CTerrorArtic_Grunt::Spawn()
 {
 	pev->team = CSDSTeams::TEAM_TERROR2;
 	m_VoiceLang = CSDSLanguage::LANG_RU;
+	m_TeamVoice = CSDSTeamVoice::VOICE_T;
 	UTIL_SetSize(pev, _tinyhull, _tinyhull);
 	SetWeapons();
 	CBase::Spawn();
