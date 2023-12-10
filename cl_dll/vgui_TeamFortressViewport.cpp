@@ -53,6 +53,7 @@
 #include "vgui_TeamFortressViewport.h"
 #include "vgui_ScorePanel.h"
 #include "vgui_SpectatorPanel.h"
+#include "czero/vgui_worldmap.h"
 
 #include "shake.h"
 #include "screenfade.h"
@@ -516,6 +517,7 @@ TeamFortressViewport::TeamFortressViewport(int x, int y, int wide, int tall) : P
 	m_iInitialized = false;
 	m_pTeamMenu = NULL;
 	m_pClassMenu = NULL;
+	m_pWorldMap = NULL;
 	m_pScoreBoard = NULL;
 	m_pSpectatorPanel = NULL;
 	m_pCurrentMenu = NULL;
@@ -578,6 +580,7 @@ TeamFortressViewport::TeamFortressViewport(int x, int y, int wide, int tall) : P
 	CreateClassMenu();
 	CreateSpectatorMenu();
 	CreateScoreBoard();
+	CreateWorldMap();
 	// Init command menus
 	m_iNumMenus = 0;
 	m_iCurrentTeamNumber = m_iUser1 = m_iUser2 = m_iUser3 = 0;
@@ -614,6 +617,10 @@ void TeamFortressViewport::Initialize()
 	if (m_pClassMenu)
 	{
 		m_pClassMenu->Initialize();
+	}
+	if (m_pWorldMap)
+	{
+		m_pWorldMap->Initialize();
 	}
 	if (m_pScoreBoard)
 	{
@@ -1496,6 +1503,9 @@ void TeamFortressViewport::ShowVGUIMenu(int iMenu)
 	case MENU_CLASS:
 		pNewMenu = ShowClassMenu();
 		break;
+	case MENU_WORLDMAP:
+		pNewMenu = ShowWorldMap();
+		break;
 
 	default:
 		break;
@@ -1567,7 +1577,7 @@ bool TeamFortressViewport::AllowedToPrintText()
 	if (m_pCurrentMenu && g_iPlayerClass == 0)
 	{
 		int iId = m_pCurrentMenu->GetMenuID();
-		if (iId == MENU_TEAM || iId == MENU_CLASS || iId == MENU_INTRO || iId == MENU_CLASSHELP)
+		if (iId == MENU_TEAM || iId == MENU_CLASS || iId == MENU_INTRO || iId == MENU_WORLDMAP || iId == MENU_CLASSHELP)
 			return false;
 	}
 
@@ -1632,6 +1642,20 @@ void TeamFortressViewport::CreateSpectatorMenu()
 	m_pSpectatorPanel->Initialize();
 }
 
+void TeamFortressViewport::CreateWorldMap(void)
+{
+	// Create the panel
+	m_pWorldMap = new UIWorldMap(255, false, 0, 0, ScreenWidth, ScreenHeight);
+	m_pWorldMap->setParent(this);
+	m_pWorldMap->setVisible(false);
+}
+
+CMenuPanel* TeamFortressViewport::ShowWorldMap(void)
+{
+	m_pWorldMap->setVisible(true);
+	return m_pWorldMap;
+}
+
 //======================================================================================
 // UPDATE HUD SECTIONS
 //======================================================================================
@@ -1650,7 +1674,7 @@ void TeamFortressViewport::UpdateOnPlayerInfo()
 void TeamFortressViewport::UpdateCursorState()
 {
 	// Need cursor if any VGUI window is up
-	if (m_pSpectatorPanel->m_menuVisible || m_pCurrentMenu || m_pTeamMenu->isVisible() || GetClientVoiceMgr()->IsInSquelchMode())
+	if (m_pSpectatorPanel->m_menuVisible || m_pCurrentMenu || m_pWorldMap->isVisible() || m_pTeamMenu->isVisible() || GetClientVoiceMgr()->IsInSquelchMode())
 	{
 		g_iVisibleMouse = true;
 		App::getInstance()->setCursorOveride(App::getInstance()->getScheme()->getCursor(Scheme::scu_arrow));
@@ -2141,6 +2165,13 @@ bool TeamFortressViewport::MsgFunc_AllowSpec(const char* pszName, int iSize, voi
 bool TeamFortressViewport::MsgFunc_ResetFade(const char* pszName, int iSize, void* pbuf)
 {
 
+	return true;
+}
+
+bool TeamFortressViewport::MsgFunc_WorldMap(const char* pszName, int iSize, void* pbuf)
+{
+	// We don't really care about our buffer data, just show the worldmap
+	ShowVGUIMenu( MENU_WORLDMAP );
 	return true;
 }
 

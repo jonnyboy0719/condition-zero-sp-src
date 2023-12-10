@@ -36,6 +36,7 @@
 #define MENU_CLASSHELP2 			7
 #define MENU_REPEATHELP 			8
 #define MENU_SPECHELP				9
+#define MENU_WORLDMAP				10
 using namespace vgui;
 
 class Cursor;
@@ -51,6 +52,7 @@ class DragNDropPanel;
 class CTransparentPanel;
 class CClassMenuPanel;
 class CTeamMenuPanel;
+class UIWorldMap;
 class TeamFortressViewport;
 
 char* GetVGUITGAName(const char *pszName);
@@ -118,6 +120,8 @@ public:
 
 public:
 	void LoadImage(const char * pImageName);
+	CImageLabel( BitmapTGA *pImage,int x,int y );
+	CImageLabel( BitmapTGA *pImage,int x,int y,int wide,int tall );
 	CImageLabel( const char* pImageName,int x,int y );
 	CImageLabel( const char* pImageName,int x,int y,int wide,int tall );
 
@@ -507,6 +511,10 @@ private:
 	void		 CreateClassMenu( void );
 	CMenuPanel*	 ShowClassMenu( void );
 	void		 CreateSpectatorMenu( void );
+
+	// CZERO
+	void			CreateWorldMap( void );
+	CMenuPanel*		ShowWorldMap( void );
 	
 	// Scheme handler
 	CSchemeManager m_SchemeManager;
@@ -605,8 +613,10 @@ public:
 	bool MsgFunc_TeamInfo( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_Spectator( const char *pszName, int iSize, void *pbuf );
 	bool MsgFunc_AllowSpec( const char *pszName, int iSize, void *pbuf );
-	bool MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf );	
-	bool MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf );	
+	bool MsgFunc_SpecFade( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_ResetFade( const char *pszName, int iSize, void *pbuf );
+	bool MsgFunc_WorldMap(const char *pszName, int iSize, void *pbuf );
+
 
 	// Input
 	bool SlotInput( int iSlot );
@@ -627,6 +637,7 @@ public:
 	int						m_SpectatorCameraMenu;
 	int						m_PlayerMenu; // a list of current player
 	CClassMenuPanel	*m_pClassMenu;
+	UIWorldMap		*m_pWorldMap;
 	ScorePanel		*m_pScoreBoard;
 	SpectatorPanel *		m_pSpectatorPanel;
 	char			m_szServerName[ MAX_SERVERNAME_LENGTH ];

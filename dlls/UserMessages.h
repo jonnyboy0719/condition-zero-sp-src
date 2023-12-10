@@ -58,5 +58,6 @@ inline int gmsgFog = 0;
 inline int gmsgScriptedSequence = 0;
 inline int gmsgObjective = 0;
 inline int gmsgRainData = 0;
+inline int gmsgWorldMap = 0;
 
 void LinkUserMessages();

@@ -10,7 +10,6 @@
 #include "vgui_loadtga.h"
 #include "VGUI_InputStream.h"
 
-
 // ---------------------------------------------------------------------- //
 // Helper class for loading tga files.
 // ---------------------------------------------------------------------- //
@@ -102,6 +101,21 @@ vgui::BitmapTGA* vgui_LoadTGANoInvertAlpha(char const* pFilename)
 
 	stream.m_ReadPos = 0;
 	vgui::BitmapTGA* pRet = new vgui::BitmapTGA(&stream, false);
+	gEngfuncs.COM_FreeFile(stream.m_pData);
+
+	return pRet;
+}
+
+BitmapTGAWorldMap* vgui_LoadWorldMapTGA(char const* pFilename)
+{
+	MemoryInputStream stream;
+
+	stream.m_pData = gEngfuncs.COM_LoadFile((char*)pFilename, 5, &stream.m_DataLen);
+	if (!stream.m_pData)
+		return NULL;
+
+	stream.m_ReadPos = 0;
+	BitmapTGAWorldMap* pRet = new BitmapTGAWorldMap(&stream, true);
 	gEngfuncs.COM_FreeFile(stream.m_pData);
 
 	return pRet;

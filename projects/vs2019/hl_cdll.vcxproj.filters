@@ -336,6 +336,9 @@
     <ClCompile Include="..\..\cl_dll\objectives.cpp">
       <Filter>Source Files\cl_dll</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\cl_dll\czero\vgui_worldmap.cpp">
+      <Filter>Source Files\cl_dll\czero</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\kbutton.h">

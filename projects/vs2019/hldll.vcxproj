@@ -135,6 +135,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "dlls" "$(TargetName).pdb"
     <ClCompile Include="..\..\dlls\czeror\czero_human_base.cpp" />
     <ClCompile Include="..\..\dlls\czeror\dead_npc.cpp" />
     <ClCompile Include="..\..\dlls\czeror\env_particle_emitter.cpp" />
+    <ClCompile Include="..\..\dlls\czeror\item_worldmap.cpp" />
     <ClCompile Include="..\..\dlls\czeror\terror_arctic.cpp" />
     <ClCompile Include="..\..\dlls\czeror\terror_russian.cpp" />
     <ClCompile Include="..\..\dlls\czeror\trigger_ammoresupply.cpp" />

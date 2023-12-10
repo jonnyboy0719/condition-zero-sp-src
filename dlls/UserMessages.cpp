@@ -70,4 +70,5 @@ void LinkUserMessages()
 	gmsgObjective = REG_USER_MSG("OBJ", -1);
 
 	gmsgRainData = REG_USER_MSG("RainData", 16);
+	gmsgWorldMap = REG_USER_MSG("WorldMap", 0);
 }

@@ -429,6 +429,9 @@
     <ClCompile Include="..\..\dlls\TriggerEndMission.cpp">
       <Filter>Source Files\dlls\czero</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\czeror\item_worldmap.cpp">
+      <Filter>Source Files\dlls\czero</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dlls\doors.h">

@@ -320,6 +320,20 @@ bool ClassButton::IsNotValid()
 
 //===========================================================
 // Button with Class image beneath it
+CImageLabel::CImageLabel(BitmapTGA* pImage, int x, int y) : Label("", x, y)
+{
+	setContentFitted(true);
+	m_pTGA = pImage;
+	setImage(m_pTGA);
+}
+
+CImageLabel::CImageLabel(BitmapTGA* pImage, int x, int y, int wide, int tall) : Label("", x, y, wide, tall)
+{
+	setContentFitted(true);
+	m_pTGA = pImage;
+	setImage(m_pTGA);
+}
+
 CImageLabel::CImageLabel(const char* pImageName, int x, int y) : Label("", x, y)
 {
 	setContentFitted(true);

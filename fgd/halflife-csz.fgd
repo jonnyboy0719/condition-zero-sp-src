@@ -3196,7 +3196,7 @@
 [
 ]
 
-@SolidClass base(Target) = func_model_brush : "Model brush"[]
+@SolidClass base(Target) = item_worldmap : "World Map"[]
 
 @SolidClass base(Target) = trigger_ammoresupply : "Ammo Resupply"
 [
