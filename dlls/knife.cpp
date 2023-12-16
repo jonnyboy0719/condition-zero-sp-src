@@ -141,6 +141,9 @@ void CKnife::PrimaryAttack()
 
 void CKnife::SecondaryAttack()
 {
+	// Don't do any primary swings
+	SetThink( NULL );
+
 	TraceResult tr;
 
 	UTIL_MakeVectors(m_pPlayer->pev->v_angle);
@@ -166,22 +169,23 @@ void CKnife::SecondaryAttack()
 #endif
 
 	m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
-	pev->nextthink = gpGlobals->time + 0.1;
 
 	if (tr.flFraction >= 1.0)
 	{
-		m_flNextPrimaryAttack = GetNextAttackDelay(1.0);
+		SendWeaponAnim(KNIFE_STAB_MISS);
+		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(1.0);
 		PLAYBACK_EVENT_FULL(FEV_NOTHOST, m_pPlayer->edict(), m_usCrowbar,
 			0.0, g_vecZero, g_vecZero, 0, 0, 0,
 			0.0, 0, 0.0);
 	}
 	else
 	{
-		m_flNextPrimaryAttack = GetNextAttackDelay(1.5);
+		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(1.5);
+		SendWeaponAnim(KNIFE_STAB);
 #ifndef CLIENT_DLL
 		CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 		ClearMultiDamage();
-		pEntity->TraceAttack(m_pPlayer->pev, gSkillData.plrDmgKnifeStab, gpGlobals->v_forward, &tr, DMG_CLUB);
+		pEntity->TraceAttack(m_pPlayer->pev, gSkillData.plrDmgKnifeStab, gpGlobals->v_forward, &tr, DMG_CLUB | DMG_NEVERGIB);
 		ApplyMultiDamage(m_pPlayer->pev, m_pPlayer->pev);
 
 		// play thwack, smack, or dong sound
@@ -224,6 +228,8 @@ void CKnife::SecondaryAttack()
 
 		m_pPlayer->m_iWeaponVolume = flVol * CROWBAR_WALLHIT_VOLUME;
 #endif
+		SetThink( &CKnife::Smack );
+		pev->nextthink = gpGlobals->time + 0.2;
 	}
 }
 
@@ -296,7 +302,7 @@ bool CKnife::Swing(bool fFirst)
 		if (fFirst)
 		{
 			// miss
-			m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
+			m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(0.5);
 
 			// player "shoot" animation
 			m_pPlayer->SetAnimation(PLAYER_ATTACK1);
@@ -329,7 +335,7 @@ bool CKnife::Swing(bool fFirst)
 
 #endif
 
-		m_flNextPrimaryAttack = GetNextAttackDelay(0.25);
+		m_flNextSecondaryAttack = m_flNextPrimaryAttack = GetNextAttackDelay(0.25);
 
 #ifndef CLIENT_DLL
 		// play thwack, smack, or dong sound
