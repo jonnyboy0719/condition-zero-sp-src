@@ -70,6 +70,24 @@
     <Filter Include="Source Files\dlls\czero">
       <UniqueIdentifier>{33f6df35-d3e6-4af8-8cd7-d2e41055c166}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\dlls\weapons\melee">
+      <UniqueIdentifier>{721d3cfd-e7dd-4c21-a608-3f49a85b08d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dlls\weapons\rifles">
+      <UniqueIdentifier>{b549c9bc-db7f-4ae2-8a66-dd16ac104303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dlls\weapons\pistols">
+      <UniqueIdentifier>{ac06109a-f902-4a6b-962d-c3c4cdd66080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dlls\weapons\shotguns">
+      <UniqueIdentifier>{f4f0538d-5bfe-4937-a368-fed6a46e77c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dlls\weapons\smgs">
+      <UniqueIdentifier>{6e7e52d6-162a-47c0-88c8-74dd2c85c293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dlls\weapons\specials">
+      <UniqueIdentifier>{3b9c0936-c089-4453-afac-a5d00dcd4186}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\airtank.cpp">
@@ -294,34 +312,10 @@
     <ClCompile Include="..\..\dlls\controller.cpp">
       <Filter>Source Files\dlls\npcs\aliens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\knife.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\mp5.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\shotgun.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\weapons_shared.cpp">
       <Filter>Source Files\dlls\weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\weapons.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\rpg.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\python.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\m4a1.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\handgrenade.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\glock.cpp">
       <Filter>Source Files\dlls\weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\hassassin.cpp">
@@ -354,15 +348,6 @@
     <ClCompile Include="..\..\dlls\scientist.cpp">
       <Filter>Source Files\dlls\npcs\humans</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\radio_controlled_bomb.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\tripmine_new.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\usp.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\minebomb.cpp">
       <Filter>Source Files\dlls\npcs\vehicles</Filter>
     </ClCompile>
@@ -386,9 +371,6 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\genericitem.cpp">
       <Filter>Source Files\dlls\czero</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\ak47.cpp">
-      <Filter>Source Files\dlls\weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\czeror\czero_human_base.cpp">
       <Filter>Source Files\dlls\npcs\czeror_enemies_fallback</Filter>
@@ -431,6 +413,45 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\czeror\item_worldmap.cpp">
       <Filter>Source Files\dlls\czero</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\knife.cpp">
+      <Filter>Source Files\dlls\weapons\melee</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\machete.cpp">
+      <Filter>Source Files\dlls\weapons\melee</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\glock.cpp">
+      <Filter>Source Files\dlls\weapons\pistols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\deagle.cpp">
+      <Filter>Source Files\dlls\weapons\pistols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ak47.cpp">
+      <Filter>Source Files\dlls\weapons\rifles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\m4a1.cpp">
+      <Filter>Source Files\dlls\weapons\rifles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\usp.cpp">
+      <Filter>Source Files\dlls\weapons\pistols</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\radio_controlled_bomb.cpp">
+      <Filter>Source Files\dlls\weapons\specials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\tripmine_new.cpp">
+      <Filter>Source Files\dlls\weapons\specials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\shotgun.cpp">
+      <Filter>Source Files\dlls\weapons\shotguns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\mp5.cpp">
+      <Filter>Source Files\dlls\weapons\smgs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\handgrenade.cpp">
+      <Filter>Source Files\dlls\weapons\specials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\rpg.cpp">
+      <Filter>Source Files\dlls\weapons\specials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -53,6 +53,7 @@ Vector previousorigin;
 CGlock g_Glock;
 CUSP g_USP;
 CKnife g_Knife;
+CMachete g_Machete;
 CPython g_Python;
 CMP5 g_Mp5;
 CM4A1 g_M4A1;
@@ -465,6 +466,7 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&g_Glock, &player);
 	HUD_PrepEntity(&g_USP, &player);
 	HUD_PrepEntity(&g_Knife, &player);
+	HUD_PrepEntity(&g_Machete, &player);
 	HUD_PrepEntity(&g_Python, &player);
 	HUD_PrepEntity(&g_Mp5, &player);
 	HUD_PrepEntity(&g_M4A1, &player);
@@ -558,6 +560,10 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	{
 	case WEAPON_KNIFE:
 		pWeapon = &g_Knife;
+		break;
+
+	case WEAPON_MACHETE:
+		pWeapon = &g_Machete;
 		break;
 
 	case WEAPON_GLOCK:

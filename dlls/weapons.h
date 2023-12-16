@@ -613,7 +613,51 @@ public:
 	}
 
 private:
-	unsigned short m_usCrowbar;
+	unsigned short m_usMelee;
+};
+
+enum machete_e
+{
+	MACHETE_IDLE = 0,
+	MACHETE_SLASH1,
+	MACHETE_SLASH2,
+	MACHETE_DRAW,
+	MACHETE_STAB,
+	MACHETE_STAB_MISS,
+	MACHETE_MIDSLASH1,
+	MACHETE_MIDSLASH2,
+	MACHETE_HOLSTER,
+};
+
+class CMachete : public CBasePlayerWeapon
+{
+public:
+	void Spawn() override;
+	void Precache() override;
+	int iItemSlot() override { return 1; }
+	void EXPORT SwingAgain();
+	void EXPORT Smack();
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	bool Swing(bool fFirst);
+	bool Deploy() override;
+	void Holster() override;
+	int m_iSwing;
+	TraceResult m_trHit;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usMelee;
 };
 
 enum python_e

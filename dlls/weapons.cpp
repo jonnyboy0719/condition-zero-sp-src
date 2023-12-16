@@ -282,6 +282,7 @@ void W_Precache()
 
 	// crowbar
 	UTIL_PrecacheOtherWeapon("weapon_knife");
+	UTIL_PrecacheOtherWeapon("weapon_machete");
 
 	// glock
 	UTIL_PrecacheOtherWeapon("weapon_glock");

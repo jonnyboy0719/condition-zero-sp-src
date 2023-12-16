@@ -286,6 +286,8 @@ cvar_t sk_sentry_health3 = {"sk_sentry_health3", "0"};
 
 CVAR_REGISTER_SKILLVAR( sk_plr_knife, 10 );
 CVAR_REGISTER_SKILLVAR( sk_plr_knifestab, 30 );
+CVAR_REGISTER_SKILLVAR( sk_plr_machete, 30 );
+CVAR_REGISTER_SKILLVAR( sk_plr_machetestab, 50 );
 CVAR_REGISTER_SKILLVAR( sk_plr_9mm_bullet, 8 );
 CVAR_REGISTER_SKILLVAR( sk_plr_45acp_bullet, 12 );
 CVAR_REGISTER_SKILLVAR( sk_plr_357_bullet, 40 );
@@ -509,6 +511,8 @@ void GameDLLInit()
 
 	CVAR_REGISTER_SKILL(sk_plr_knife);
 	CVAR_REGISTER_SKILL(sk_plr_knifestab);
+	CVAR_REGISTER_SKILL(sk_plr_machete);
+	CVAR_REGISTER_SKILL(sk_plr_machetestab);
 
 	// Glock Round
 	CVAR_REGISTER_SKILL(sk_plr_9mm_bullet);

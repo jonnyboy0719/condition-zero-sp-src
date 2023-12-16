@@ -1212,7 +1212,7 @@ int g_iSwing;
 
 //Only predict the miss sounds, hit sounds are still played
 //server side, so players don't get the wrong idea.
-void EV_Crowbar(event_args_t* args)
+void EV_Knife(event_args_t* args)
 {
 	int idx;
 	Vector origin;
@@ -1228,6 +1228,26 @@ void EV_Crowbar(event_args_t* args)
 		break;
 	case 1:
 		gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/knife_slash2.wav", 1, ATTN_NORM, 0, PITCH_NORM);
+		break;
+	}
+}
+
+void EV_Machete(event_args_t* args)
+{
+	int idx;
+	Vector origin;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+
+	//Play Swing sound
+	switch (gEngfuncs.pfnRandomLong(0, 1))
+	{
+	case 0:
+		gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/machete_slash1.wav", 1, ATTN_NORM, 0, PITCH_NORM);
+		break;
+	case 1:
+		gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/machete_slash2.wav", 1, ATTN_NORM, 0, PITCH_NORM);
 		break;
 	}
 }
