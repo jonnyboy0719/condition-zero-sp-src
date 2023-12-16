@@ -52,7 +52,7 @@ Vector previousorigin;
 // HLDM Weapon placeholder entities.
 CGlock g_Glock;
 CUSP g_USP;
-CCrowbar g_Crowbar;
+CKnife g_Knife;
 CPython g_Python;
 CMP5 g_Mp5;
 CM4A1 g_M4A1;
@@ -464,7 +464,7 @@ void HUD_InitClientWeapons()
 	// Allocate slot(s) for each weapon that we are going to be predicting
 	HUD_PrepEntity(&g_Glock, &player);
 	HUD_PrepEntity(&g_USP, &player);
-	HUD_PrepEntity(&g_Crowbar, &player);
+	HUD_PrepEntity(&g_Knife, &player);
 	HUD_PrepEntity(&g_Python, &player);
 	HUD_PrepEntity(&g_Mp5, &player);
 	HUD_PrepEntity(&g_M4A1, &player);
@@ -556,8 +556,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	// FIXME, make this a method in each weapon?  where you pass in an entity_state_t *?
 	switch (from->client.m_iId)
 	{
-	case WEAPON_CROWBAR:
-		pWeapon = &g_Crowbar;
+	case WEAPON_KNIFE:
+		pWeapon = &g_Knife;
 		break;
 
 	case WEAPON_GLOCK:

@@ -573,20 +573,19 @@ private:
 	unsigned short m_usFire;
 };
 
-enum crowbar_e
+enum knife_e
 {
-	CROWBAR_IDLE = 0,
-	CROWBAR_DRAW,
-	CROWBAR_HOLSTER,
-	CROWBAR_ATTACK1HIT,
-	CROWBAR_ATTACK1MISS,
-	CROWBAR_ATTACK2MISS,
-	CROWBAR_ATTACK2HIT,
-	CROWBAR_ATTACK3MISS,
-	CROWBAR_ATTACK3HIT
+	KNIFE_IDLE = 0,
+	KNIFE_DRAW,
+	KNIFE_SLASH1,
+	KNIFE_SLASH2,
+	KNIFE_MIDSLASH1,
+	KNIFE_MIDSLASH2,
+	KNIFE_STAB,
+	KNIFE_STAB_MISS,
 };
 
-class CCrowbar : public CBasePlayerWeapon
+class CKnife : public CBasePlayerWeapon
 {
 public:
 	void Spawn() override;
@@ -597,6 +596,7 @@ public:
 	bool GetItemInfo(ItemInfo* p) override;
 
 	void PrimaryAttack() override;
+	void SecondaryAttack() override;
 	bool Swing(bool fFirst);
 	bool Deploy() override;
 	void Holster() override;

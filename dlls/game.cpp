@@ -18,6 +18,21 @@
 #include "game.h"
 #include "filesystem_utils.h"
 
+// Register skill cvars in 1 single define instead of doing it 3 times in a row each time.
+#define CVAR_REGISTER_SKILL(_VAR) \
+	CVAR_REGISTER(&_VAR##1);      \
+	CVAR_REGISTER(&_VAR##2);      \
+	CVAR_REGISTER(&_VAR##3)
+#define CVAR_REGISTER_SKILLVAR(_VAR, _DEF) \
+cvar_t _VAR##1 = {#_VAR##"1", #_DEF}; \
+cvar_t _VAR##2 = {#_VAR##"2", #_DEF}; \
+cvar_t _VAR##3 = {#_VAR##"3", #_DEF};
+#define CVAR_REGISTER_SKILLVAR_SPECIFIC(_VAR, _EASY, _MEDIUM, _HARD) \
+cvar_t _VAR##1 = {#_VAR##"1", #_EASY}; \
+cvar_t _VAR##2 = {#_VAR##"2", #_MEDIUM}; \
+cvar_t _VAR##3 = {#_VAR##"3", #_HARD};
+
+
 cvar_t displaysoundlist = {"displaysoundlist", "0"};
 
 // multiplayer server rules
@@ -269,107 +284,30 @@ cvar_t sk_sentry_health3 = {"sk_sentry_health3", "0"};
 
 // PLAYER WEAPONS
 
-// Crowbar whack
-cvar_t sk_plr_crowbar1 = {"sk_plr_crowbar1", "0"};
-cvar_t sk_plr_crowbar2 = {"sk_plr_crowbar2", "0"};
-cvar_t sk_plr_crowbar3 = {"sk_plr_crowbar3", "0"};
-
-// Glock Round
-cvar_t sk_plr_9mm_bullet1 = {"sk_plr_9mm_bullet1", "0"};
-cvar_t sk_plr_9mm_bullet2 = {"sk_plr_9mm_bullet2", "0"};
-cvar_t sk_plr_9mm_bullet3 = {"sk_plr_9mm_bullet3", "0"};
-
-// 45 ACP
-cvar_t sk_plr_45acp_bullet1 = {"sk_plr_45acp_bullet1", "0"};
-cvar_t sk_plr_45acp_bullet2 = {"sk_plr_45acp_bullet2", "0"};
-cvar_t sk_plr_45acp_bullet3 = {"sk_plr_45acp_bullet3", "0"};
-
-// 357 Round
-cvar_t sk_plr_357_bullet1 = {"sk_plr_357_bullet1", "0"};
-cvar_t sk_plr_357_bullet2 = {"sk_plr_357_bullet2", "0"};
-cvar_t sk_plr_357_bullet3 = {"sk_plr_357_bullet3", "0"};
-
-// MP5 Round
-cvar_t sk_plr_9mmAR_bullet1 = {"sk_plr_9mmAR_bullet1", "0"};
-cvar_t sk_plr_9mmAR_bullet2 = {"sk_plr_9mmAR_bullet2", "0"};
-cvar_t sk_plr_9mmAR_bullet3 = {"sk_plr_9mmAR_bullet3", "0"};
+CVAR_REGISTER_SKILLVAR( sk_plr_knife, 10 );
+CVAR_REGISTER_SKILLVAR( sk_plr_knifestab, 30 );
+CVAR_REGISTER_SKILLVAR( sk_plr_9mm_bullet, 8 );
+CVAR_REGISTER_SKILLVAR( sk_plr_45acp_bullet, 12 );
+CVAR_REGISTER_SKILLVAR( sk_plr_357_bullet, 40 );
+CVAR_REGISTER_SKILLVAR( sk_plr_9mmAR_bullet, 10 );
+CVAR_REGISTER_SKILLVAR( sk_plr_556nato_bullet, 25 );
+CVAR_REGISTER_SKILLVAR( sk_plr_762nato_bullet, 30 );
+CVAR_REGISTER_SKILLVAR( sk_plr_9mmAR_grenade, 100 );
+CVAR_REGISTER_SKILLVAR( sk_plr_buckshot, 12 );
+CVAR_REGISTER_SKILLVAR( sk_plr_rpg, 100 );
+CVAR_REGISTER_SKILLVAR( sk_plr_hand_grenade, 100 );
+CVAR_REGISTER_SKILLVAR( sk_plr_tripmine, 150 );
 
 
-// M4A1 Round
-cvar_t sk_plr_556nato_bullet1 = {"sk_plr_556nato_bullet1", "0"};
-cvar_t sk_plr_556nato_bullet2 = {"sk_plr_556nato_bullet2", "0"};
-cvar_t sk_plr_556nato_bullet3 = {"sk_plr_556nato_bullet3", "0"};
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_12mm_bullet, 8, 10, 11 );
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_9mmAR_bullet, 3, 4, 5 );
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_9mm_bullet, 4, 5, 8 );
 
-
-// AK47 Round
-cvar_t sk_plr_762nato_bullet1 = {"sk_plr_762nato_bullet1", "0"};
-cvar_t sk_plr_762nato_bullet2 = {"sk_plr_762nato_bullet2", "0"};
-cvar_t sk_plr_762nato_bullet3 = {"sk_plr_762nato_bullet3", "0"};
-
-
-// M203 grenade
-cvar_t sk_plr_9mmAR_grenade1 = {"sk_plr_9mmAR_grenade1", "0"};
-cvar_t sk_plr_9mmAR_grenade2 = {"sk_plr_9mmAR_grenade2", "0"};
-cvar_t sk_plr_9mmAR_grenade3 = {"sk_plr_9mmAR_grenade3", "0"};
-
-
-// Shotgun buckshot
-cvar_t sk_plr_buckshot1 = {"sk_plr_buckshot1", "0"};
-cvar_t sk_plr_buckshot2 = {"sk_plr_buckshot2", "0"};
-cvar_t sk_plr_buckshot3 = {"sk_plr_buckshot3", "0"};
-
-
-// RPG
-cvar_t sk_plr_rpg1 = {"sk_plr_rpg1", "0"};
-cvar_t sk_plr_rpg2 = {"sk_plr_rpg2", "0"};
-cvar_t sk_plr_rpg3 = {"sk_plr_rpg3", "0"};
-
-
-// Hand Grendade
-cvar_t sk_plr_hand_grenade1 = {"sk_plr_hand_grenade1", "0"};
-cvar_t sk_plr_hand_grenade2 = {"sk_plr_hand_grenade2", "0"};
-cvar_t sk_plr_hand_grenade3 = {"sk_plr_hand_grenade3", "0"};
-
-
-// WORLD WEAPONS
-cvar_t sk_12mm_bullet1 = {"sk_12mm_bullet1", "0"};
-cvar_t sk_12mm_bullet2 = {"sk_12mm_bullet2", "0"};
-cvar_t sk_12mm_bullet3 = {"sk_12mm_bullet3", "0"};
-
-cvar_t sk_9mmAR_bullet1 = {"sk_9mmAR_bullet1", "0"};
-cvar_t sk_9mmAR_bullet2 = {"sk_9mmAR_bullet2", "0"};
-cvar_t sk_9mmAR_bullet3 = {"sk_9mmAR_bullet3", "0"};
-
-cvar_t sk_9mm_bullet1 = {"sk_9mm_bullet1", "0"};
-cvar_t sk_9mm_bullet2 = {"sk_9mm_bullet2", "0"};
-cvar_t sk_9mm_bullet3 = {"sk_9mm_bullet3", "0"};
-
-
-// HORNET
-cvar_t sk_hornet_dmg1 = {"sk_hornet_dmg1", "0"};
-cvar_t sk_hornet_dmg2 = {"sk_hornet_dmg2", "0"};
-cvar_t sk_hornet_dmg3 = {"sk_hornet_dmg3", "0"};
-
-// HEALTH/CHARGE
-cvar_t sk_suitcharger1 = {"sk_suitcharger1", "0"};
-cvar_t sk_suitcharger2 = {"sk_suitcharger2", "0"};
-cvar_t sk_suitcharger3 = {"sk_suitcharger3", "0"};
-
-cvar_t sk_battery1 = {"sk_battery1", "0"};
-cvar_t sk_battery2 = {"sk_battery2", "0"};
-cvar_t sk_battery3 = {"sk_battery3", "0"};
-
-cvar_t sk_healthcharger1 = {"sk_healthcharger1", "0"};
-cvar_t sk_healthcharger2 = {"sk_healthcharger2", "0"};
-cvar_t sk_healthcharger3 = {"sk_healthcharger3", "0"};
-
-cvar_t sk_healthkit1 = {"sk_healthkit1", "0"};
-cvar_t sk_healthkit2 = {"sk_healthkit2", "0"};
-cvar_t sk_healthkit3 = {"sk_healthkit3", "0"};
-
-cvar_t sk_scientist_heal1 = {"sk_scientist_heal1", "0"};
-cvar_t sk_scientist_heal2 = {"sk_scientist_heal2", "0"};
-cvar_t sk_scientist_heal3 = {"sk_scientist_heal3", "0"};
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_suitcharger, 75, 50, 35 );
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_healthcharger, 50, 40, 25 );
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_battery, 35, 25, 20 );
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_healthkit, 20, 15, 10 );
+CVAR_REGISTER_SKILLVAR_SPECIFIC( sk_scientist_heal, 35, 30, 25 );
 
 
 // monster damage adjusters
@@ -418,12 +356,6 @@ cvar_t sk_player_leg3 = {"sk_player_leg3", "1"};
 
 // Register your console variables here
 // This gets called one time when the game is initialied
-
-// Register skill cvars in 1 single define instead of doing it 3 times in a row each time.
-#define CVAR_REGISTER_SKILL(_VAR) \
-CVAR_REGISTER(&_VAR##1); \
-CVAR_REGISTER(&_VAR##2); \
-CVAR_REGISTER(&_VAR##3)
 
 void GameDLLInit()
 {
@@ -575,8 +507,8 @@ void GameDLLInit()
 
 	// PLAYER WEAPONS
 
-	// Crowbar whack
-	CVAR_REGISTER_SKILL(sk_plr_crowbar);
+	CVAR_REGISTER_SKILL(sk_plr_knife);
+	CVAR_REGISTER_SKILL(sk_plr_knifestab);
 
 	// Glock Round
 	CVAR_REGISTER_SKILL(sk_plr_9mm_bullet);
@@ -615,10 +547,6 @@ void GameDLLInit()
 	CVAR_REGISTER_SKILL(sk_12mm_bullet);
 	CVAR_REGISTER_SKILL(sk_9mmAR_bullet);
 	CVAR_REGISTER_SKILL(sk_9mm_bullet);
-
-
-	// HORNET
-	CVAR_REGISTER_SKILL(sk_hornet_dmg);
 
 	// HEALTH/SUIT CHARGE DISTRIBUTION
 	CVAR_REGISTER_SKILL(sk_suitcharger);

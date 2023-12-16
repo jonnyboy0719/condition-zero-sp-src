@@ -294,7 +294,7 @@
     <ClCompile Include="..\..\dlls\controller.cpp">
       <Filter>Source Files\dlls\npcs\aliens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\crowbar.cpp">
+    <ClCompile Include="..\..\dlls\knife.cpp">
       <Filter>Source Files\dlls\weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\mp5.cpp">

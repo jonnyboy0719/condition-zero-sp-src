@@ -75,7 +75,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\dlls\crowbar.cpp">
+    <ClCompile Include="..\..\dlls\knife.cpp">
       <Filter>Source Files\_hl\dlls</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\ev_hldm.cpp">

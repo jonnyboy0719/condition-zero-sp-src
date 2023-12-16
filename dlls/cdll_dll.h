@@ -43,7 +43,10 @@ constexpr int MAX_PLAYERS = 32;
 enum WeaponId
 {
 	WEAPON_NONE = 0,
+#ifdef HL_WEAPONS
 	WEAPON_CROWBAR,
+#endif
+	WEAPON_KNIFE,
 	WEAPON_GLOCK,
 	WEAPON_USP,
 	WEAPON_PYTHON,

@@ -118,7 +118,8 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	gSkillData.suitchargerCapacity = 30;
 
 	// Crowbar whack
-	gSkillData.plrDmgCrowbar = 25;
+	gSkillData.plrDmgKnife = 25;
+	gSkillData.plrDmgKnifeStab = 40;
 
 	// Glock Round
 	gSkillData.plrDmg9MM = 12;

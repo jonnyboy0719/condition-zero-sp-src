@@ -291,7 +291,8 @@ void CGameRules::RefreshSkillData()
 	// PLAYER WEAPONS
 
 	// Crowbar whack
-	gSkillData.plrDmgCrowbar = GetSkillCvar("sk_plr_crowbar");
+	gSkillData.plrDmgKnife = GetSkillCvar("sk_plr_knife");
+	gSkillData.plrDmgKnifeStab = GetSkillCvar("sk_plr_knifestab");
 
 	// Glock Round
 	gSkillData.plrDmg9MM = GetSkillCvar("sk_plr_9mm_bullet");
