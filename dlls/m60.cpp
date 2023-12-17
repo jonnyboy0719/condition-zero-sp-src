@@ -156,7 +156,7 @@ void CM60::Reload()
 	if (m_pPlayer->ammo_762nato <= 0)
 		return;
 
-	DefaultReload(AK47_MAX_CLIP, M60_RELOAD, 5.8);
+	DefaultReload(M60_MAX_CLIP, M60_RELOAD, 5.8);
 }
 
 
