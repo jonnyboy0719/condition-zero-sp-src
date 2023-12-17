@@ -31,7 +31,7 @@ LINK_ENTITY_TO_CLASS(weapon_m60, CM60);
 void CM60::Spawn()
 {
 	Precache();
-	SET_MODEL(ENT(pev), "models/w_ak47.mdl");
+	SET_MODEL(ENT(pev), "models/w_m60.mdl");
 	m_iId = WEAPON_M60;
 
 	m_iDefaultAmmo = M60_MAX_CLIP;
