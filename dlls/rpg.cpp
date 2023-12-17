@@ -288,7 +288,7 @@ void CRpg::Precache()
 {
 	PRECACHE_MODEL("models/w_law.mdl");
 	PRECACHE_MODEL("models/w_law-closed.mdl");
-	PRECACHE_MODEL("models/v_rpg.mdl");
+	PRECACHE_MODEL("models/v_law.mdl");
 	PRECACHE_MODEL("models/p_law.mdl");
 
 	PRECACHE_SOUND("items/9mmclip1.wav");
@@ -322,7 +322,7 @@ bool CRpg::GetItemInfo(ItemInfo* p)
 
 bool CRpg::Deploy()
 {
-	bool ret = DefaultDeploy("models/v_rpg.mdl", "models/p_law.mdl", RPG_DRAW, "rpg");
+	bool ret = DefaultDeploy("models/v_law.mdl", "models/p_law.mdl", RPG_DRAW, "rpg");
 	if ( !ret ) return false;
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.55;
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3.1;
