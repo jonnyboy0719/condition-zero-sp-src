@@ -159,7 +159,7 @@ void CTriggerAmmoResupply::TouchResupply( CBaseEntity* pOther )
 		// For the AWP.
 		case 8:
 		{
-			// TODO: Add 338 Magnum Ammo
+			bResult = (pOther->GiveAmmo(_338MagnumAmmo_MAX_CARRY, "338 Magnum Ammo", _338MagnumAmmo_MAX_CARRY) != -1);
 		}
 		break;
 

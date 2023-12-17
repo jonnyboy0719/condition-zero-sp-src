@@ -101,6 +101,7 @@ public:
 #define _9MM_MAX_CARRY 250
 #define _M4A1_MAX_CARRY 180
 #define _762nato_MAX_CARRY 200
+#define _338MagnumAmmo_MAX_CARRY 35
 #define _357_MAX_CARRY 42
 #define BUCKSHOT_MAX_CARRY 48
 #define BOLT_MAX_CARRY 50
@@ -116,6 +117,7 @@ public:
 #define WEAPON_NOCLIP -1
 
 //#define CROWBAR_MAX_CLIP		WEAPON_NOCLIP
+#define AWP_MAX_CLIP 5
 #define GLOCK_MAX_CLIP 17
 #define PYTHON_MAX_CLIP 7
 #define MP5_MAX_CLIP 30
