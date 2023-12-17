@@ -38,16 +38,14 @@ client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes
 WeaponsResource gWR;
 
 const char* ScopeTextures[SCOPE_MAX] = {
-	"sprites/scope/top.spr",
-	"sprites/scope/top_left.spr",
-	"sprites/scope/top_right.spr",
-	"sprites/scope/left.spr",
-	"sprites/scope/right.spr",
-	"sprites/scope/bottom.spr",
-	"sprites/scope/bottom_left.spr",
-	"sprites/scope/bottom_right.spr",
-	"sprites/scope/vertical.spr",
-	"sprites/scope/horizontal.spr"
+	"sprites/scope/top3.spr",
+	"sprites/scope/top_left3.spr",
+	"sprites/scope/top_right3.spr",
+	"sprites/scope/left3.spr",
+	"sprites/scope/right3.spr",
+	"sprites/scope/bottom3.spr",
+	"sprites/scope/bottom_left3.spr",
+	"sprites/scope/bottom_right3.spr",
 };
 
 float g_mCBlend = 0;
@@ -363,7 +361,7 @@ bool CHudAmmo::VidInit()
 	m_HUD_selection = gHUD.GetSpriteIndex("selection");
 
 	for ( int i = 0; i < SCOPE_MAX; i++ )
-		hScope[i] = LoadSprite( ScopeTextures[i] );
+		hScope[i] = SPR_Load(ScopeTextures[i]);
 
 	ghsprBuckets = gHUD.GetSprite(m_HUD_bucket0);
 	giBucketWidth = gHUD.GetSpriteRect(m_HUD_bucket0).right - gHUD.GetSpriteRect(m_HUD_bucket0).left;
@@ -800,9 +798,122 @@ void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
 void CHudAmmo::DrawScope()
 {
 	// If not in zoom, then stop.
-	//if ( gHUD.m_iFOV >= 90 ) return;
-	//for ( int i = 0; i < SCOPE_MAX; i++ )
-	//	DrawScope( (ScopeTable_e)i );
+	if ( gHUD.m_iFOV >= 90 ) return;
+	for ( int i = 0; i < SCOPE_MAX; i++ )
+		DrawScope( (ScopeTable_e)i );
+
+	// Now draw the filling
+	int screen_wide = ScreenWidth;
+	int screen_tall = ScreenHeight;
+	V_HSPRITE scope_sprite = hScope[SCOPE_TOP];
+	int spr_wide = SPR_Width(scope_sprite, 0);
+	int spr_tall = SPR_Height(scope_sprite, 0);
+
+	int spr_wide_half = (spr_wide / 2);
+	int spr_tall_half = (spr_tall / 2);
+
+	int wide_half = (screen_wide / 2);
+	int tall_half = (screen_tall / 2);
+
+	int tall_size = tall_half - spr_tall - spr_tall_half;
+	int wide_size = wide_half - spr_wide - spr_wide_half;
+	int side_height = (spr_tall * 3) + 1;
+
+	V_HSPRITE spr_horz = SPR_Load( "sprites/scope/horizontal.spr" );
+	SPR_Set( spr_horz, 255, 255, 255 );
+
+	bool bCanDraw = true;
+	int iDrawnState = 0;
+	spr_wide = SPR_Width(spr_horz, 0);
+	spr_tall = SPR_Height(spr_horz, 0);
+	int xPos = -1;
+	int yPos = -1;
+
+	// Horizontal
+	while ( bCanDraw )
+	{
+		if ( iDrawnState < 2 )
+		{
+			// If we hit the limit, then move down.
+			int yRes = (spr_tall + yPos);
+			if ( yRes >= tall_size )
+				iDrawnState = 1;
+		}
+
+		Rect rect;
+		rect.right = spr_wide;
+		rect.left = 0;
+		rect.bottom = spr_tall;
+		rect.top = 0;
+		SPR_Draw( 0, xPos, yPos, &rect );
+		xPos += spr_wide;
+
+		// Back to start
+		if ( xPos >= screen_wide )
+		{
+			xPos = -1;
+			if ( iDrawnState == 1 )
+			{
+				yPos = screen_tall - tall_size - 1;
+				iDrawnState = 2;
+			}
+			else
+				yPos += spr_tall;
+		}
+
+		// Reached the end?
+		if ( yPos >= screen_tall )
+			bCanDraw = false;
+	}
+
+	V_HSPRITE spr_vert = SPR_Load( "sprites/scope/vertical.spr" );
+	SPR_Set( spr_vert, 255, 255, 255 );
+	spr_wide = SPR_Width(spr_vert, 0);
+	spr_tall = SPR_Height(spr_vert, 0);
+	bCanDraw = true;
+	xPos = -1;
+	yPos = tall_size;
+	iDrawnState = 0;
+	int vertHeight = 0;
+
+	// Vertical
+	while ( bCanDraw )
+	{
+		if ( vertHeight >= side_height )
+			spr_tall = (vertHeight - side_height);
+		int xRes = (spr_wide + xPos);
+		if ( xRes >= wide_size && iDrawnState == 0 )
+		{
+			spr_wide = (xRes - wide_size);
+			iDrawnState = 1;
+		}
+		Rect rect;
+		rect.right = spr_wide;
+		rect.left = 0;
+		rect.bottom = spr_tall;
+		rect.top = 0;
+		SPR_Draw( 0, xPos, yPos, &rect );
+		xPos += spr_wide;
+
+		if ( iDrawnState == 1 )
+		{
+			xPos = screen_wide - wide_size - 1;
+			iDrawnState = 2;
+		}
+
+		// Back to start
+		if ( xPos >= screen_wide )
+		{
+			xPos = -1;
+			yPos += spr_tall;
+			vertHeight += spr_tall;
+			iDrawnState = 0;
+		}
+
+		// Reached the end?
+		if ( vertHeight >= side_height )
+			bCanDraw = false;
+	}
 }
 
 void CHudAmmo::DrawScope( ScopeTable_e eTable )
@@ -818,6 +929,11 @@ void CHudAmmo::DrawScope( ScopeTable_e eTable )
 	int spr_wide = SPR_Width(scope_sprite, 0);
 	int spr_tall = SPR_Height(scope_sprite, 0);
 	SPR_Set( scope_sprite, r, g, b );
+	Rect rect;
+	rect.right = spr_wide;
+	rect.left = 0;
+	rect.bottom = spr_tall;
+	rect.top = 0;
 	switch ( eTable )
 	{
 		case SCOPE_TOP:
@@ -880,16 +996,8 @@ void CHudAmmo::DrawScope( ScopeTable_e eTable )
 			y += spr_tall;
 		}
 		break;
-		case SCOPE_VERTICAL:
-		{
-		}
-		break;
-		case SCOPE_HORIZONTAL:
-		{
-		}
-		break;
 	}
-	SPR_Draw( 0, x, y, NULL );
+	SPR_Draw( 0, x, y, &rect );
 }
 
 void CHudAmmo::DrawDynCrosshair()
@@ -924,9 +1032,10 @@ void CHudAmmo::DrawDynCrosshair()
 		dyndest.spanner = atoi( hud_dyncrosshair_span->string );
 	}
 
-	gEngfuncs.Con_NPrintf(11, "\t == DynamicCrosshairTarget == \n");
-	gEngfuncs.Con_NPrintf(12, "\ttarget.spanner >> [%i]\n", dyndest.spanner);
-	gEngfuncs.Con_NPrintf(13, "\ttarget.length >> [%i]\n", dyndest.length);
+	// DEBUG
+	//gEngfuncs.Con_NPrintf(11, "\t == DynamicCrosshairTarget == \n");
+	//gEngfuncs.Con_NPrintf(12, "\ttarget.spanner >> [%i]\n", dyndest.spanner);
+	//gEngfuncs.Con_NPrintf(13, "\ttarget.length >> [%i]\n", dyndest.length);
 
 	// Left
 	y = tall_half - (size / 2);
@@ -1158,6 +1267,9 @@ bool CHudAmmo::Draw(float flTime)
 	if ((gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) != 0)
 		return true;
 
+	// Draw the scope first
+	DrawScope();
+
 	// Draw Weapon Menu
 	DrawWList(flTime);
 
@@ -1176,7 +1288,7 @@ bool CHudAmmo::Draw(float flTime)
 	if ((pw->iAmmoType < 0) && (pw->iAmmo2Type < 0))
 		return false;
 
-	DrawScope();
+	// Draw our dynamic crosshair
 	DrawDynCrosshair();
 
 	int iFlags = DHN_DRAWZERO; // draw 0 values

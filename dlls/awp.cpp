@@ -53,7 +53,7 @@ void CAWP::Precache()
 	PRECACHE_SOUND("items/9mmclip1.wav");
 
 	PRECACHE_SOUND("weapons/zoom.wav");
-	PRECACHE_SOUND("weapons/awp.wav");
+	PRECACHE_SOUND("weapons/awp1.wav");
 	PRECACHE_SOUND("weapons/awp_deploy.wav");
 	PRECACHE_SOUND("weapons/awp_clipout.wav");
 	PRECACHE_SOUND("weapons/awp_clipin.wav");

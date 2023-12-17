@@ -3512,6 +3512,18 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		gEvilImpulse101 = false;
 		break;
 
+
+	case 110:
+		gEvilImpulse101 = true;
+		GiveNamedItem("weapon_awp");
+		GiveNamedItem("ammo_338magnum");
+		GiveNamedItem("ammo_338magnum");
+		GiveNamedItem("ammo_338magnum");
+		GiveNamedItem("ammo_338magnum");
+
+		gEvilImpulse101 = false;
+		break;
+
 	case 102:
 		// Gibbage!!!
 		CGib::SpawnRandomGibs(pev, 1, true);
