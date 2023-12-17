@@ -153,7 +153,7 @@ void DecalGunshot(TraceResult* pTrace, int iBulletType)
 		case BULLET_PLAYER_9MM:
 		case BULLET_PLAYER_45ACP:
 		case BULLET_PLAYER_M4A1:
-		case BULLET_PLAYER_AK47:
+		case BULLET_PLAYER_762NATO:
 		case BULLET_MONSTER_9MM:
 		case BULLET_PLAYER_MP5:
 		case BULLET_MONSTER_MP5:
@@ -316,6 +316,9 @@ void W_Precache()
 	// gauss
 	UTIL_PrecacheOtherWeapon("weapon_gauss");
 	UTIL_PrecacheOther("ammo_gaussclip");
+
+	UTIL_PrecacheOtherWeapon("weapon_m60");
+	UTIL_PrecacheOther("ammo_762natobox");
 
 	// rpg
 	UTIL_PrecacheOtherWeapon("weapon_law");

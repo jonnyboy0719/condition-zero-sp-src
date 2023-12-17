@@ -322,7 +322,11 @@ bool CRpg::GetItemInfo(ItemInfo* p)
 
 bool CRpg::Deploy()
 {
-	return DefaultDeploy("models/v_rpg.mdl", "models/p_law.mdl", RPG_DRAW, "rpg");
+	bool ret = DefaultDeploy("models/v_rpg.mdl", "models/p_law.mdl", RPG_DRAW, "rpg");
+	if ( !ret ) return false;
+	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.55;
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3.1;
+	return ret;
 }
 
 

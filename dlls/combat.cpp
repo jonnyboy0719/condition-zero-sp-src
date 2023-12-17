@@ -1617,7 +1617,7 @@ Vector CBaseEntity::FireBulletsPlayer(unsigned int cShots, Vector vecSrc, Vector
 					pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgM4A1, vecDir, &tr, DMG_BULLET);
 					break;
 
-				case BULLET_PLAYER_AK47:
+				case BULLET_PLAYER_762NATO:
 					pEntity->TraceAttack(pevAttacker, gSkillData.plrDmgAK47, vecDir, &tr, DMG_BULLET);
 					break;
 

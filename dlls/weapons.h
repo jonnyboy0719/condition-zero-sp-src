@@ -88,6 +88,7 @@ public:
 #define RPG_WEIGHT 20
 #define GAUSS_WEIGHT 20
 #define EGON_WEIGHT 20
+#define M60_WEIGHT 40
 #define HORNETGUN_WEIGHT 10
 #define HANDGRENADE_WEIGHT 5
 #define SNARK_WEIGHT 5
@@ -99,7 +100,7 @@ public:
 #define URANIUM_MAX_CARRY 100
 #define _9MM_MAX_CARRY 250
 #define _M4A1_MAX_CARRY 180
-#define _AK47_MAX_CARRY 180
+#define _762nato_MAX_CARRY 200
 #define _357_MAX_CARRY 42
 #define BUCKSHOT_MAX_CARRY 48
 #define BOLT_MAX_CARRY 50
@@ -120,6 +121,7 @@ public:
 #define MP5_MAX_CLIP 30
 #define M4A1_MAX_CLIP 30
 #define AK47_MAX_CLIP 30
+#define M60_MAX_CLIP 50
 #define SHOTGUN_MAX_CLIP 8
 #define CROSSBOW_MAX_CLIP 5
 #define RPG_MAX_CLIP 1
@@ -170,7 +172,7 @@ typedef enum
 	BULLET_PLAYER_45ACP,	// glock
 	BULLET_PLAYER_MP5,		// mp5
 	BULLET_PLAYER_M4A1,		// mp5
-	BULLET_PLAYER_AK47,		// mp5
+	BULLET_PLAYER_762NATO,		// mp5
 	BULLET_PLAYER_357,		// python
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR,	// crowbar swipe
@@ -697,6 +699,43 @@ public:
 
 private:
 	unsigned short m_usFirePython;
+};
+
+enum m60_e
+{
+	M60_IDLE = 0,
+	M60_FIRE1,
+	M60_FIRE2,
+	M60_RELOAD,
+	M60_DRAW,
+};
+
+class CM60 : public CBasePlayerWeapon
+{
+public:
+	void Spawn() override;
+	void Precache() override;
+	int iItemSlot() override { return 4; }
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void PrimaryAttack() override;
+	bool Deploy() override;
+	void Reload() override;
+	void WeaponIdle() override;
+	float m_flNextAnimTime;
+	int m_iShell;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usM60;
 };
 
 enum mak47_e

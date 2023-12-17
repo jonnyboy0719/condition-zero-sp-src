@@ -166,7 +166,7 @@ void CTriggerAmmoResupply::TouchResupply( CBaseEntity* pOther )
 		// For the AK47, Scout, M60, and G3SG1.
 		case 9:
 		{
-			bResult = (pOther->GiveAmmo(_AK47_MAX_CARRY, "762nato", _AK47_MAX_CARRY) != -1);
+			bResult = (pOther->GiveAmmo(_762nato_MAX_CARRY, "762nato", _762nato_MAX_CARRY) != -1);
 		}
 		break;
 

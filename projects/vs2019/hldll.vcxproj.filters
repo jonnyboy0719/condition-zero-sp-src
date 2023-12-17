@@ -453,6 +453,9 @@
     <ClCompile Include="..\..\dlls\rpg.cpp">
       <Filter>Source Files\dlls\weapons\specials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\m60.cpp">
+      <Filter>Source Files\dlls\weapons\specials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dlls\doors.h">
