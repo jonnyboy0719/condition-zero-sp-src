@@ -109,6 +109,7 @@ struct DynamicCrosshairTarget
 DynamicCrosshairTarget BlendTo( const DynamicCrosshairTarget &blend_from, const DynamicCrosshairTarget &blend_to, float &flLastTimeCheck, float blend_time );
 void BlendMA( const DynamicCrosshairTarget &start, float scale, const DynamicCrosshairTarget &direction, DynamicCrosshairTarget &dest );
 void BlendScale( const DynamicCrosshairTarget& in, float scale, DynamicCrosshairTarget& result );
+void UpdateDynamicCrosshair( int spanner, int length );
 
 //
 //-----------------------------------------------------
@@ -138,6 +139,7 @@ public:
 	bool MsgFunc_HideWeapon(const char* pszName, int iSize, void* pbuf);
 
 	void RegisterScopes();
+	void SetupDynamicCrosshair( WeaponId weaponid );
 
 	void DrawScope();
 	void DrawScope( ScopeTable_e eTable );

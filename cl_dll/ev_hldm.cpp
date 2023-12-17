@@ -347,6 +347,52 @@ Go to the trouble of combining multiple pellets into a single damage call.
 */
 void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int cShots, float* vecSrc, float* vecDirShooting, float flDistance, int iBulletType, int iTracerFreq, int* tracerCount, float flSpreadX, float flSpreadY, bool randomspread)
 {
+	if ( EV_IsLocal(idx) )
+	{
+		int dyn[2];
+		switch ( iBulletType )
+		{
+			case BULLET_PLAYER_338MAGNUM:
+			{
+				dyn[0] = 10;
+				dyn[1] = 5;
+			}
+			break;
+
+			case BULLET_PLAYER_357:
+			case BULLET_PLAYER_9MM:
+			case BULLET_PLAYER_45ACP:
+			{
+				dyn[0] = 10;
+				dyn[1] = 10;
+			}
+			break;
+
+			case BULLET_PLAYER_BUCKSHOT:
+			{
+				dyn[0] = 20;
+				dyn[1] = 20;
+			}
+			break;
+
+			case BULLET_PLAYER_M4A1:
+			case BULLET_PLAYER_762NATO:
+			{
+				dyn[0] = 5;
+				dyn[1] = 6;
+			}
+			break;
+
+			default:
+			{
+				dyn[0] = 3;
+				dyn[1] = 2;
+			}
+			break;
+		}
+		UpdateDynamicCrosshair( dyn[0], dyn[1] );
+	}
+
 	int i;
 	pmtrace_t tr;
 	int iShot;

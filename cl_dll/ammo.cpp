@@ -76,7 +76,6 @@ void UpdateDynamicCrosshair( int spanner, int length )
 }
 
 int g_weaponselect = 0;
-int m_iCurrentAmmo = 0;
 
 void WeaponsResource::LoadAllWeaponSprites()
 {
@@ -684,9 +683,7 @@ bool CHudAmmo::MsgFunc_CurWeapon(const char* pszName, int iSize, void* pbuf)
 	else
 		SetCrosshair(m_pWeapon->hZoomedCrosshair, m_pWeapon->rcZoomedCrosshair, 255, 255, 255);
 
-	// TODO: Each weapon should have it's own crosshair type
-	g_DynamicCrosshairWeapon.spanner = 5;
-	g_DynamicCrosshairWeapon.length = 5;
+	SetupDynamicCrosshair( (WeaponId)iId );
 #endif
 
 	m_fFade = 200.0f; //!!!
@@ -725,6 +722,79 @@ bool CHudAmmo::MsgFunc_WeaponList(const char* pszName, int iSize, void* pbuf)
 	gWR.AddWeapon(&Weapon);
 
 	return true;
+}
+
+void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
+{
+	switch ( weaponid )
+	{
+		case WEAPON_GLOCK:
+		{
+			g_DynamicCrosshairWeapon.spanner = 10;
+			g_DynamicCrosshairWeapon.length = 5;
+		}
+		break;
+		case WEAPON_USP:
+		{
+			g_DynamicCrosshairWeapon.spanner = 8;
+			g_DynamicCrosshairWeapon.length = 8;
+		}
+		break;
+		case WEAPON_PYTHON:
+		{
+			g_DynamicCrosshairWeapon.spanner = 8;
+			g_DynamicCrosshairWeapon.length = 10;
+		}
+		break;
+		case WEAPON_MP5:
+		{
+			g_DynamicCrosshairWeapon.spanner = 10;
+			g_DynamicCrosshairWeapon.length = 8;
+		}
+		break;
+		case WEAPON_M4A1:
+		{
+			g_DynamicCrosshairWeapon.spanner = 15;
+			g_DynamicCrosshairWeapon.length = 10;
+		}
+		break;
+		case WEAPON_AWP:
+		{
+			g_DynamicCrosshairWeapon.spanner = 15;
+			g_DynamicCrosshairWeapon.length = 10;
+		}
+		break;
+		case WEAPON_AK47:
+		{
+			g_DynamicCrosshairWeapon.spanner = 10;
+			g_DynamicCrosshairWeapon.length = 10;
+		}
+		break;
+		case WEAPON_M60:
+		{
+			g_DynamicCrosshairWeapon.spanner = 28;
+			g_DynamicCrosshairWeapon.length = 15;
+		}
+		break;
+		case WEAPON_SHOTGUN:
+		{
+			g_DynamicCrosshairWeapon.spanner = 12;
+			g_DynamicCrosshairWeapon.length = 10;
+		}
+		break;
+		case WEAPON_RPG:
+		{
+			g_DynamicCrosshairWeapon.spanner = 6;
+			g_DynamicCrosshairWeapon.length = 8;
+		}
+		break;
+		default:
+		{
+			g_DynamicCrosshairWeapon.spanner = 5;
+			g_DynamicCrosshairWeapon.length = 5;
+		}
+		break;
+	}
 }
 
 void CHudAmmo::DrawScope()
@@ -1079,9 +1149,6 @@ void CHudAmmo::UserCmd_PrevWeapon()
 
 bool CHudAmmo::Draw(float flTime)
 {
-	DrawScope();
-	DrawDynCrosshair();
-
 	int a, x, y, r, g, b;
 	int AmmoWidth;
 
@@ -1108,6 +1175,9 @@ bool CHudAmmo::Draw(float flTime)
 	// SPR_Draw Ammo
 	if ((pw->iAmmoType < 0) && (pw->iAmmo2Type < 0))
 		return false;
+
+	DrawScope();
+	DrawDynCrosshair();
 
 	int iFlags = DHN_DRAWZERO; // draw 0 values
 
@@ -1157,24 +1227,12 @@ bool CHudAmmo::Draw(float flTime)
 			// GL Seems to need this
 			ScaleColors(r, g, b, a);
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
-
-			if ( m_iCurrentAmmo != pw->iClip )
-			{
-				m_iCurrentAmmo = pw->iClip;
-				// TODO: Check ammotype
-				UpdateDynamicCrosshair( 3, 2 );
-			}
 		}
 		else
 		{
 			// SPR_Draw a bullets only line
 			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
-			if ( m_iCurrentAmmo != gWR.CountAmmo(pw->iAmmoType) )
-			{
-				m_iCurrentAmmo = gWR.CountAmmo(pw->iAmmoType);
-				UpdateDynamicCrosshair( 3, 2 );
-			}
 		}
 
 		// Draw the ammo Icon
