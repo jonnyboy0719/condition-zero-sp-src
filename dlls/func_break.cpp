@@ -49,7 +49,7 @@ const char* CBreakable::pSpawnObjects[] =
 		"ammo_556nato",	      // 11
 		"weapon_357",		  // 12
 		"ammo_357",			  // 13
-		"weapon_rpg",		  // 14
+		"weapon_law",		  // 14
 		"ammo_rpgclip",		  // 15
 		"ammo_gaussclip",	  // 16
 		"weapon_handgrenade", // 17
