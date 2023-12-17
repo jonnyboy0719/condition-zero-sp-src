@@ -366,6 +366,9 @@
     <ClCompile Include="..\..\dlls\m60.cpp">
       <Filter>Source Files\_hl\dlls\weapons\specials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\awp.cpp">
+      <Filter>Source Files\_hl\dlls\weapons\rifles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\kbutton.h">

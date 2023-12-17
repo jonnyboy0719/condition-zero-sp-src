@@ -1048,7 +1048,7 @@ void CBasePlayer::TabulateAmmo()
 	ammo_m4a1 = AmmoInventory(GetAmmoIndex("m4a1"));
 	ammo_762nato = AmmoInventory(GetAmmoIndex("762nato"));
 	ammo_45acp = AmmoInventory(GetAmmoIndex("45acp"));
-	ammo_awp = AmmoInventory(GetAmmoIndex("awp"));
+	ammo_awp = AmmoInventory(GetAmmoIndex("338 Magnum Ammo"));
 }
 
 
@@ -3499,7 +3499,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_9mmAR");
 		GiveNamedItem("ammo_9mmAR");
 		GiveNamedItem("weapon_awp");
-		GiveNamedItem("ammo_762nato");
+		GiveNamedItem("ammo_338magnum");
 		GiveNamedItem("ammo_ARgrenades");
 		GiveNamedItem("weapon_hegrenade");
 		GiveNamedItem("weapon_smokegrenade");

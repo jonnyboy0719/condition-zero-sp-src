@@ -136,6 +136,7 @@ void CHalfLifeMultiplay::RefreshSkillData()
 	// M4A1
 	gSkillData.plrDmgM4A1 = 25;
 	gSkillData.plrDmgAK47 = 30;
+	gSkillData.plrDmgAWP = 60;
 
 	// M203 grenade
 	gSkillData.plrDmgM203Grenade = 100;

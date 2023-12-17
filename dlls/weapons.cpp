@@ -154,6 +154,7 @@ void DecalGunshot(TraceResult* pTrace, int iBulletType)
 		case BULLET_PLAYER_45ACP:
 		case BULLET_PLAYER_M4A1:
 		case BULLET_PLAYER_762NATO:
+		case BULLET_PLAYER_338MAGNUM:
 		case BULLET_MONSTER_9MM:
 		case BULLET_PLAYER_MP5:
 		case BULLET_MONSTER_MP5:
@@ -307,7 +308,7 @@ void W_Precache()
 
 	// AWP
 	UTIL_PrecacheOtherWeapon("weapon_awp");
-	UTIL_PrecacheOther("ammo_762nato");
+	UTIL_PrecacheOther("ammo_338magnum");
 
 	// deagle
 	UTIL_PrecacheOtherWeapon("weapon_deagle");

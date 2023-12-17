@@ -84,7 +84,7 @@ public:
 #define PYTHON_WEIGHT 15
 #define MP5_WEIGHT 15
 #define SHOTGUN_WEIGHT 15
-#define CROSSBOW_WEIGHT 10
+#define AWP_WEIGHT 10
 #define RPG_WEIGHT 20
 #define GAUSS_WEIGHT 20
 #define EGON_WEIGHT 20
@@ -172,9 +172,10 @@ typedef enum
 	BULLET_NONE = 0,
 	BULLET_PLAYER_9MM,		// glock
 	BULLET_PLAYER_45ACP,	// glock
-	BULLET_PLAYER_MP5,		// mp5
-	BULLET_PLAYER_M4A1,		// mp5
-	BULLET_PLAYER_762NATO,		// mp5
+	BULLET_PLAYER_MP5,
+	BULLET_PLAYER_M4A1,
+	BULLET_PLAYER_762NATO,
+	BULLET_PLAYER_338MAGNUM,
 	BULLET_PLAYER_357,		// python
 	BULLET_PLAYER_BUCKSHOT, // shotgun
 	BULLET_PLAYER_CROWBAR,	// crowbar swipe
@@ -812,6 +813,56 @@ public:
 
 private:
 	unsigned short m_usM4A1;
+};
+
+enum awp_e
+{
+	AWP_IDLE = 0,
+	AWP_FIRE1,
+	AWP_FIRE2,
+	AWP_FIRE3,
+	AWP_RELOAD,
+	AWP_DEPLOY,
+};
+
+enum SniperScopeZoom_e
+{
+	ZOOM_NONE = 0,
+	ZOOM_4X,
+	ZOOM_8X,
+};
+
+class CAWP : public CBasePlayerWeapon
+{
+public:
+	void Spawn() override;
+	void Precache() override;
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void UpdateZoomState();
+
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	bool Deploy() override;
+	void Holster() override;
+	void Reload() override;
+	void WeaponIdle() override;
+	float m_flNextAnimTime;
+	int m_iShell;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usAWP;
+	SniperScopeZoom_e m_ScopeZoom;
 };
 
 enum mp5_e

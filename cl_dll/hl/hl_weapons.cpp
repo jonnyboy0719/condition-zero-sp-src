@@ -50,6 +50,7 @@ bool g_irunninggausspred = false;
 Vector previousorigin;
 
 // HLDM Weapon placeholder entities.
+CAWP g_AWP;
 CGlock g_Glock;
 CUSP g_USP;
 CKnife g_Knife;
@@ -464,6 +465,7 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&player, NULL);
 
 	// Allocate slot(s) for each weapon that we are going to be predicting
+	HUD_PrepEntity(&g_AWP, &player);
 	HUD_PrepEntity(&g_Glock, &player);
 	HUD_PrepEntity(&g_USP, &player);
 	HUD_PrepEntity(&g_Knife, &player);
@@ -570,6 +572,10 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 
 	case WEAPON_M60:
 		pWeapon = &g_m60;
+		break;
+
+	case WEAPON_AWP:
+		pWeapon = &g_AWP;
 		break;
 
 	case WEAPON_GLOCK:

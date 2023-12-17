@@ -294,6 +294,7 @@ CVAR_REGISTER_SKILLVAR( sk_plr_357_bullet, 40 );
 CVAR_REGISTER_SKILLVAR( sk_plr_9mmAR_bullet, 10 );
 CVAR_REGISTER_SKILLVAR( sk_plr_556nato_bullet, 25 );
 CVAR_REGISTER_SKILLVAR( sk_plr_762nato_bullet, 30 );
+CVAR_REGISTER_SKILLVAR( sk_plr_338magnum_bullet, 60 );
 CVAR_REGISTER_SKILLVAR( sk_plr_9mmAR_grenade, 100 );
 CVAR_REGISTER_SKILLVAR( sk_plr_buckshot, 12 );
 CVAR_REGISTER_SKILLVAR( sk_plr_rpg, 100 );
@@ -514,22 +515,13 @@ void GameDLLInit()
 	CVAR_REGISTER_SKILL(sk_plr_machete);
 	CVAR_REGISTER_SKILL(sk_plr_machetestab);
 
-	// Glock Round
 	CVAR_REGISTER_SKILL(sk_plr_9mm_bullet);
-
-	// 45 ACP
 	CVAR_REGISTER_SKILL(sk_plr_45acp_bullet);
-
-	// 357 Round
 	CVAR_REGISTER_SKILL(sk_plr_357_bullet);
-
-	// MP5 Round
 	CVAR_REGISTER_SKILL(sk_plr_9mmAR_bullet);
-
-	// M4A1 Round
 	CVAR_REGISTER_SKILL(sk_plr_556nato_bullet);
 	CVAR_REGISTER_SKILL(sk_plr_762nato_bullet);
-
+	CVAR_REGISTER_SKILL(sk_plr_338magnum_bullet);
 
 	// M203 grenade
 	CVAR_REGISTER_SKILL(sk_plr_9mmAR_grenade);

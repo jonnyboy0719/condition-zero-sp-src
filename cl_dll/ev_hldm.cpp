@@ -285,6 +285,7 @@ void EV_HLDM_DecalGunshot(pmtrace_t* pTrace, int iBulletType)
 		case BULLET_PLAYER_MP5:
 		case BULLET_PLAYER_M4A1:
 		case BULLET_PLAYER_762NATO:
+		case BULLET_PLAYER_338MAGNUM:
 		case BULLET_MONSTER_MP5:
 		case BULLET_PLAYER_BUCKSHOT:
 		case BULLET_PLAYER_357:
@@ -325,6 +326,7 @@ void EV_HLDM_CheckTracer(int idx, float* vecSrc, float* end, float* forward, flo
 		case BULLET_PLAYER_MP5:
 		case BULLET_PLAYER_M4A1:
 		case BULLET_PLAYER_762NATO:
+		case BULLET_PLAYER_338MAGNUM:
 		case BULLET_MONSTER_MP5:
 		case BULLET_MONSTER_9MM:
 		case BULLET_MONSTER_12MM:
@@ -404,6 +406,7 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 			case BULLET_PLAYER_MP5:
 			case BULLET_PLAYER_M4A1:
 			case BULLET_PLAYER_762NATO:
+			case BULLET_PLAYER_338MAGNUM:
 			case BULLET_PLAYER_357:
 
 				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
@@ -697,6 +700,48 @@ void EV_FireAK47(event_args_t* args)
 }
 //======================
 //	    AK47 START
+//======================
+
+//======================
+//	    AWP START
+//======================
+void EV_FireAWP(event_args_t* args)
+{
+	int idx;
+	Vector origin;
+	Vector angles;
+
+	Vector vecSrc, vecAiming;
+	Vector up, right, forward;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+	VectorCopy(args->angles, angles);
+
+	AngleVectors(angles, forward, right, up);
+
+	if (EV_IsLocal(idx))
+	{
+		// Add muzzle flash to current weapon model
+		EV_MuzzleFlash();
+		switch (gEngfuncs.pfnRandomLong(0, 2))
+		{
+			case 0: gEngfuncs.pEventAPI->EV_WeaponAnimation(AWP_FIRE1, 0); break;
+			case 1: gEngfuncs.pEventAPI->EV_WeaponAnimation(AWP_FIRE2, 0); break;
+			case 2: gEngfuncs.pEventAPI->EV_WeaponAnimation(AWP_FIRE3, 0); break;
+		}
+		V_PunchAxis(0, gEngfuncs.pfnRandomFloat(-2, 2));
+	}
+
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/awp1.wav", 1, ATTN_NORM, 0, 94 + gEngfuncs.pfnRandomLong(0, 0xf));
+
+	EV_GetGunPosition(args, vecSrc, origin);
+	VectorCopy(forward, vecAiming);
+
+	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_338MAGNUM, 2, &tracerCount[idx - 1], args->fparam1, args->fparam2);
+}
+//======================
+//	    AWP START
 //======================
 
 //======================
