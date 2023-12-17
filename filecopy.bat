@@ -15,5 +15,12 @@ echo Installing "%destination%/%filename%"
 rem If you are having problems with this command, remove the redirect to nul part (> nul) to get error messages from robocopy.
 @robocopy "%source%" "%destination%" "%filename%" /njh /njs /ndl /nc /ns /np > nul
 
+rem do local copy, if it exists. Has to be setup manually, since the file is ignored.
+if exist ../../filecopy_local.bat (
+"../../filecopy_local.bat" %~1 %~2
+) else (
+	echo filecopy_local.bat does not exist.
+)
+
 rem Needed because robocopy returns a non-zero code for success which makes Visual Studio treat this as failure.
 exit /b 0

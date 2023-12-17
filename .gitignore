@@ -8,6 +8,9 @@
 game_build/cl_dlls
 game_build/dlls
 
+# Local file copy
+filecopy_local.bat
+
 # No compiled maps, .map or cached files (.jmx and .wa_)
 *.map
 *.jmx
