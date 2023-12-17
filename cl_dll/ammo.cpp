@@ -679,7 +679,10 @@ bool CHudAmmo::MsgFunc_CurWeapon(const char* pszName, int iSize, void* pbuf)
 			SetCrosshair(m_pWeapon->hZoomedCrosshair, m_pWeapon->rcZoomedCrosshair, 255, 255, 255);
 	}
 #else
-	SetCrosshair(0, nullrc, 0, 0, 0);
+	if (gHUD.m_iFOV >= 90)
+		SetCrosshair(0, nullrc, 0, 0, 0);
+	else
+		SetCrosshair(m_pWeapon->hZoomedAutoaim, m_pWeapon->rcZoomedAutoaim, 255, 255, 255);
 
 	// TODO: Each weapon should have it's own crosshair type
 	g_DynamicCrosshairWeapon.spanner = 5;
