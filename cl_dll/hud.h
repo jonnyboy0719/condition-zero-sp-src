@@ -84,7 +84,31 @@ struct HUDLIST
 	HUDLIST* pNext;
 };
 
+enum ScopeTable_e
+{
+	SCOPE_TOP,
+	SCOPE_TOP_L,
+	SCOPE_TOP_R,
+	SCOPE_LEFT,
+	SCOPE_RIGHT,
+	SCOPE_BOTTOM,
+	SCOPE_BOTTOM_L,
+	SCOPE_BOTTOM_R,
+	SCOPE_VERTICAL,
+	SCOPE_HORIZONTAL,
 
+	SCOPE_MAX
+};
+
+struct DynamicCrosshairTarget
+{
+	int spanner;
+	int length;
+};
+
+DynamicCrosshairTarget BlendTo( const DynamicCrosshairTarget &blend_from, const DynamicCrosshairTarget &blend_to, float &flLastTimeCheck, float blend_time );
+void BlendMA( const DynamicCrosshairTarget &start, float scale, const DynamicCrosshairTarget &direction, DynamicCrosshairTarget &dest );
+void BlendScale( const DynamicCrosshairTarget& in, float scale, DynamicCrosshairTarget& result );
 
 //
 //-----------------------------------------------------
@@ -113,6 +137,12 @@ public:
 	bool MsgFunc_ItemPickup(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_HideWeapon(const char* pszName, int iSize, void* pbuf);
 
+	void RegisterScopes();
+
+	void DrawScope();
+	void DrawScope( ScopeTable_e eTable );
+	void DrawDynCrosshair();
+
 	void SlotInput(int iSlot);
 	void UserCmd_Slot1();
 	void UserCmd_Slot2();
@@ -134,6 +164,8 @@ private:
 	WEAPON* m_pWeapon;
 	int m_HUD_bucket0;
 	int m_HUD_selection;
+
+	V_HSPRITE hScope[SCOPE_MAX];
 };
 
 //

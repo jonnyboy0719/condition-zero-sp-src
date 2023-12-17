@@ -37,6 +37,30 @@ client_sprite_t* GetSpriteList(client_sprite_t* pList, const char* psz, int iRes
 
 WeaponsResource gWR;
 
+const char* ScopeTextures[SCOPE_MAX] = {
+	"sprites/scope/top.spr",
+	"sprites/scope/top_left.spr",
+	"sprites/scope/top_right.spr",
+	"sprites/scope/left.spr",
+	"sprites/scope/right.spr",
+	"sprites/scope/bottom.spr",
+	"sprites/scope/bottom_left.spr",
+	"sprites/scope/bottom_right.spr",
+	"sprites/scope/vertical.spr",
+	"sprites/scope/horizontal.spr"
+};
+
+float g_mCBlend = 0;
+DynamicCrosshairTarget g_DynamicCrosshairTarget;
+DynamicCrosshairTarget g_DynamicCrosshairWeapon;
+
+void UpdateDynamicCrosshair( int spanner, int length )
+{
+	g_DynamicCrosshairTarget.spanner = spanner;
+	g_DynamicCrosshairTarget.length = length;
+	g_mCBlend = Plat_PlatformTime();
+}
+
 int g_weaponselect = 0;
 
 void WeaponsResource::LoadAllWeaponSprites()
@@ -257,6 +281,11 @@ DECLARE_COMMAND(m_Ammo, PrevWeapon);
 
 #define HISTORY_DRAW_TIME "5"
 
+cvar_t *hud_dyncrosshair_size = nullptr;
+cvar_t *hud_dyncrosshair_length = nullptr;
+cvar_t *hud_dyncrosshair_span = nullptr;
+cvar_t *hud_dyncrosshair_static = nullptr;
+
 bool CHudAmmo::Init()
 {
 	gHUD.AddHudElem(this);
@@ -287,6 +316,10 @@ bool CHudAmmo::Init()
 
 	CVAR_CREATE("hud_drawhistory_time", HISTORY_DRAW_TIME, 0);
 	CVAR_CREATE("hud_fastswitch", "0", FCVAR_ARCHIVE); // controls whether or not weapons can be selected in one keypress
+	hud_dyncrosshair_size = CVAR_CREATE("hud_dyncross_size", "2", FCVAR_ARCHIVE);
+	hud_dyncrosshair_length = CVAR_CREATE("hud_dyncross_length", "5", FCVAR_ARCHIVE);
+	hud_dyncrosshair_span = CVAR_CREATE("hud_dyncross_spanner", "5", FCVAR_ARCHIVE);
+	hud_dyncrosshair_static = CVAR_CREATE("hud_dyncross_static", "0", FCVAR_ARCHIVE);
 
 	m_iFlags |= HUD_ACTIVE; //!!!
 
@@ -299,6 +332,7 @@ bool CHudAmmo::Init()
 void CHudAmmo::Reset()
 {
 	m_fFade = 0;
+	g_mCBlend = 0;
 	m_iFlags |= HUD_ACTIVE; //!!!
 
 	gpActiveSel = NULL;
@@ -314,6 +348,9 @@ bool CHudAmmo::VidInit()
 	m_HUD_bucket0 = gHUD.GetSpriteIndex("bucket1");
 	m_HUD_selection = gHUD.GetSpriteIndex("selection");
 
+	for ( int i = 0; i < SCOPE_MAX; i++ )
+		hScope[i] = LoadSprite( ScopeTextures[i] );
+
 	ghsprBuckets = gHUD.GetSprite(m_HUD_bucket0);
 	giBucketWidth = gHUD.GetSpriteRect(m_HUD_bucket0).right - gHUD.GetSpriteRect(m_HUD_bucket0).left;
 	giBucketHeight = gHUD.GetSpriteRect(m_HUD_bucket0).bottom - gHUD.GetSpriteRect(m_HUD_bucket0).top;
@@ -322,6 +359,7 @@ bool CHudAmmo::VidInit()
 
 	// If we've already loaded weapons, let's get new sprites
 	gWR.LoadAllWeaponSprites();
+	g_mCBlend = 0;
 
 	if (ScreenWidth >= 640)
 	{
@@ -489,6 +527,8 @@ bool CHudAmmo::MsgFunc_AmmoX(const char* pszName, int iSize, void* pbuf)
 
 	gWR.SetAmmo(iIndex, abs(iCount));
 
+	UpdateDynamicCrosshair( 5, 2 );
+
 	return true;
 }
 
@@ -544,8 +584,10 @@ bool CHudAmmo::MsgFunc_HideWeapon(const char* pszName, int iSize, void* pbuf)
 	}
 	else
 	{
+#ifdef HL_WEAPONS
 		if (m_pWeapon)
 			SetCrosshair(m_pWeapon->hCrosshair, m_pWeapon->rcCrosshair, 255, 255, 255);
+#endif
 	}
 
 	return true;
@@ -608,6 +650,7 @@ bool CHudAmmo::MsgFunc_CurWeapon(const char* pszName, int iSize, void* pbuf)
 
 	m_pWeapon = pWeapon;
 
+#ifdef HL_WEAPONS
 	if (gHUD.m_iFOV >= 90)
 	{ // normal crosshairs
 		if (fOnTarget && 0 != m_pWeapon->hAutoaim)
@@ -622,6 +665,13 @@ bool CHudAmmo::MsgFunc_CurWeapon(const char* pszName, int iSize, void* pbuf)
 		else
 			SetCrosshair(m_pWeapon->hZoomedCrosshair, m_pWeapon->rcZoomedCrosshair, 255, 255, 255);
 	}
+#else
+	SetCrosshair(0, nullrc, 0, 0, 0);
+
+	// TODO: Each weapon should have it's own crosshair type
+	g_DynamicCrosshairWeapon.spanner = 5;
+	g_DynamicCrosshairWeapon.length = 5;
+#endif
 
 	m_fFade = 200.0f; //!!!
 	m_iFlags |= HUD_ACTIVE;
@@ -659,6 +709,188 @@ bool CHudAmmo::MsgFunc_WeaponList(const char* pszName, int iSize, void* pbuf)
 	gWR.AddWeapon(&Weapon);
 
 	return true;
+}
+
+void CHudAmmo::DrawScope()
+{
+	// If not in zoom, then stop.
+	//if ( gHUD.m_iFOV >= 90 ) return;
+	//for ( int i = 0; i < SCOPE_MAX; i++ )
+	//	DrawScope( (ScopeTable_e)i );
+}
+
+void CHudAmmo::DrawScope( ScopeTable_e eTable )
+{
+	int r, g, b, x ,y;
+	r = g = b = 255;
+	x = y = 0;
+	int screen_wide = ScreenWidth;
+	int screen_tall = ScreenHeight;
+	int wide_half = (screen_wide / 2);
+	int tall_half = (screen_tall / 2);
+	V_HSPRITE scope_sprite = hScope[eTable];
+	int spr_wide = SPR_Width(scope_sprite, 0);
+	int spr_tall = SPR_Height(scope_sprite, 0);
+	SPR_Set( scope_sprite, r, g, b );
+	switch ( eTable )
+	{
+		case SCOPE_TOP:
+		{
+			x = wide_half - (spr_wide / 2);
+			y = tall_half - (spr_tall / 2);
+			y -= spr_tall;
+		}
+		break;
+		case SCOPE_TOP_L:
+		{
+			x = wide_half - (spr_wide / 2);
+			x -= spr_wide;
+			y = tall_half - (spr_tall / 2);
+			y -= spr_tall;
+		}
+		break;
+		case SCOPE_TOP_R:
+		{
+			x = wide_half - (spr_wide / 2);
+			x += spr_wide;
+			y = tall_half - (spr_tall / 2);
+			y -= spr_tall;
+		}
+		break;
+		case SCOPE_LEFT:
+		{
+			x = wide_half - (spr_wide / 2);
+			x -= spr_wide;
+			y = tall_half - (spr_tall / 2);
+		}
+		break;
+		case SCOPE_RIGHT:
+		{
+			x = wide_half - (spr_wide / 2);
+			x += spr_wide;
+			y = tall_half - (spr_tall / 2);
+		}
+		break;
+		case SCOPE_BOTTOM:
+		{
+			x = wide_half - (spr_wide / 2);
+			y = (tall_half - (spr_tall / 2));
+			y += spr_tall;
+		}
+		break;
+		case SCOPE_BOTTOM_L:
+		{
+			x = wide_half - (spr_wide / 2);
+			x -= spr_wide;
+			y = tall_half - (spr_tall / 2);
+			y += spr_tall;
+		}
+		break;
+		case SCOPE_BOTTOM_R:
+		{
+			x = wide_half - (spr_wide / 2);
+			x += spr_wide;
+			y = tall_half - (spr_tall / 2);
+			y += spr_tall;
+		}
+		break;
+		case SCOPE_VERTICAL:
+		{
+		}
+		break;
+		case SCOPE_HORIZONTAL:
+		{
+		}
+		break;
+	}
+	SPR_Draw( 0, x, y, NULL );
+}
+
+void CHudAmmo::DrawDynCrosshair()
+{
+	// If in zoom, don't draw
+	if ( gHUD.m_iFOV < 90 ) return;
+
+	int a = 255;
+	int r, g, b, x, y;
+	r = g = b = x = y = 0;
+	g = 255;
+	int screen_wide = ScreenWidth;
+	int screen_tall = ScreenHeight;
+	int wide_half = (screen_wide / 2);
+	int tall_half = (screen_tall / 2);
+	int size = atoi( hud_dyncrosshair_size->string );
+	DynamicCrosshairTarget dyndest;
+
+	// If static, then don't do any dynamic stuff
+	bool bDynamic = atoi( hud_dyncrosshair_static->string ) <= 0 ? true : false;
+	if ( bDynamic )
+	{
+		DynamicCrosshairTarget target;
+		target = g_DynamicCrosshairWeapon;
+		target.spanner += g_DynamicCrosshairTarget.spanner;
+		target.length += g_DynamicCrosshairTarget.length;
+		dyndest = BlendTo( target, g_DynamicCrosshairWeapon, g_mCBlend, 0.15f );
+	}
+	else
+	{
+		dyndest.length = atoi( hud_dyncrosshair_length->string );
+		dyndest.spanner = atoi( hud_dyncrosshair_span->string );
+	}
+
+	gEngfuncs.Con_NPrintf(11, "\t == DynamicCrosshairTarget == \n");
+	gEngfuncs.Con_NPrintf(12, "\ttarget.spanner >> [%i]\n", dyndest.spanner);
+	gEngfuncs.Con_NPrintf(13, "\ttarget.length >> [%i]\n", dyndest.length);
+
+	// Left
+	y = tall_half - (size / 2);
+	x = wide_half - dyndest.spanner;
+	FillRGBA( x, y, -dyndest.length, size, r, g, b, a );
+
+	// Right
+	x = wide_half + dyndest.spanner;
+	FillRGBA( x, y, dyndest.length, size, r, g, b, a );
+
+	// Top
+	y = tall_half - dyndest.spanner;
+	x = wide_half - (size / 2);
+	FillRGBA( x, y, size, -dyndest.length, r, g, b, a );
+
+	// Bottom
+	y = tall_half + dyndest.spanner;
+	FillRGBA( x, y, size, dyndest.length, r, g, b, a );
+}
+
+DynamicCrosshairTarget BlendTo( const DynamicCrosshairTarget& blend_from, const DynamicCrosshairTarget& blend_to, float &flLastTimeCheck, float blend_time )
+{
+	// Don't update if this is invalid
+	if ( !flLastTimeCheck && !blend_time ) return blend_to;
+
+	// Clear if blend is over
+	if ( (flLastTimeCheck + blend_time) < Plat_PlatformTime() )
+	{
+		flLastTimeCheck = 0;
+		return blend_to;
+	}
+
+	// Smooth it out
+	float interp = (Plat_PlatformTime() - flLastTimeCheck) / blend_time;
+	DynamicCrosshairTarget vOut;
+	BlendScale( blend_from, (1.0 - interp), vOut );
+	BlendMA( vOut, interp, blend_to, vOut );
+	return vOut;
+}
+
+void BlendMA( const DynamicCrosshairTarget& start, float scale, const DynamicCrosshairTarget& direction, DynamicCrosshairTarget& dest )
+{
+	dest.length = start.length + direction.length * scale;
+	dest.spanner = start.spanner + direction.spanner * scale;
+}
+
+void BlendScale( const DynamicCrosshairTarget& in, float scale, DynamicCrosshairTarget& result )
+{
+	result.length = in.length * scale;
+	result.spanner = in.spanner * scale;
 }
 
 //------------------------------------------------------------------------
@@ -826,6 +1058,9 @@ void CHudAmmo::UserCmd_PrevWeapon()
 
 bool CHudAmmo::Draw(float flTime)
 {
+	DrawScope();
+	DrawDynCrosshair();
+
 	int a, x, y, r, g, b;
 	int AmmoWidth;
 
@@ -852,7 +1087,6 @@ bool CHudAmmo::Draw(float flTime)
 	// SPR_Draw Ammo
 	if ((pw->iAmmoType < 0) && (pw->iAmmo2Type < 0))
 		return false;
-
 
 	int iFlags = DHN_DRAWZERO; // draw 0 values
 
@@ -934,6 +1168,7 @@ bool CHudAmmo::Draw(float flTime)
 			SPR_DrawAdditive(0, x, y - iOffset, &m_pWeapon->rcAmmo2);
 		}
 	}
+
 	return true;
 }
 

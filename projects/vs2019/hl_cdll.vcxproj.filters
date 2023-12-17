@@ -369,6 +369,9 @@
     <ClCompile Include="..\..\dlls\awp.cpp">
       <Filter>Source Files\_hl\dlls\weapons\rifles</Filter>
     </ClCompile>
+    <ClCompile Include="platform.cpp">
+      <Filter>Source Files\cl_dll</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\kbutton.h">

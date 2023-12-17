@@ -95,6 +95,7 @@ bool CAWP::Deploy()
 	auto ret = DefaultDeploy("models/v_awp.mdl", "models/p_awp.mdl", AWP_DEPLOY, "mp5");
 	if ( !ret ) return false;
 	m_ScopeZoom = ZOOM_NONE;
+	UpdateZoomState();
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.03;
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.03;
 	return true;
