@@ -51,17 +51,32 @@ const char* ScopeTextures[SCOPE_MAX] = {
 };
 
 float g_mCBlend = 0;
+bool g_FirstDynUpdate = false;
 DynamicCrosshairTarget g_DynamicCrosshairTarget;
 DynamicCrosshairTarget g_DynamicCrosshairWeapon;
+#define DYNAMIC_UPDATE_MAX_SPAN 20
+#define DYNAMIC_UPDATE_MAX_LENGTH 15
 
 void UpdateDynamicCrosshair( int spanner, int length )
 {
-	g_DynamicCrosshairTarget.spanner = spanner;
-	g_DynamicCrosshairTarget.length = length;
+	if ( !g_FirstDynUpdate )
+	{
+		g_DynamicCrosshairTarget.spanner = spanner;
+		g_DynamicCrosshairTarget.length = length;
+		g_FirstDynUpdate = true;
+	}
+	else
+	{
+		g_DynamicCrosshairTarget.spanner += spanner;
+		g_DynamicCrosshairTarget.length += length;
+	}
+	g_DynamicCrosshairTarget.spanner = v_clamp( g_DynamicCrosshairTarget.spanner, 0, DYNAMIC_UPDATE_MAX_SPAN );
+	g_DynamicCrosshairTarget.length = v_clamp( g_DynamicCrosshairTarget.spanner, 0, DYNAMIC_UPDATE_MAX_LENGTH );
 	g_mCBlend = Plat_PlatformTime();
 }
 
 int g_weaponselect = 0;
+int m_iCurrentAmmo = 0;
 
 void WeaponsResource::LoadAllWeaponSprites()
 {
@@ -527,8 +542,6 @@ bool CHudAmmo::MsgFunc_AmmoX(const char* pszName, int iSize, void* pbuf)
 
 	gWR.SetAmmo(iIndex, abs(iCount));
 
-	UpdateDynamicCrosshair( 5, 2 );
-
 	return true;
 }
 
@@ -864,12 +877,17 @@ void CHudAmmo::DrawDynCrosshair()
 DynamicCrosshairTarget BlendTo( const DynamicCrosshairTarget& blend_from, const DynamicCrosshairTarget& blend_to, float &flLastTimeCheck, float blend_time )
 {
 	// Don't update if this is invalid
-	if ( !flLastTimeCheck && !blend_time ) return blend_to;
+	if ( !flLastTimeCheck && !blend_time )
+	{
+		g_FirstDynUpdate = false;
+		return blend_to;
+	}
 
 	// Clear if blend is over
 	if ( (flLastTimeCheck + blend_time) < Plat_PlatformTime() )
 	{
 		flLastTimeCheck = 0;
+		g_FirstDynUpdate = false;
 		return blend_to;
 	}
 
@@ -1136,12 +1154,24 @@ bool CHudAmmo::Draw(float flTime)
 			// GL Seems to need this
 			ScaleColors(r, g, b, a);
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
+
+			if ( m_iCurrentAmmo != pw->iClip )
+			{
+				m_iCurrentAmmo = pw->iClip;
+				// TODO: Check ammotype
+				UpdateDynamicCrosshair( 3, 2 );
+			}
 		}
 		else
 		{
 			// SPR_Draw a bullets only line
 			x = ScreenWidth - 4 * AmmoWidth - iIconWidth;
 			x = gHUD.DrawHudNumber(x, y, iFlags | DHN_3DIGITS, gWR.CountAmmo(pw->iAmmoType), r, g, b);
+			if ( m_iCurrentAmmo != gWR.CountAmmo(pw->iAmmoType) )
+			{
+				m_iCurrentAmmo = gWR.CountAmmo(pw->iAmmoType);
+				UpdateDynamicCrosshair( 3, 2 );
+			}
 		}
 
 		// Draw the ammo Icon

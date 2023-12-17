@@ -76,6 +76,7 @@ using qboolean = int;
 
 #define V_min(a, b) (((a) < (b)) ? (a) : (b))
 #define V_max(a, b) (((a) > (b)) ? (a) : (b))
+#define v_clamp(val, min, max) (((val) > (max)) ? (max) : (((val) < (min)) ? (min) : (val)))
 
 float Plat_PlatformTime();
 
