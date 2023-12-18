@@ -52,15 +52,16 @@ void CHandGrenade::Precache()
 
 bool CHandGrenade::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_HEGRENADE);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "Hand Grenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 4;
-	p->iPosition = 1;
-	p->iId = m_iId = WEAPON_HEGRENADE;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iWeight = HANDGRENADE_WEIGHT;
 	p->iFlags = ITEM_FLAG_LIMITINWORLD | ITEM_FLAG_EXHAUSTIBLE;
 
@@ -254,15 +255,16 @@ bool CFlashGrenade::Deploy()
 
 bool CFlashGrenade::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_FLASHGRENADE);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "Flash Grenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 4;
-	p->iPosition = 2;
-	p->iId = m_iId = WEAPON_FLASHGRENADE;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iWeight = HANDGRENADE_WEIGHT;
 	p->iFlags = ITEM_FLAG_LIMITINWORLD | ITEM_FLAG_EXHAUSTIBLE;
 	return true;
@@ -297,15 +299,16 @@ bool CSmokeGrenade::Deploy()
 
 bool CSmokeGrenade::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_SMOKEGRENADE);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "Smoke Grenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 4;
-	p->iPosition = 3;
-	p->iId = m_iId = WEAPON_SMOKEGRENADE;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iWeight = HANDGRENADE_WEIGHT;
 	p->iFlags = ITEM_FLAG_LIMITINWORLD | ITEM_FLAG_EXHAUSTIBLE;
 	return true;
@@ -339,15 +342,16 @@ bool CNervGasGrenade::Deploy()
 
 bool CNervGasGrenade::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_GASGRENADE);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "NervGas Grenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 4;
-	p->iPosition = 4;
-	p->iId = m_iId = WEAPON_GASGRENADE;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iWeight = HANDGRENADE_WEIGHT;
 	p->iFlags = ITEM_FLAG_LIMITINWORLD | ITEM_FLAG_EXHAUSTIBLE;
 	return true;

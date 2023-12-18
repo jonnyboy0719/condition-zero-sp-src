@@ -73,6 +73,7 @@ void CMP5::Precache()
 
 bool CMP5::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_MP5);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "9mm";
 	p->iMaxAmmo1 = _9MM_MAX_CARRY;
@@ -81,10 +82,10 @@ bool CMP5::GetItemInfo(ItemInfo* p)
 	//p->pszAmmo2 = "ARgrenades";
 	//p->iMaxAmmo2 = M203_GRENADE_MAX_CARRY;
 	p->iMaxClip = MP5_MAX_CLIP;
-	p->iSlot = 2;
-	p->iPosition = 0;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
 	p->iFlags = 0;
-	p->iId = m_iId = WEAPON_MP5;
+	p->iId = m_iId = slot.id;
 	p->iWeight = MP5_WEIGHT;
 
 	return true;

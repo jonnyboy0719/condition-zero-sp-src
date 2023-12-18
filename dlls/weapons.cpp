@@ -310,6 +310,9 @@ void W_Precache()
 	UTIL_PrecacheOtherWeapon("weapon_awp");
 	UTIL_PrecacheOther("ammo_338magnum");
 
+	// scout
+	UTIL_PrecacheOtherWeapon("weapon_scout");
+
 	// deagle
 	UTIL_PrecacheOtherWeapon("weapon_deagle");
 	UTIL_PrecacheOther("ammo_50ae");

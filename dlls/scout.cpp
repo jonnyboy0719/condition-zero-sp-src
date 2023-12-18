@@ -23,55 +23,57 @@
 #include "gamerules.h"
 #include "UserMessages.h"
 
-LINK_ENTITY_TO_CLASS(weapon_awp, CAWP);
+LINK_ENTITY_TO_CLASS(weapon_scout, CScout);
 
 
 //=========================================================
 //=========================================================
-void CAWP::Spawn()
+void CScout::Spawn()
 {
 	Precache();
-	SET_MODEL(ENT(pev), "models/w_awp.mdl");
-	m_iId = WEAPON_AWP;
+	SET_MODEL(ENT(pev), "models/w_scout.mdl");
+	m_iId = WEAPON_SCOUT;
 
-	m_iDefaultAmmo = AWP_MAX_CLIP;
+	m_iDefaultAmmo = SCOUT_MAX_CLIP;
 
 	FallInit(); // get ready to fall down.
 }
 
 
-void CAWP::Precache()
+void CScout::Precache()
 {
-	PRECACHE_MODEL("models/v_awp.mdl");
-	PRECACHE_MODEL("models/w_awp.mdl");
-	PRECACHE_MODEL("models/p_awp.mdl");
+	PRECACHE_MODEL("models/v_scout.mdl");
+	PRECACHE_MODEL("models/w_scout.mdl");
+	PRECACHE_MODEL("models/p_scout.mdl");
 
 	m_iShell = PRECACHE_MODEL("models/shell.mdl"); // brass shellTE_MODEL
 
-	PRECACHE_MODEL("models/w_556nato.mdl");
-	PRECACHE_MODEL("models/w_556nato_big.mdl");
+	PRECACHE_MODEL("models/w_762nato.mdl");
+	PRECACHE_MODEL("models/w_762nato_big.mdl");
+	PRECACHE_MODEL("models/w_762natobox.mdl");
+	PRECACHE_MODEL("models/w_762natobox_big.mdl");
 	PRECACHE_SOUND("items/9mmclip1.wav");
 
 	PRECACHE_SOUND("weapons/zoom.wav");
-	PRECACHE_SOUND("weapons/awp1.wav");
-	PRECACHE_SOUND("weapons/awp_deploy.wav");
-	PRECACHE_SOUND("weapons/awp_clipout.wav");
-	PRECACHE_SOUND("weapons/awp_clipin.wav");
+	PRECACHE_SOUND("weapons/scout_fire-1.wav");
+	PRECACHE_SOUND("weapons/scout_bolt.wav");
+	PRECACHE_SOUND("weapons/scout_clipin.wav");
+	PRECACHE_SOUND("weapons/scout_clipout.wav");
 
 	PRECACHE_SOUND("weapons/357_cock1.wav");
 
-	m_usAWP = PRECACHE_EVENT(1, "events/awp.sc");
+	m_usScout = PRECACHE_EVENT(1, "events/scout.sc");
 }
 
-bool CAWP::GetItemInfo(ItemInfo* p)
+bool CScout::GetItemInfo(ItemInfo* p)
 {
-	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_AWP);
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_SCOUT);
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "338 Magnum Ammo";
-	p->iMaxAmmo1 = _338MagnumAmmo_MAX_CARRY;
+	p->pszAmmo1 = "762nato";
+	p->iMaxAmmo1 = _762nato_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
-	p->iMaxClip = AWP_MAX_CLIP;
+	p->iMaxClip = SCOUT_MAX_CLIP;
 	p->iSlot = slot.slot;
 	p->iPosition = slot.position;
 	p->iFlags = 0;
@@ -81,7 +83,7 @@ bool CAWP::GetItemInfo(ItemInfo* p)
 	return true;
 }
 
-void CAWP::UpdateZoomState()
+void CScout::UpdateZoomState()
 {
 	switch ( m_ScopeZoom )
 	{
@@ -91,25 +93,25 @@ void CAWP::UpdateZoomState()
 	}
 }
 
-bool CAWP::Deploy()
+bool CScout::Deploy()
 {
-	auto ret = DefaultDeploy("models/v_awp.mdl", "models/p_awp.mdl", AWP_DEPLOY, "mp5");
+	auto ret = DefaultDeploy("models/v_scout.mdl", "models/p_scout.mdl", SCOUT_DEPLOY, "mp5");
 	if ( !ret ) return false;
 	m_ScopeZoom = ZOOM_NONE;
 	UpdateZoomState();
-	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.03;
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.03;
+	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 1.01;
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.01;
 	return true;
 }
 
-void CAWP::Holster()
+void CScout::Holster()
 {
 	m_ScopeZoom = ZOOM_NONE;
 	UpdateZoomState();
 }
 
 
-void CAWP::PrimaryAttack()
+void CScout::PrimaryAttack()
 {
 	// don't fire underwater
 	if (m_pPlayer->pev->waterlevel == 3)
@@ -148,7 +150,7 @@ void CAWP::PrimaryAttack()
 		case ZOOM_4X: vCone = VECTOR_CONE_1DEGREES; break;
 		case ZOOM_8X: vCone = Vector(0, 0, 0); break;
 	}
-	vecDir = m_pPlayer->FireBulletsPlayer(1, vecSrc, vecAiming, vCone, 8192, BULLET_PLAYER_338MAGNUM, 2, 0, m_pPlayer->pev, m_pPlayer->random_seed);
+	vecDir = m_pPlayer->FireBulletsPlayer(1, vecSrc, vecAiming, vCone, 8192, BULLET_PLAYER_762NATO, 2, 0, m_pPlayer->pev, m_pPlayer->random_seed);
 
 	int flags;
 #if defined(CLIENT_WEAPONS)
@@ -157,21 +159,21 @@ void CAWP::PrimaryAttack()
 	flags = 0;
 #endif
 
-	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usAWP, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0);
+	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usScout, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, 0, 0, 0, 0);
 
 	if (0 == m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
-	m_flNextPrimaryAttack = GetNextAttackDelay(1.2);
+	m_flNextPrimaryAttack = GetNextAttackDelay(1.31);
 
 	if (m_flNextPrimaryAttack < UTIL_WeaponTimeBase())
-		m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + 1.2;
+		m_flNextPrimaryAttack = UTIL_WeaponTimeBase() + 1.31;
 
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
 }
 
-void CAWP::SecondaryAttack()
+void CScout::SecondaryAttack()
 {
 	m_flNextSecondaryAttack = GetNextAttackDelay(0.85);
 	switch (m_ScopeZoom)
@@ -185,19 +187,19 @@ void CAWP::SecondaryAttack()
 }
 
 
-void CAWP::Reload()
+void CScout::Reload()
 {
-	if (m_pPlayer->ammo_awp <= 0)
+	if (m_pPlayer->ammo_762nato <= 0)
 		return;
 
 	m_ScopeZoom = ZOOM_NONE;
 	UpdateZoomState();
 
-	DefaultReload(AWP_MAX_CLIP, AWP_RELOAD, 3.08);
+	DefaultReload(SCOUT_MAX_CLIP, SCOUT_RELOAD, 2.03);
 }
 
 
-void CAWP::WeaponIdle()
+void CScout::WeaponIdle()
 {
 	ResetEmptySound();
 
@@ -206,35 +208,7 @@ void CAWP::WeaponIdle()
 	if (m_flTimeWeaponIdle > UTIL_WeaponTimeBase())
 		return;
 
-	SendWeaponAnim(AWP_IDLE);
+	SendWeaponAnim(SCOUT_IDLE);
 
 	m_flTimeWeaponIdle = UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15); // how long till we do this again.
 }
-
-
-
-class CAWPAmmoClip : public CBasePlayerAmmo
-{
-	void Spawn() override
-	{
-		Precache();
-		SET_MODEL(ENT(pev), "models/w_338magnum.mdl");
-		CBasePlayerAmmo::Spawn();
-	}
-	void Precache() override
-	{
-		PRECACHE_MODEL("models/w_338magnum.mdl");
-		PRECACHE_SOUND("items/9mmclip1.wav");
-	}
-	bool AddAmmo(CBaseEntity* pOther) override
-	{
-		bool bResult = (pOther->GiveAmmo(AWP_MAX_CLIP, "m4a338 Magnum Ammo1", _338MagnumAmmo_MAX_CARRY) != -1);
-		if (bResult)
-		{
-			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
-		}
-		return bResult;
-	}
-};
-LINK_ENTITY_TO_CLASS(ammo_338magnum, CAWPAmmoClip);
-

@@ -69,16 +69,17 @@ void CAK47::Precache()
 
 bool CAK47::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_AK47);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "762nato";
 	p->iMaxAmmo1 = _762nato_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = AK47_MAX_CLIP;
-	p->iSlot = 2;
-	p->iPosition = 3;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
 	p->iFlags = 0;
-	p->iId = m_iId = WEAPON_AK47;
+	p->iId = m_iId = slot.id;
 	p->iWeight = MP5_WEIGHT;
 
 	return true;

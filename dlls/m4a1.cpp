@@ -67,16 +67,17 @@ void CM4A1::Precache()
 
 bool CM4A1::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_M4A1);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "m4a1";
 	p->iMaxAmmo1 = _M4A1_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = M4A1_MAX_CLIP;
-	p->iSlot = 2;
-	p->iPosition = 2;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
 	p->iFlags = 0;
-	p->iId = m_iId = WEAPON_M4A1;
+	p->iId = m_iId = slot.id;
 	p->iWeight = MP5_WEIGHT;
 
 	return true;

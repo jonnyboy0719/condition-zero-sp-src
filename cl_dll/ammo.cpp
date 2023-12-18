@@ -729,7 +729,7 @@ void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
 		case WEAPON_GLOCK:
 		{
 			g_DynamicCrosshairWeapon.spanner = 10;
-			g_DynamicCrosshairWeapon.length = 5;
+			g_DynamicCrosshairWeapon.length = 8;
 		}
 		break;
 		case WEAPON_USP:
@@ -738,7 +738,7 @@ void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
 			g_DynamicCrosshairWeapon.length = 8;
 		}
 		break;
-		case WEAPON_PYTHON:
+		case WEAPON_DEAGLE:
 		{
 			g_DynamicCrosshairWeapon.spanner = 8;
 			g_DynamicCrosshairWeapon.length = 10;
@@ -756,6 +756,12 @@ void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
 			g_DynamicCrosshairWeapon.length = 10;
 		}
 		break;
+		case WEAPON_SCOUT:
+		{
+			g_DynamicCrosshairWeapon.spanner = 20;
+			g_DynamicCrosshairWeapon.length = 15;
+		}
+		break;
 		case WEAPON_AWP:
 		{
 			g_DynamicCrosshairWeapon.spanner = 15;
@@ -771,7 +777,7 @@ void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
 		case WEAPON_M60:
 		{
 			g_DynamicCrosshairWeapon.spanner = 28;
-			g_DynamicCrosshairWeapon.length = 15;
+			g_DynamicCrosshairWeapon.length = 25;
 		}
 		break;
 		case WEAPON_SHOTGUN:

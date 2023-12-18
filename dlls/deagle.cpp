@@ -26,6 +26,7 @@ LINK_ENTITY_TO_CLASS(weapon_deagle, CPython);
 
 bool CPython::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_DEAGLE);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "357";
 	p->iMaxAmmo1 = _357_MAX_CARRY;
@@ -33,9 +34,9 @@ bool CPython::GetItemInfo(ItemInfo* p)
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = PYTHON_MAX_CLIP;
 	p->iFlags = 0;
-	p->iSlot = 1;
-	p->iPosition = 2;
-	p->iId = m_iId = WEAPON_PYTHON;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iWeight = PYTHON_WEIGHT;
 
 	return true;
@@ -44,7 +45,7 @@ bool CPython::GetItemInfo(ItemInfo* p)
 void CPython::Spawn()
 {
 	Precache();
-	m_iId = WEAPON_PYTHON;
+	m_iId = WEAPON_DEAGLE;
 	SET_MODEL(ENT(pev), "models/w_357.mdl");
 
 	m_iDefaultAmmo = PYTHON_DEFAULT_GIVE;

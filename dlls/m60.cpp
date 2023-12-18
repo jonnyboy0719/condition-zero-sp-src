@@ -70,16 +70,17 @@ void CM60::Precache()
 
 bool CM60::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_M60);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "762nato";
 	p->iMaxAmmo1 = _762nato_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = M60_MAX_CLIP;
-	p->iSlot = 3;
-	p->iPosition = 1;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iFlags = 0;
-	p->iId = m_iId = WEAPON_M60;
 	p->iWeight = M60_WEIGHT;
 
 	return true;

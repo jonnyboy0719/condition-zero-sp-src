@@ -3520,6 +3520,11 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("ammo_338magnum");
 		GiveNamedItem("ammo_338magnum");
 		GiveNamedItem("ammo_338magnum");
+		GiveNamedItem("weapon_scout");
+		GiveNamedItem("ammo_762nato");
+		GiveNamedItem("ammo_762nato");
+		GiveNamedItem("ammo_762nato");
+		GiveNamedItem("ammo_762nato");
 
 		gEvilImpulse101 = false;
 		break;

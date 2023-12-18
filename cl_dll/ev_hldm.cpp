@@ -744,9 +744,6 @@ void EV_FireAK47(event_args_t* args)
 
 	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_762NATO, 2, &tracerCount[idx - 1], args->fparam1, args->fparam2);
 }
-//======================
-//	    AK47 START
-//======================
 
 //======================
 //	    AWP START
@@ -786,9 +783,44 @@ void EV_FireAWP(event_args_t* args)
 
 	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_338MAGNUM, 2, &tracerCount[idx - 1], args->fparam1, args->fparam2);
 }
+
 //======================
-//	    AWP START
+//	    SCOUT START
 //======================
+void EV_FireSCOUT(event_args_t* args)
+{
+	int idx;
+	Vector origin;
+	Vector angles;
+
+	Vector vecSrc, vecAiming;
+	Vector up, right, forward;
+
+	idx = args->entindex;
+	VectorCopy(args->origin, origin);
+	VectorCopy(args->angles, angles);
+
+	AngleVectors(angles, forward, right, up);
+
+	if (EV_IsLocal(idx))
+	{
+		// Add muzzle flash to current weapon model
+		EV_MuzzleFlash();
+		switch (gEngfuncs.pfnRandomLong(0, 1))
+		{
+			case 0: gEngfuncs.pEventAPI->EV_WeaponAnimation(SCOUT_FIRE1, 0); break;
+			case 1: gEngfuncs.pEventAPI->EV_WeaponAnimation(SCOUT_FIRE2, 0); break;
+		}
+		V_PunchAxis(0, gEngfuncs.pfnRandomFloat(-2, 2));
+	}
+
+	gEngfuncs.pEventAPI->EV_PlaySound(idx, origin, CHAN_WEAPON, "weapons/scout_fire-1.wav", 1, ATTN_NORM, 0, 94 + gEngfuncs.pfnRandomLong(0, 0xf));
+
+	EV_GetGunPosition(args, vecSrc, origin);
+	VectorCopy(forward, vecAiming);
+
+	EV_HLDM_FireBullets(idx, forward, right, up, 1, vecSrc, vecAiming, 8192, BULLET_PLAYER_762NATO, 2, &tracerCount[idx - 1], args->fparam1, args->fparam2);
+}
 
 //======================
 //	    M60 START

@@ -564,12 +564,12 @@ public:
 
 	bool HasSuit() const
 	{
-		return HasWeapon(WEAPON_SUIT);
+		return HasWeapon(WEAPON_ARMOR);
 	}
 
 	bool HasAnyWeapons() const
 	{
-		return (m_iWeaponBits & ~(1ULL << WEAPON_SUIT)) != 0;
+		return (m_iWeaponBits & ~(1ULL << WEAPON_ARMOR)) != 0;
 	}
 
 private:

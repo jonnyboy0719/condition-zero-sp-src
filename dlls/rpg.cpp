@@ -305,15 +305,16 @@ void CRpg::Precache()
 
 bool CRpg::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_RPG);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "rockets";
 	p->iMaxAmmo1 = 1;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 3;
-	p->iPosition = 0;
-	p->iId = m_iId = WEAPON_RPG;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iFlags = ITEM_FLAG_LIMITINWORLD | ITEM_FLAG_EXHAUSTIBLE;
 	p->iWeight = RPG_WEIGHT;
 

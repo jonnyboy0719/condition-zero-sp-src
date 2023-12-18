@@ -57,15 +57,16 @@ void CKnife::Precache()
 
 bool CKnife::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_KNIFE);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = NULL;
 	p->iMaxAmmo1 = -1;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 0;
-	p->iPosition = 0;
-	p->iId = WEAPON_KNIFE;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
+	p->iId = m_iId = slot.id;
 	p->iWeight = CROWBAR_WEIGHT;
 	return true;
 }

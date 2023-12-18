@@ -59,16 +59,17 @@ void CGlock::Precache()
 
 bool CGlock::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_GLOCK);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "9mm";
 	p->iMaxAmmo1 = _9MM_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = GLOCK_MAX_CLIP;
-	p->iSlot = 1;
-	p->iPosition = 0;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
 	p->iFlags = 0;
-	p->iId = m_iId = WEAPON_GLOCK;
+	p->iId = m_iId = slot.id;
 	p->iWeight = GLOCK_WEIGHT;
 
 	return true;

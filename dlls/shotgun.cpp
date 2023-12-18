@@ -68,16 +68,17 @@ void CShotgun::Precache()
 
 bool CShotgun::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_SHOTGUN);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "buckshot";
 	p->iMaxAmmo1 = BUCKSHOT_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = SHOTGUN_MAX_CLIP;
-	p->iSlot = 2;
-	p->iPosition = 1;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
 	p->iFlags = 0;
-	p->iId = m_iId = WEAPON_SHOTGUN;
+	p->iId = m_iId = slot.id;
 	p->iWeight = SHOTGUN_WEIGHT;
 
 	return true;

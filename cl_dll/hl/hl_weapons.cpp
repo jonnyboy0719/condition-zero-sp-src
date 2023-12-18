@@ -51,12 +51,13 @@ Vector previousorigin;
 
 // HLDM Weapon placeholder entities.
 CAWP g_AWP;
+CScout g_Scout;
 CGlock g_Glock;
 CUSP g_USP;
 CKnife g_Knife;
 CMachete g_Machete;
 CM60 g_m60;
-CPython g_Python;
+CPython g_Deagle;
 CMP5 g_Mp5;
 CM4A1 g_M4A1;
 CAK47 g_AK47;
@@ -466,12 +467,13 @@ void HUD_InitClientWeapons()
 
 	// Allocate slot(s) for each weapon that we are going to be predicting
 	HUD_PrepEntity(&g_AWP, &player);
+	HUD_PrepEntity(&g_Scout, &player);
 	HUD_PrepEntity(&g_Glock, &player);
 	HUD_PrepEntity(&g_USP, &player);
 	HUD_PrepEntity(&g_Knife, &player);
 	HUD_PrepEntity(&g_Machete, &player);
 	HUD_PrepEntity(&g_m60, &player);
-	HUD_PrepEntity(&g_Python, &player);
+	HUD_PrepEntity(&g_Deagle, &player);
 	HUD_PrepEntity(&g_Mp5, &player);
 	HUD_PrepEntity(&g_M4A1, &player);
 	HUD_PrepEntity(&g_AK47, &player);
@@ -578,6 +580,10 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		pWeapon = &g_AWP;
 		break;
 
+	case WEAPON_SCOUT:
+		pWeapon = &g_Scout;
+		break;
+
 	case WEAPON_GLOCK:
 		pWeapon = &g_Glock;
 		break;
@@ -586,8 +592,8 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 		pWeapon = &g_USP;
 		break;
 
-	case WEAPON_PYTHON:
-		pWeapon = &g_Python;
+	case WEAPON_DEAGLE:
+		pWeapon = &g_Deagle;
 		break;
 
 	case WEAPON_MP5:
@@ -842,7 +848,7 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 	if (g_runfuncs && (HUD_GetWeaponAnim() != to->client.weaponanim))
 	{
 		//Make sure the 357 has the right body
-		g_Python.pev->body = bIsMultiplayer() ? 1 : 0;
+		g_Deagle.pev->body = bIsMultiplayer() ? 1 : 0;
 
 		// Force a fixed anim down to viewmodel
 		HUD_SendWeaponAnim(to->client.weaponanim, pWeapon->pev->body, true);

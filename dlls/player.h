@@ -385,18 +385,18 @@ inline void CBasePlayer::ClearWeaponBit(int id)
 
 inline bool CBasePlayer::HasSuit() const
 {
-	return (m_WeaponBits & (1ULL << WEAPON_SUIT)) != 0;
+	return (m_WeaponBits & (1ULL << WEAPON_ARMOR)) != 0;
 }
 
 inline void CBasePlayer::SetHasSuit(bool hasSuit)
 {
 	if (hasSuit)
 	{
-		SetWeaponBit(WEAPON_SUIT);
+		SetWeaponBit(WEAPON_ARMOR);
 	}
 	else
 	{
-		ClearWeaponBit(WEAPON_SUIT);
+		ClearWeaponBit(WEAPON_ARMOR);
 	}
 }
 

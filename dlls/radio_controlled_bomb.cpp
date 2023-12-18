@@ -293,16 +293,17 @@ void CRadioBombController::Precache()
 
 bool CRadioBombController::GetItemInfo(ItemInfo* p)
 {
+	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_RADIOCONTROLLER);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "Satchel Charge";
 	p->iMaxAmmo1 = 1;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = WEAPON_NOCLIP;
-	p->iSlot = 4;
-	p->iPosition = 0;
+	p->iSlot = slot.slot;
+	p->iPosition = slot.position;
 	p->iFlags = ITEM_FLAG_LIMITINWORLD | ITEM_FLAG_EXHAUSTIBLE;
-	p->iId = m_iId = WEAPON_RADIOCONTROLLER;
+	p->iId = m_iId = slot.id;
 	p->iWeight = SATCHEL_WEIGHT;
 
 	return true;

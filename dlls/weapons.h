@@ -69,6 +69,42 @@ public:
 };
 
 
+struct WeaponSlots
+{
+	WeaponId id;
+	int slot;
+	int position;
+};
+
+static WeaponSlots weapon_slots[] = {
+	// SLOT 0
+	{ WEAPON_KNIFE, 0, 0 },
+	{ WEAPON_MACHETE, 0, 1 },
+	// SLOT 1
+	{ WEAPON_GLOCK, 1, 0 },
+	{ WEAPON_USP, 1, 1 },
+	{ WEAPON_DEAGLE, 1, 2 },
+	// SLOT 2
+	{ WEAPON_MP5, 2, 0 },
+	{ WEAPON_SHOTGUN, 2, 1 },
+	{ WEAPON_AK47, 2, 2 },
+	{ WEAPON_M4A1, 2, 3 },
+	{ WEAPON_AWP, 2, 4 },
+	{ WEAPON_SCOUT, 2, 5 },
+	// SLOT 3
+	{ WEAPON_RPG, 3, 0 },
+	{ WEAPON_M60, 3, 1 },
+	// SLOT 4
+	{ WEAPON_RADIOCONTROLLER, 4, 0 },
+	{ WEAPON_HEGRENADE, 4, 1 },
+	{ WEAPON_FLASHGRENADE, 4, 2 },
+	{ WEAPON_SMOKEGRENADE, 4, 3 },
+	{ WEAPON_GASGRENADE, 4, 4 },
+	// SLOT 5
+};
+
+WeaponSlots GetWeaponSlotInfo( WeaponId WeaponID );
+
 // constant items
 #define ITEM_HEALTHKIT 1
 #define ITEM_ANTIDOTE 2
@@ -125,7 +161,7 @@ public:
 #define AK47_MAX_CLIP 30
 #define M60_MAX_CLIP 50
 #define SHOTGUN_MAX_CLIP 8
-#define CROSSBOW_MAX_CLIP 5
+#define SCOUT_MAX_CLIP 10
 #define RPG_MAX_CLIP 1
 #define GAUSS_MAX_CLIP WEAPON_NOCLIP
 #define EGON_MAX_CLIP WEAPON_NOCLIP
@@ -862,6 +898,48 @@ public:
 
 private:
 	unsigned short m_usAWP;
+	SniperScopeZoom_e m_ScopeZoom;
+};
+
+enum scout_e
+{
+	SCOUT_IDLE = 0,
+	SCOUT_FIRE1,
+	SCOUT_FIRE2,
+	SCOUT_RELOAD,
+	SCOUT_DEPLOY,
+};
+
+class CScout : public CBasePlayerWeapon
+{
+public:
+	void Spawn() override;
+	void Precache() override;
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void UpdateZoomState();
+
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	bool Deploy() override;
+	void Holster() override;
+	void Reload() override;
+	void WeaponIdle() override;
+	float m_flNextAnimTime;
+	int m_iShell;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usScout;
 	SniperScopeZoom_e m_ScopeZoom;
 };
 

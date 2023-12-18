@@ -19,6 +19,17 @@
 #include "weapons.h"
 #include "gamerules.h"
 
+WeaponSlots GetWeaponSlotInfo( WeaponId WeaponID )
+{
+	for ( int i = 0; i < ARRAYSIZE( weapon_slots ); i++ )
+	{
+		WeaponSlots slot = weapon_slots[i];
+		if ( slot.id == WeaponID )
+			return slot;
+	}
+	return WeaponSlots();
+}
+
 // Precaches the ammo and queues the ammo info for sending to clients
 void AddAmmoNameToAmmoRegistry(const char* szAmmoname, const char* weaponName)
 {
