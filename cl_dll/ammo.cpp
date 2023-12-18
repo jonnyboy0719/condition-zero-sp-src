@@ -875,6 +875,7 @@ void CHudAmmo::DrawScope()
 	yPos = tall_size;
 	iDrawnState = 0;
 	int vertHeight = 0;
+	bool bFixedTinyGap = false;
 
 	// Vertical
 	while ( bCanDraw )
@@ -884,7 +885,11 @@ void CHudAmmo::DrawScope()
 		int xRes = (spr_wide + xPos);
 		if ( xRes >= wide_size && iDrawnState == 0 )
 		{
-			spr_wide = (xRes - wide_size);
+			if ( !bFixedTinyGap )
+			{
+				spr_wide = (xRes - wide_size);
+				bFixedTinyGap = true;
+			}
 			iDrawnState = 1;
 		}
 		Rect rect;
