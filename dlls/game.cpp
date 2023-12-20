@@ -294,7 +294,7 @@ CVAR_REGISTER_SKILLVAR( sk_plr_357_bullet, 40 );
 CVAR_REGISTER_SKILLVAR( sk_plr_9mmAR_bullet, 10 );
 CVAR_REGISTER_SKILLVAR( sk_plr_556nato_bullet, 25 );
 CVAR_REGISTER_SKILLVAR( sk_plr_762nato_bullet, 30 );
-CVAR_REGISTER_SKILLVAR( sk_plr_338magnum_bullet, 60 );
+CVAR_REGISTER_SKILLVAR( sk_plr_338magnum_bullet, 80 );
 CVAR_REGISTER_SKILLVAR( sk_plr_9mmAR_grenade, 100 );
 CVAR_REGISTER_SKILLVAR( sk_plr_buckshot, 12 );
 CVAR_REGISTER_SKILLVAR( sk_plr_rpg, 100 );
