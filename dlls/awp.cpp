@@ -228,7 +228,7 @@ class CAWPAmmoClip : public CBasePlayerAmmo
 	}
 	bool AddAmmo(CBaseEntity* pOther) override
 	{
-		bool bResult = (pOther->GiveAmmo(AWP_MAX_CLIP, "m4a338 Magnum Ammo1", _338MagnumAmmo_MAX_CARRY) != -1);
+		bool bResult = (pOther->GiveAmmo(AWP_MAX_CLIP, "338 Magnum Ammo", _338MagnumAmmo_MAX_CARRY) != -1);
 		if (bResult)
 		{
 			EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/9mmclip1.wav", 1, ATTN_NORM);
