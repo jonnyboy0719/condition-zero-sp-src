@@ -166,7 +166,7 @@ void CGlock::GlockFire()
 		case GlockState_e::STATE_BURST:
 		{
 			flSpread = 0.1;
-			flCycleTime = 0.1;
+			flCycleTime = 0.25;
 		}
 		break;
 	}
