@@ -375,6 +375,12 @@
     <ClCompile Include="..\..\dlls\scout.cpp">
       <Filter>Source Files\_hl\dlls\weapons\rifles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\ump45.cpp">
+      <Filter>Source Files\_hl\dlls\weapons\smgs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\mac10.cpp">
+      <Filter>Source Files\_hl\dlls\weapons\smgs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\kbutton.h">

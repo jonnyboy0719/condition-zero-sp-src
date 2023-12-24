@@ -194,12 +194,14 @@ void CBasePlayerWeapon::ItemPostFrame()
 		}
 		else
 		{
+#if 0
 			// weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
 			if (m_iClip == 0 && (iFlags() & ITEM_FLAG_NOAUTORELOAD) == 0 && m_flNextPrimaryAttack < (UseDecrement() ? 0.0 : gpGlobals->time))
 			{
 				Reload();
 				return;
 			}
+#endif
 		}
 
 		WeaponIdle();

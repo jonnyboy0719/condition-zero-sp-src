@@ -291,6 +291,8 @@ void W_Precache()
 
 	// usp
 	UTIL_PrecacheOtherWeapon("weapon_usp");
+	UTIL_PrecacheOtherWeapon("weapon_ump45");
+	UTIL_PrecacheOtherWeapon("weapon_mac10");
 	UTIL_PrecacheOther("ammo_45acp");
 
 	// m4
@@ -302,7 +304,7 @@ void W_Precache()
 	UTIL_PrecacheOther("ammo_762nato");
 
 	// mp5
-	UTIL_PrecacheOtherWeapon("weapon_9mmAR");
+	UTIL_PrecacheOtherWeapon("weapon_mp5");
 	UTIL_PrecacheOther("ammo_9mmAR");
 	UTIL_PrecacheOther("ammo_ARgrenades");
 
@@ -405,6 +407,7 @@ TYPEDESCRIPTION CBasePlayerWeapon::m_SaveData[] =
 		DEFINE_FIELD(CBasePlayerWeapon, m_iSecondaryAmmoType, FIELD_INTEGER),
 		DEFINE_FIELD(CBasePlayerWeapon, m_iClip, FIELD_INTEGER),
 		DEFINE_FIELD(CBasePlayerWeapon, m_iDefaultAmmo, FIELD_INTEGER),
+		DEFINE_FIELD(CBasePlayerWeapon, m_iWeaponState, FIELD_INTEGER),
 		//	DEFINE_FIELD( CBasePlayerWeapon, m_iClientClip, FIELD_INTEGER )	 , reset to zero on load so hud gets updated correctly
 		//  DEFINE_FIELD( CBasePlayerWeapon, m_iClientWeaponState, FIELD_INTEGER ), reset to zero on load so hud gets updated correctly
 };

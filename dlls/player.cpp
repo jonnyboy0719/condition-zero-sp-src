@@ -3496,7 +3496,8 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_ak47");
 		GiveNamedItem("ammo_762nato");
 		GiveNamedItem("ammo_556nato");
-		GiveNamedItem("weapon_9mmAR");
+		GiveNamedItem("weapon_mp5");
+		GiveNamedItem("weapon_ump45");
 		GiveNamedItem("ammo_9mmAR");
 		GiveNamedItem("weapon_awp");
 		GiveNamedItem("ammo_338magnum");

@@ -171,7 +171,7 @@ void CHGrunt::GibMonster()
 		}
 		else
 		{
-			pGun = DropItem("weapon_9mmAR", vecGunPos, vecGunAngles);
+			pGun = DropItem("weapon_mp5", vecGunPos, vecGunAngles);
 		}
 		if (pGun)
 		{
@@ -755,7 +755,7 @@ void CHGrunt::HandleAnimEvent(MonsterEvent_t* pEvent)
 			}
 			else
 			{
-				DropItem("weapon_9mmAR", vecGunPos, vecGunAngles);
+				DropItem("weapon_mp5", vecGunPos, vecGunAngles);
 			}
 			if (FBitSet(pev->weapons, HGRUNT_GRENADELAUNCHER))
 			{

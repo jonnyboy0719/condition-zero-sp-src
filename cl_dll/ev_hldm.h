@@ -15,6 +15,8 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 // HLDM
 void EV_FireGlock(event_args_t* args);
 void EV_FireUSP(event_args_t* args);
+void EV_FireUMP45(event_args_t* args);
+void EV_FireMAC10(event_args_t* args);
 void EV_FireShotGunSingle(event_args_t* args);
 void EV_FireShotGunDouble(event_args_t* args);
 void EV_FireSCOUT(event_args_t* args);

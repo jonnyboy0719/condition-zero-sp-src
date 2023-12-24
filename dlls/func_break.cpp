@@ -40,7 +40,7 @@ const char* CBreakable::pSpawnObjects[] =
 		"item_healthkit",	  // 2
 		"weapon_9mmhandgun",  // 3
 		"ammo_9mmclip",		  // 4
-		"weapon_9mmAR",		  // 5
+		"weapon_mp5",		  // 5
 		"ammo_9mmAR",		  // 6
 		"ammo_ARgrenades",	  // 7
 		"weapon_m3",	  // 8
@@ -193,6 +193,7 @@ const char* CBreakable::pSoundsWood[] =
 		"debris/wood1.wav",
 		"debris/wood2.wav",
 		"debris/wood3.wav",
+		"debris/wood4.wav",
 };
 
 const char* CBreakable::pSoundsFlesh[] =
@@ -210,6 +211,9 @@ const char* CBreakable::pSoundsMetal[] =
 		"debris/metal1.wav",
 		"debris/metal2.wav",
 		"debris/metal3.wav",
+		"debris/metal4.wav",
+		"debris/metal5.wav",
+		"debris/metal6.wav",
 };
 
 const char* CBreakable::pSoundsConcrete[] =
@@ -217,6 +221,7 @@ const char* CBreakable::pSoundsConcrete[] =
 		"debris/concrete1.wav",
 		"debris/concrete2.wav",
 		"debris/concrete3.wav",
+		"debris/concrete4.wav",
 };
 
 
@@ -225,6 +230,7 @@ const char* CBreakable::pSoundsGlass[] =
 		"debris/glass1.wav",
 		"debris/glass2.wav",
 		"debris/glass3.wav",
+		"debris/glass4.wav",
 };
 
 const char** CBreakable::MaterialSoundList(Materials precacheMaterial, int& soundCount)
@@ -325,10 +331,11 @@ void CBreakable::Precache()
 
 	case matUnbreakableGlass:
 	case matGlass:
-		pGibName = "models/glassgibs.mdl";
+		pGibName = "sprites/particles/glass_01.spr";
 
 		PRECACHE_SOUND("debris/bustglass1.wav");
 		PRECACHE_SOUND("debris/bustglass2.wav");
+		PRECACHE_SOUND("debris/bustglass3.wav");
 		break;
 	case matMetal:
 		pGibName = "models/metalplategibs.mdl";
@@ -341,6 +348,7 @@ void CBreakable::Precache()
 
 		PRECACHE_SOUND("debris/bustconcrete1.wav");
 		PRECACHE_SOUND("debris/bustconcrete2.wav");
+		PRECACHE_SOUND("debris/bustconcrete3.wav");
 		break;
 	case matRocks:
 		pGibName = "models/rockgibs.mdl";
@@ -398,7 +406,8 @@ void CBreakable::DamageSound()
 		rgpsz[0] = "debris/glass1.wav";
 		rgpsz[1] = "debris/glass2.wav";
 		rgpsz[2] = "debris/glass3.wav";
-		i = 3;
+		rgpsz[3] = "debris/glass4.wav";
+		i = 4;
 		break;
 
 	default: //Wood is default, needs to match constant used in KeyValue
@@ -406,14 +415,18 @@ void CBreakable::DamageSound()
 		rgpsz[0] = "debris/wood1.wav";
 		rgpsz[1] = "debris/wood2.wav";
 		rgpsz[2] = "debris/wood3.wav";
-		i = 3;
+		rgpsz[3] = "debris/wood4.wav";
+		i = 4;
 		break;
 
 	case matMetal:
 		rgpsz[0] = "debris/metal1.wav";
-		rgpsz[1] = "debris/metal3.wav";
-		rgpsz[2] = "debris/metal2.wav";
-		i = 2;
+		rgpsz[1] = "debris/metal2.wav";
+		rgpsz[2] = "debris/metal3.wav";
+		rgpsz[3] = "debris/metal4.wav";
+		rgpsz[4] = "debris/metal5.wav";
+		rgpsz[5] = "debris/metal6.wav";
+		i = 6;
 		break;
 
 	case matFlesh:
@@ -431,7 +444,8 @@ void CBreakable::DamageSound()
 		rgpsz[0] = "debris/concrete1.wav";
 		rgpsz[1] = "debris/concrete2.wav";
 		rgpsz[2] = "debris/concrete3.wav";
-		i = 3;
+		rgpsz[3] = "debris/concrete4.wav";
+		i = 4;
 		break;
 
 	case matCeilingTile:
@@ -626,7 +640,7 @@ void CBreakable::Die()
 	switch (m_Material)
 	{
 	case matGlass:
-		switch (RANDOM_LONG(0, 1))
+		switch (RANDOM_LONG(0, 2))
 		{
 		case 0:
 			EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustglass1.wav", fvol, ATTN_NORM, 0, pitch);
@@ -634,17 +648,23 @@ void CBreakable::Die()
 		case 1:
 			EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustglass2.wav", fvol, ATTN_NORM, 0, pitch);
 			break;
+		case 2:
+			EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustglass3.wav", fvol, ATTN_NORM, 0, pitch);
+			break;
 		}
 		cFlag = BREAK_GLASS;
 		break;
 
 	case matWood:
-		switch (RANDOM_LONG(0, 1))
+		switch (RANDOM_LONG(0, 2))
 		{
 		case 0:
 			EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustcrate1.wav", fvol, ATTN_NORM, 0, pitch);
 			break;
 		case 1:
+			EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustcrate2.wav", fvol, ATTN_NORM, 0, pitch);
+			break;
+		case 2:
 			EMIT_SOUND_DYN(ENT(pev), CHAN_VOICE, "debris/bustcrate2.wav", fvol, ATTN_NORM, 0, pitch);
 			break;
 		}
@@ -708,39 +728,81 @@ void CBreakable::Die()
 	}
 
 	vecSpot = pev->origin + (pev->mins + pev->maxs) * 0.5;
-	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecSpot);
-	WRITE_BYTE(TE_BREAKMODEL);
+	if ( m_Material == matGlass )
+	{
+		Vector tmp = pev->absmin + pev->size * 0.5;
+		Vector vecSpot1 = pev->absmin + pev->absmax;
+		Vector vecSize = vecSpot1 - tmp;
+		float scale = vecSize.Length();
 
-	// position
-	WRITE_COORD(vecSpot.x);
-	WRITE_COORD(vecSpot.y);
-	WRITE_COORD(vecSpot.z);
+		MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpot );
+			WRITE_BYTE( TE_SPRITE );
+			WRITE_COORD( vecSpot.x );
+			WRITE_COORD( vecSpot.y );
+			WRITE_COORD( vecSpot.z );
+			WRITE_SHORT( m_idShard );
+			WRITE_BYTE( scale * RANDOM_FLOAT( 0.5, 0.6 ) );
+			WRITE_BYTE( 255 );
+		MESSAGE_END();
 
-	// size
-	WRITE_COORD(pev->size.x);
-	WRITE_COORD(pev->size.y);
-	WRITE_COORD(pev->size.z);
+		vecSpot = pev->origin + (pev->mins + pev->maxs) * 0.2;
+		MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpot );
+			WRITE_BYTE( TE_SPRITE );
+			WRITE_COORD( vecSpot.x );
+			WRITE_COORD( vecSpot.y );
+			WRITE_COORD( vecSpot.z );
+			WRITE_SHORT( m_idShard );
+			WRITE_BYTE( scale * RANDOM_FLOAT( 0.5, 0.6 ) );
+			WRITE_BYTE( 255 );
+		MESSAGE_END();
 
-	// velocity
-	WRITE_COORD(vecVelocity.x);
-	WRITE_COORD(vecVelocity.y);
-	WRITE_COORD(vecVelocity.z);
+		vecSpot = pev->origin + (pev->mins + pev->maxs) * 0.8;
+		MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecSpot );
+			WRITE_BYTE( TE_SPRITE );
+			WRITE_COORD( vecSpot.x );
+			WRITE_COORD( vecSpot.y );
+			WRITE_COORD( vecSpot.z );
+			WRITE_SHORT( m_idShard );
+			WRITE_BYTE( scale * RANDOM_FLOAT( 0.5, 0.6 ) );
+			WRITE_BYTE( 255 );
+		MESSAGE_END();
+	}
+	else
+	{
+		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecSpot);
+		WRITE_BYTE(TE_BREAKMODEL);
 
-	// randomization
-	WRITE_BYTE(10);
+		// position
+		WRITE_COORD(vecSpot.x);
+		WRITE_COORD(vecSpot.y);
+		WRITE_COORD(vecSpot.z);
 
-	// Model
-	WRITE_SHORT(m_idShard); //model id#
+		// size
+		WRITE_COORD(pev->size.x);
+		WRITE_COORD(pev->size.y);
+		WRITE_COORD(pev->size.z);
 
-	// # of shards
-	WRITE_BYTE(0); // let client decide
+		// velocity
+		WRITE_COORD(vecVelocity.x);
+		WRITE_COORD(vecVelocity.y);
+		WRITE_COORD(vecVelocity.z);
 
-	// duration
-	WRITE_BYTE(25); // 2.5 seconds
+		// randomization
+		WRITE_BYTE(10);
 
-	// flags
-	WRITE_BYTE(cFlag);
-	MESSAGE_END();
+		// Model
+		WRITE_SHORT(m_idShard); //model id#
+
+		// # of shards
+		WRITE_BYTE(0); // let client decide
+
+		// duration
+		WRITE_BYTE(25); // 2.5 seconds
+
+		// flags
+		WRITE_BYTE(cFlag);
+		MESSAGE_END();
+	}
 
 	float size = pev->size.x;
 	if (size < pev->size.y)

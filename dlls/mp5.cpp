@@ -24,16 +24,14 @@
 #include "UserMessages.h"
 
 LINK_ENTITY_TO_CLASS(weapon_mp5, CMP5);
-LINK_ENTITY_TO_CLASS(weapon_9mmAR, CMP5);
 
 
 //=========================================================
 //=========================================================
 void CMP5::Spawn()
 {
-	pev->classname = MAKE_STRING("weapon_9mmAR"); // hack to allow for old names
 	Precache();
-	SET_MODEL(ENT(pev), "models/w_9mmAR.mdl");
+	SET_MODEL(ENT(pev), "models/w_mp5.mdl");
 	m_iId = WEAPON_MP5;
 
 	m_iDefaultAmmo = MP5_DEFAULT_GIVE;
@@ -44,9 +42,9 @@ void CMP5::Spawn()
 
 void CMP5::Precache()
 {
-	PRECACHE_MODEL("models/v_9mmAR.mdl");
-	PRECACHE_MODEL("models/w_9mmAR.mdl");
-	PRECACHE_MODEL("models/p_9mmAR.mdl");
+	PRECACHE_MODEL("models/v_mp5.mdl");
+	PRECACHE_MODEL("models/w_mp5.mdl");
+	PRECACHE_MODEL("models/p_mp5.mdl");
 
 	m_iShell = PRECACHE_MODEL("models/shell.mdl"); // brass shellTE_MODEL
 
@@ -93,7 +91,7 @@ bool CMP5::GetItemInfo(ItemInfo* p)
 
 bool CMP5::Deploy()
 {
-	return DefaultDeploy("models/v_9mmAR.mdl", "models/p_9mmAR.mdl", MP5_DEPLOY, "mp5");
+	return DefaultDeploy("models/v_mp5.mdl", "models/p_mp5.mdl", MP5_DEPLOY, "mp5");
 }
 
 

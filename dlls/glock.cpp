@@ -22,6 +22,12 @@
 
 LINK_ENTITY_TO_CLASS(weapon_glock, CGlock);
 
+enum GlockState_e
+{
+	STATE_SINGLE = 0,
+	STATE_BURST,
+};
+
 void CGlock::Spawn()
 {
 	Precache();
@@ -29,6 +35,7 @@ void CGlock::Spawn()
 	SET_MODEL(ENT(pev), "models/w_glock.mdl");
 
 	m_iDefaultAmmo = GLOCK_DEFAULT_GIVE;
+	m_iWeaponState = GlockState_e::STATE_SINGLE;
 
 	FallInit(); // get ready to fall down.
 }
@@ -44,6 +51,7 @@ void CGlock::Precache()
 
 	PRECACHE_SOUND("items/9mmclip1.wav");
 	PRECACHE_SOUND("items/9mmclip2.wav");
+	PRECACHE_SOUND("items/mode_switch.wav");
 
 	PRECACHE_SOUND("weapons/pl_gun1.wav"); //silenced handgun
 	PRECACHE_SOUND("weapons/pl_gun2.wav"); //silenced handgun
@@ -80,22 +88,59 @@ bool CGlock::Deploy()
 	// pev->body = 1;
 	bool ret = DefaultDeploy("models/v_glock.mdl", "models/p_glock.mdl", GLOCK_DRAW, "onehanded");
 	if ( !ret ) return false;
+	m_iBullets = 0;
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.55;
 	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.11;
 	return true;
 }
 
+void CGlock::ItemPostFrame()
+{
+	// For burst fire
+	if ( m_iBullets > 0 && m_flTimeWeaponIdle <= UTIL_WeaponTimeBase() )
+	{
+		GlockFire();
+		return;
+	}
+	CBasePlayerWeapon::ItemPostFrame();
+}
+
 void CGlock::PrimaryAttack()
 {
-	GlockFire(0.01, 0.3, true);
+	if ( m_iBullets > 0 ) return;
+	switch (m_iWeaponState)
+	{
+		case GlockState_e::STATE_SINGLE: m_iBullets = 1; break;
+		case GlockState_e::STATE_BURST: m_iBullets = 3; break;
+	}
+	if ( m_iClip == 1 )
+		m_iBullets = 1;
+	GlockFire();
 }
 
 void CGlock::SecondaryAttack()
 {
-	GlockFire(0.1, 0.5, false);
+	if ( m_iBullets > 0 ) return;
+	switch (m_iWeaponState)
+	{
+		case GlockState_e::STATE_SINGLE:
+		{
+			m_iWeaponState = GlockState_e::STATE_BURST;
+			ClientPrint( m_pPlayer->pev, HUD_PRINTCENTER, "#Switch_To_BurstFire" );
+		}
+		break;
+		case GlockState_e::STATE_BURST:
+		{
+			m_iWeaponState = GlockState_e::STATE_SINGLE;
+			ClientPrint( m_pPlayer->pev, HUD_PRINTCENTER, "#Switch_To_SemiAuto" );
+		}
+		break;
+	}
+	EMIT_SOUND(ENT(pev), CHAN_ITEM, "items/mode_switch.wav", 1, ATTN_NORM);
+	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.5);
 }
 
-void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
+void CGlock::GlockFire()
 {
 	if (m_iClip <= 0)
 	{
@@ -104,24 +149,29 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 			PlayEmptySound();
 			m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(0.2);
 		}
-
+		m_iBullets = 0;
 		return;
 	}
 
-	int ammospend = fUseAutoAim ? 1 : 3;
-
-	// If we can't spend the amount, only use the required amount.
-	if ( m_iClip < ammospend )
-		ammospend = ammospend - m_iClip;
-
-	// If we only shoot 1, then simply use the single shot instead.
-	if ( ammospend <= 1 || m_iClip <= 1 )
+	float flSpread;
+	float flCycleTime;
+	switch (m_iWeaponState)
 	{
-		fUseAutoAim = true;
-		ammospend = 1;
+		case GlockState_e::STATE_SINGLE:
+		{
+			flSpread = 0.01;
+			flCycleTime = 0.3;
+		}
+		break;
+		case GlockState_e::STATE_BURST:
+		{
+			flSpread = 0.1;
+			flCycleTime = 0.1;
+		}
+		break;
 	}
 
-	m_iClip -= ammospend;
+	m_iClip -= 1;
 
 	m_pPlayer->pev->effects = (int)(m_pPlayer->pev->effects) | EF_MUZZLEFLASH;
 
@@ -136,35 +186,18 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 	// player "shoot" animation
 	m_pPlayer->SetAnimation(PLAYER_ATTACK1);
 
-	// silenced
-	if (pev->body == 1)
-	{
-		m_pPlayer->m_iWeaponVolume = QUIET_GUN_VOLUME;
-		m_pPlayer->m_iWeaponFlash = DIM_GUN_FLASH;
-	}
-	else
-	{
-		// non-silenced
-		m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
-		m_pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
-	}
+	m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;
+	m_pPlayer->m_iWeaponFlash = NORMAL_GUN_FLASH;
 
 	Vector vecSrc = m_pPlayer->GetGunPosition();
 	Vector vecAiming;
 
-	if (fUseAutoAim)
-	{
-		vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_10DEGREES);
-	}
-	else
-	{
-		vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
-	}
+	vecAiming = m_pPlayer->GetAutoaimVector(AUTOAIM_10DEGREES);
 
 	Vector vecDir;
-	vecDir = m_pPlayer->FireBulletsPlayer(ammospend, vecSrc, vecAiming, Vector(flSpread, flSpread, flSpread), 8192, BULLET_PLAYER_9MM, 0, 0, m_pPlayer->pev, m_pPlayer->random_seed);
+	vecDir = m_pPlayer->FireBulletsPlayer(1, vecSrc, vecAiming, Vector(flSpread, flSpread, flSpread), 8192, BULLET_PLAYER_9MM, 0, 0, m_pPlayer->pev, m_pPlayer->random_seed);
 
-	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFire, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, ammospend, 0, (m_iClip == 0) ? 1 : 0, 0);
+	PLAYBACK_EVENT_FULL(flags, m_pPlayer->edict(), m_usFire, 0.0, g_vecZero, g_vecZero, vecDir.x, vecDir.y, m_iBullets, m_iWeaponState, (m_iClip == 0) ? 1 : 0, 0);
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(flCycleTime);
 
@@ -172,7 +205,12 @@ void CGlock::GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim)
 		// HEV suit - indicate out of ammo condition
 		m_pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 
-	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	m_iBullets--;
+
+	if ( m_iBullets <= 0 )
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + UTIL_SharedRandomFloat(m_pPlayer->random_seed, 10, 15);
+	else
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.03;
 }
 
 

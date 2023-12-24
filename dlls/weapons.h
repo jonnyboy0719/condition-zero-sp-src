@@ -86,11 +86,13 @@ static WeaponSlots weapon_slots[] = {
 	{ WEAPON_DEAGLE, 1, 2 },
 	// SLOT 2
 	{ WEAPON_MP5, 2, 0 },
-	{ WEAPON_SHOTGUN, 2, 1 },
-	{ WEAPON_AK47, 2, 2 },
-	{ WEAPON_M4A1, 2, 3 },
-	{ WEAPON_AWP, 2, 4 },
-	{ WEAPON_SCOUT, 2, 5 },
+	{ WEAPON_UMP45, 2, 1 },
+	{ WEAPON_MAC10, 2, 2 },
+	{ WEAPON_SHOTGUN, 2, 3 },
+	{ WEAPON_AK47, 2, 4 },
+	{ WEAPON_M4A1, 2, 5 },
+	{ WEAPON_AWP, 2, 6 },
+	{ WEAPON_SCOUT, 2, 7 },
 	// SLOT 3
 	{ WEAPON_RPG, 3, 0 },
 	{ WEAPON_M60, 3, 1 },
@@ -134,6 +136,7 @@ WeaponSlots GetWeaponSlotInfo( WeaponId WeaponID );
 
 // weapon clip/carry ammo capacities
 #define URANIUM_MAX_CARRY 100
+#define _45ACP_MAX_CARRY 200
 #define _9MM_MAX_CARRY 250
 #define _M4A1_MAX_CARRY 180
 #define _762nato_MAX_CARRY 200
@@ -154,8 +157,10 @@ WeaponSlots GetWeaponSlotInfo( WeaponId WeaponID );
 
 //#define CROWBAR_MAX_CLIP		WEAPON_NOCLIP
 #define AWP_MAX_CLIP 5
-#define GLOCK_MAX_CLIP 17
+#define GLOCK_MAX_CLIP 18
 #define PYTHON_MAX_CLIP 7
+#define UMP_MAX_CLIP 25
+#define MAC10_MAX_CLIP 30
 #define MP5_MAX_CLIP 30
 #define M4A1_MAX_CLIP 30
 #define AK47_MAX_CLIP 30
@@ -173,8 +178,10 @@ WeaponSlots GetWeaponSlotInfo( WeaponId WeaponID );
 
 
 // the default amount of ammo that comes with each gun when it spawns
-#define GLOCK_DEFAULT_GIVE 17
+#define GLOCK_DEFAULT_GIVE 18
 #define PYTHON_DEFAULT_GIVE 7
+#define MAC10_DEFAULT_GIVE 30
+#define UMP_DEFAULT_GIVE 25
 #define MP5_DEFAULT_GIVE 30
 #define MP5_DEFAULT_AMMO 30
 #define MP5_M203_DEFAULT_GIVE 0
@@ -376,7 +383,7 @@ public:
 	bool DefaultDeploy(const char* szViewModel, const char* szWeaponModel, int iAnim, const char* szAnimExt, int body = 0);
 	bool DefaultReload(int iClipSize, int iAnim, float fDelay, int body = 0);
 
-	void ItemPostFrame() override; // called each frame by the player PostThink
+	virtual void ItemPostFrame(); // called each frame by the player PostThink
 	// called by CBasePlayerWeapons ItemPostFrame()
 	virtual void PrimaryAttack() {}						  // do "+ATTACK"
 	virtual void SecondaryAttack() {}					  // do "+ATTACK2"
@@ -417,6 +424,8 @@ public:
 	bool m_fInReload;			   // Are we in the middle of a reload;
 
 	int m_iDefaultAmmo; // how much ammo you get when you pick up this weapon as placed by a level designer.
+
+	int m_iWeaponState; // Used by weapons that has weapon switches trough secondary attack
 
 	// hle time creep vars
 	float m_flPrevPrimaryAttack;
@@ -549,9 +558,10 @@ public:
 	int iItemSlot() override { return 2; }
 	bool GetItemInfo(ItemInfo* p) override;
 
+	void ItemPostFrame() override;
 	void PrimaryAttack() override;
 	void SecondaryAttack() override;
-	void GlockFire(float flSpread, float flCycleTime, bool fUseAutoAim);
+	void GlockFire();
 	bool Deploy() override;
 	void Reload() override;
 	void WeaponIdle() override;
@@ -567,6 +577,7 @@ public:
 
 private:
 	int m_iShell;
+	int m_iBullets;
 
 
 	unsigned short m_usFire;
@@ -983,6 +994,84 @@ public:
 private:
 	unsigned short m_usMP5;
 	unsigned short m_usMP52;
+};
+
+enum ump45_e
+{
+	UMP45_IDLE = 0,
+	UMP45_RELOAD,
+	UMP45_DEPLOY,
+	UMP45_FIRE1,
+	UMP45_FIRE2,
+	UMP45_FIRE3,
+};
+
+class CUMP45 : public CBasePlayerWeapon
+{
+public:
+	void Spawn() override;
+	void Precache() override;
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	bool Deploy() override;
+	void Reload() override;
+	void WeaponIdle() override;
+	float m_flNextAnimTime;
+	int m_iShell;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usEvent;
+};
+
+enum mac10_e
+{
+	MAC10_IDLE = 0,
+	MAC10_RELOAD,
+	MAC10_DEPLOY,
+	MAC10_FIRE1,
+	MAC10_FIRE2,
+	MAC10_FIRE3,
+};
+
+class CMAC10 : public CBasePlayerWeapon
+{
+public:
+	void Spawn() override;
+	void Precache() override;
+	int iItemSlot() override { return 3; }
+	bool GetItemInfo(ItemInfo* p) override;
+
+	void PrimaryAttack() override;
+	void SecondaryAttack() override;
+	bool Deploy() override;
+	void Reload() override;
+	void WeaponIdle() override;
+	float m_flNextAnimTime;
+	int m_iShell;
+
+	bool UseDecrement() override
+	{
+#if defined(CLIENT_WEAPONS)
+		return true;
+#else
+		return false;
+#endif
+	}
+
+private:
+	unsigned short m_usEvent;
 };
 
 #ifdef HL_WEAPONS

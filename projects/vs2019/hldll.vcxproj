@@ -176,6 +176,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "dlls" "$(TargetName).pdb"
     <ClCompile Include="..\..\dlls\logic_changekeyvalue.cpp" />
     <ClCompile Include="..\..\dlls\m4a1.cpp" />
     <ClCompile Include="..\..\dlls\m60.cpp" />
+    <ClCompile Include="..\..\dlls\mac10.cpp" />
     <ClCompile Include="..\..\dlls\machete.cpp" />
     <ClCompile Include="..\..\dlls\maprules.cpp" />
     <ClCompile Include="..\..\dlls\minebomb.cpp" />
@@ -220,6 +221,7 @@ cmd /c ""$(ProjectDir)..\..\filecopy.bat" "$(OutDir)" "dlls" "$(TargetName).pdb"
     <ClCompile Include="..\..\dlls\trigger_freezeplayer.cpp" />
     <ClCompile Include="..\..\dlls\tripmine_new.cpp" />
     <ClCompile Include="..\..\dlls\turret.cpp" />
+    <ClCompile Include="..\..\dlls\ump45.cpp" />
     <ClCompile Include="..\..\dlls\UserMessages.cpp" />
     <ClCompile Include="..\..\dlls\usp.cpp" />
     <ClCompile Include="..\..\dlls\util.cpp" />

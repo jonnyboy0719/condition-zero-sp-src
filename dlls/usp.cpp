@@ -61,7 +61,7 @@ bool CUSP::GetItemInfo(ItemInfo* p)
 	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_USP);
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "45acp";
-	p->iMaxAmmo1 = _9MM_MAX_CARRY;
+	p->iMaxAmmo1 = _45ACP_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
 	p->iMaxClip = GLOCK_MAX_CLIP;

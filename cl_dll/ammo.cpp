@@ -744,6 +744,18 @@ void CHudAmmo::SetupDynamicCrosshair( WeaponId weaponid )
 			g_DynamicCrosshairWeapon.length = 10;
 		}
 		break;
+		case WEAPON_MAC10:
+		{
+			g_DynamicCrosshairWeapon.spanner = 10;
+			g_DynamicCrosshairWeapon.length = 13;
+		}
+		break;
+		case WEAPON_UMP45:
+		{
+			g_DynamicCrosshairWeapon.spanner = 10;
+			g_DynamicCrosshairWeapon.length = 15;
+		}
+		break;
 		case WEAPON_MP5:
 		{
 			g_DynamicCrosshairWeapon.spanner = 10;

@@ -59,6 +59,8 @@ CMachete g_Machete;
 CM60 g_m60;
 CPython g_Deagle;
 CMP5 g_Mp5;
+CUMP45 g_UMP45;
+CMAC10 g_Mac10;
 CM4A1 g_M4A1;
 CAK47 g_AK47;
 #ifdef HL_WEAPONS
@@ -475,6 +477,8 @@ void HUD_InitClientWeapons()
 	HUD_PrepEntity(&g_m60, &player);
 	HUD_PrepEntity(&g_Deagle, &player);
 	HUD_PrepEntity(&g_Mp5, &player);
+	HUD_PrepEntity(&g_UMP45, &player);
+	HUD_PrepEntity(&g_Mac10, &player);
 	HUD_PrepEntity(&g_M4A1, &player);
 	HUD_PrepEntity(&g_AK47, &player);
 #ifdef HL_WEAPONS
@@ -594,6 +598,14 @@ void HUD_WeaponsPostThink(local_state_s* from, local_state_s* to, usercmd_t* cmd
 
 	case WEAPON_DEAGLE:
 		pWeapon = &g_Deagle;
+		break;
+
+	case WEAPON_MAC10:
+		pWeapon = &g_Mac10;
+		break;
+
+	case WEAPON_UMP45:
+		pWeapon = &g_UMP45;
 		break;
 
 	case WEAPON_MP5:
