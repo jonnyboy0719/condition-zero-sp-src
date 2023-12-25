@@ -741,7 +741,7 @@ void CBreakable::Die()
 			WRITE_COORD( vecSpot.y );
 			WRITE_COORD( vecSpot.z );
 			WRITE_SHORT( m_idShard );
-			WRITE_BYTE( scale * RANDOM_FLOAT( 0.5, 0.6 ) );
+			WRITE_BYTE( 3 );
 			WRITE_BYTE( 255 );
 		MESSAGE_END();
 
@@ -752,7 +752,7 @@ void CBreakable::Die()
 			WRITE_COORD( vecSpot.y );
 			WRITE_COORD( vecSpot.z );
 			WRITE_SHORT( m_idShard );
-			WRITE_BYTE( scale * RANDOM_FLOAT( 0.5, 0.6 ) );
+			WRITE_BYTE( 3 );
 			WRITE_BYTE( 255 );
 		MESSAGE_END();
 
@@ -763,7 +763,7 @@ void CBreakable::Die()
 			WRITE_COORD( vecSpot.y );
 			WRITE_COORD( vecSpot.z );
 			WRITE_SHORT( m_idShard );
-			WRITE_BYTE( scale * RANDOM_FLOAT( 0.5, 0.6 ) );
+			WRITE_BYTE( 3 );
 			WRITE_BYTE( 255 );
 		MESSAGE_END();
 	}
