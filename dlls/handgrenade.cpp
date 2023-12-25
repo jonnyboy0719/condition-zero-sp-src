@@ -54,7 +54,7 @@ bool CHandGrenade::GetItemInfo(ItemInfo* p)
 {
 	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_HEGRENADE);
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "Hand Grenade";
+	p->pszAmmo1 = "HandGrenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
@@ -257,7 +257,7 @@ bool CFlashGrenade::GetItemInfo(ItemInfo* p)
 {
 	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_FLASHGRENADE);
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "Flash Grenade";
+	p->pszAmmo1 = "FlashGrenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
@@ -301,7 +301,7 @@ bool CSmokeGrenade::GetItemInfo(ItemInfo* p)
 {
 	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_SMOKEGRENADE);
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "Smoke Grenade";
+	p->pszAmmo1 = "SmokeGrenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
@@ -344,7 +344,7 @@ bool CNervGasGrenade::GetItemInfo(ItemInfo* p)
 {
 	WeaponSlots slot = GetWeaponSlotInfo(WEAPON_GASGRENADE);
 	p->pszName = STRING(pev->classname);
-	p->pszAmmo1 = "NervGas Grenade";
+	p->pszAmmo1 = "GasGrenade";
 	p->iMaxAmmo1 = HANDGRENADE_MAX_CARRY;
 	p->pszAmmo2 = NULL;
 	p->iMaxAmmo2 = -1;
