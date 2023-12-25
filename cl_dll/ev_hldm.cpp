@@ -269,30 +269,33 @@ void EV_HLDM_GunshotDecalTrace(pmtrace_t* pTrace, char* decalName)
 	}
 }
 
-void EV_HLDM_DecalGunshot(pmtrace_t* pTrace, int iBulletType)
+void EV_HLDM_DecalGunshot(int idx, pmtrace_t* pTrace, int iBulletType)
 {
 	physent_t* pe;
 
 	pe = gEngfuncs.pEventAPI->EV_GetPhysent(pTrace->ent);
 
-	if (pe && pe->solid == SOLID_BSP)
+	if (pe)
 	{
-		switch (iBulletType)
+		if ( pe->solid == SOLID_BSP )
 		{
-		case BULLET_PLAYER_9MM:
-		case BULLET_PLAYER_45ACP:
-		case BULLET_MONSTER_9MM:
-		case BULLET_PLAYER_MP5:
-		case BULLET_PLAYER_M4A1:
-		case BULLET_PLAYER_762NATO:
-		case BULLET_PLAYER_338MAGNUM:
-		case BULLET_MONSTER_MP5:
-		case BULLET_PLAYER_BUCKSHOT:
-		case BULLET_PLAYER_357:
-		default:
-			// smoke and decal
-			EV_HLDM_GunshotDecalTrace(pTrace, EV_HLDM_DamageDecal(pe));
-			break;
+			switch (iBulletType)
+			{
+			case BULLET_PLAYER_9MM:
+			case BULLET_PLAYER_45ACP:
+			case BULLET_MONSTER_9MM:
+			case BULLET_PLAYER_MP5:
+			case BULLET_PLAYER_M4A1:
+			case BULLET_PLAYER_762NATO:
+			case BULLET_PLAYER_338MAGNUM:
+			case BULLET_MONSTER_MP5:
+			case BULLET_PLAYER_BUCKSHOT:
+			case BULLET_PLAYER_357:
+			default:
+				// smoke and decal
+				EV_HLDM_GunshotDecalTrace(pTrace, EV_HLDM_DamageDecal(pe));
+				break;
+			}
 		}
 	}
 }
@@ -456,11 +459,11 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 			case BULLET_PLAYER_357:
 
 				EV_HLDM_PlayTextureSound(idx, &tr, vecSrc, vecEnd, iBulletType);
-				EV_HLDM_DecalGunshot(&tr, iBulletType);
+				EV_HLDM_DecalGunshot(idx, &tr, iBulletType);
 				break;
 			case BULLET_PLAYER_BUCKSHOT:
 
-				EV_HLDM_DecalGunshot(&tr, iBulletType);
+				EV_HLDM_DecalGunshot(idx, &tr, iBulletType);
 
 				break;
 			}
@@ -498,7 +501,7 @@ void EV_FireGlock(event_args_t* args)
 	shell = gEngfuncs.pEventAPI->EV_FindModelIndex("models/shell.mdl"); // brass shell
 
 	int iBulletNum = args->iparam1;
-	bool bBurstShot = (args->iparam2 >= 1 ? true : false);
+	bool bBurstShot = (args->iparam2 == 1 ? true : false);
 
 	bool bDoEventSeq = true;
 	if ( bBurstShot && iBulletNum < 3 )

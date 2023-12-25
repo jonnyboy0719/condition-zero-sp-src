@@ -80,10 +80,10 @@ void CZeroHumanBase_Pistol::OnSentenceSay( BarneySay say )
 		PlaySentence(CZero::GetVoiceLang("INSMOKE", m_VoiceLang, m_TeamVoice), 4, VOL_NORM, ATTN_NORM);
 		break;
 	case BARNSAY_PAIN:
-		PlaySentence(CZero::GetVoiceLang("WOUND", m_VoiceLang, m_TeamVoice), 4, VOL_NORM, ATTN_NORM);
+		PlaySentence(CZero::GetVoiceLang("WOUND", m_VoiceLang, m_TeamVoice), 4, VOL_NORM, ATTN_NORM); CZero::OnHit( ENT(pev), (m_LastHitGroup == HITGROUP_HEAD) );
 		break;
 	case BARNSAY_DIE:
-		PlaySentence(CZero::GetVoiceLang("DEATH", m_VoiceLang, m_TeamVoice), 4, VOL_NORM, ATTN_NORM);
+		PlaySentence(CZero::GetVoiceLang("DEATH", m_VoiceLang, m_TeamVoice), 4, VOL_NORM, ATTN_NORM); CZero::OnHit( ENT(pev), (m_LastHitGroup == HITGROUP_HEAD) );
 		break;
 	}
 }
@@ -96,6 +96,7 @@ int CZeroHumanBase::IRelationship(CBaseEntity* pTarget)
 void CZeroHumanBase::DeathSound()
 {
 	SENTENCEG_PlayRndSz(ENT(pev), CZero::GetVoiceLang("DEATH", m_VoiceLang, m_TeamVoice), HGRUNT_SENTENCE_VOLUME, ATTN_NORM, 0, m_voicePitch);
+	CZero::OnHit( ENT(pev), (m_LastHitGroup == HITGROUP_HEAD) );
 }
 
 void CZeroHumanBase::PainSound()
@@ -105,6 +106,7 @@ void CZeroHumanBase::PainSound()
 		SENTENCEG_PlayRndSz(ENT(pev), CZero::GetVoiceLang("WOUND", m_VoiceLang, m_TeamVoice), HGRUNT_SENTENCE_VOLUME, ATTN_NORM, 0, m_voicePitch);
 		m_flNextPainTime = gpGlobals->time + 1;
 	}
+	CZero::OnHit( ENT(pev), (m_LastHitGroup == HITGROUP_HEAD) );
 }
 
 void CZeroHumanBase::IdleSound()
@@ -273,4 +275,23 @@ int CZero::GetTeamRelationShip(CBaseEntity* me, CBaseEntity* target)
 		break;
 	}
 	return R_DL;
+}
+
+void CZero::OnHit( edict_t *ent, bool headshot )
+{
+	if ( !ent ) return;
+	if ( !headshot )
+	{
+		switch ( RANDOM_LONG(0, 1) )
+		{
+		case 0:
+			EMIT_SOUND(ent, CHAN_AUTO, "weapons/hits/bullet_hit1.wav", 1, ATTN_NORM);
+			break;
+		case 1:
+			EMIT_SOUND(ent, CHAN_AUTO, "weapons/hits/bullet_hit2.wav", 1, ATTN_NORM);
+			break;
+		}
+	}
+	else
+		EMIT_SOUND(ent, CHAN_AUTO, "weapons/hits/headshot.wav", 1, ATTN_NORM);
 }

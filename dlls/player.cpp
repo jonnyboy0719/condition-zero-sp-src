@@ -41,6 +41,7 @@
 #include "hltv.h"
 #include "UserMessages.h"
 #include "client.h"
+#include "czeror/czero_human_base.h"
 
 // #define DUCKFIX
 
@@ -164,16 +165,7 @@ LINK_ENTITY_TO_CLASS(player, CBasePlayer);
 
 void CBasePlayer::Pain()
 {
-	float flRndSound; //sound randomizer
-
-	flRndSound = RANDOM_FLOAT(0, 1);
-
-	if (flRndSound <= 0.33)
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pl_pain5.wav", 1, ATTN_NORM);
-	else if (flRndSound <= 0.66)
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pl_pain6.wav", 1, ATTN_NORM);
-	else
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pl_pain7.wav", 1, ATTN_NORM);
+	CZero::OnHit( ENT(pev), (m_LastHitGroup == HITGROUP_HEAD) );
 }
 
 /* 

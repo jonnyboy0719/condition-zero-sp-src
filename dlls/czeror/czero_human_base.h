@@ -42,6 +42,7 @@ namespace CZero
 	const char *GetVoiceLang( const char *szSentence, CSDSLanguage lang, CSDSTeamVoice team );
 	CSDSTeams GetEnemyTeam(CBaseEntity* pEnemy);
 	int GetTeamRelationShip(CBaseEntity *me, CBaseEntity *target);
+	void OnHit( edict_t *ent, bool headshot );
 }
 
 class CZeroHumanBase_Pistol : public CBarney
