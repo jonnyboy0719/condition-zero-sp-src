@@ -356,6 +356,9 @@ Activity CBaseMonster::GetDeathActivity()
 		return m_IdealActivity;
 	}
 
+	// We are no longer solid, don't block the player. (or cause the player to die from doors...)
+	pev->solid = SOLID_NOT;
+
 	// Play our death animation, so just return this ACT instead,
 	// so we can check for it at SetActivity() function.
 	if (m_iDeathSequencePlay > ACTIVITY_NOT_AVAILABLE)
