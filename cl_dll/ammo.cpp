@@ -49,13 +49,16 @@ const char* ScopeTextures[SCOPE_MAX] = {
 };
 
 float g_mCBlend = 0;
+float g_mCBlendTime = 0;
+float g_mCHit = 0;
 bool g_FirstDynUpdate = false;
 DynamicCrosshairTarget g_DynamicCrosshairTarget;
 DynamicCrosshairTarget g_DynamicCrosshairWeapon;
+DynamicCrosshairTarget g_DynamicCrosshairHit;
 #define DYNAMIC_UPDATE_MAX_SPAN 20
 #define DYNAMIC_UPDATE_MAX_LENGTH 15
 
-void UpdateDynamicCrosshair( int spanner, int length )
+void UpdateDynamicCrosshair( int spanner, int length, float dyntime )
 {
 	if ( !g_FirstDynUpdate )
 	{
@@ -71,6 +74,13 @@ void UpdateDynamicCrosshair( int spanner, int length )
 	g_DynamicCrosshairTarget.spanner = v_clamp( g_DynamicCrosshairTarget.spanner, 0, DYNAMIC_UPDATE_MAX_SPAN );
 	g_DynamicCrosshairTarget.length = v_clamp( g_DynamicCrosshairTarget.spanner, 0, DYNAMIC_UPDATE_MAX_LENGTH );
 	g_mCBlend = Plat_PlatformTime();
+	g_mCBlendTime = dyntime;
+}
+
+void OnCrosshairHit()
+{
+	g_mCHit = Plat_PlatformTime();
+	g_DynamicCrosshairHit.spanner = 255;
 }
 
 int g_weaponselect = 0;
@@ -297,6 +307,7 @@ cvar_t *hud_dyncrosshair_size = nullptr;
 cvar_t *hud_dyncrosshair_length = nullptr;
 cvar_t *hud_dyncrosshair_span = nullptr;
 cvar_t *hud_dyncrosshair_static = nullptr;
+cvar_t *hud_dyncrosshair_hitmarker = nullptr;
 
 bool CHudAmmo::Init()
 {
@@ -332,6 +343,7 @@ bool CHudAmmo::Init()
 	hud_dyncrosshair_length = CVAR_CREATE("hud_dyncross_length", "5", FCVAR_ARCHIVE);
 	hud_dyncrosshair_span = CVAR_CREATE("hud_dyncross_spanner", "5", FCVAR_ARCHIVE);
 	hud_dyncrosshair_static = CVAR_CREATE("hud_dyncross_static", "0", FCVAR_ARCHIVE);
+	hud_dyncrosshair_hitmarker = CVAR_CREATE("hud_dyncross_hitmarker", "1", FCVAR_ARCHIVE);
 
 	m_iFlags |= HUD_ACTIVE; //!!!
 
@@ -345,6 +357,8 @@ void CHudAmmo::Reset()
 {
 	m_fFade = 0;
 	g_mCBlend = 0;
+	g_mCBlendTime = 0;
+	g_mCHit = 0;
 	m_iFlags |= HUD_ACTIVE; //!!!
 
 	gpActiveSel = NULL;
@@ -372,6 +386,8 @@ bool CHudAmmo::VidInit()
 	// If we've already loaded weapons, let's get new sprites
 	gWR.LoadAllWeaponSprites();
 	g_mCBlend = 0;
+	g_mCBlendTime = 0;
+	g_mCHit = 0;
 
 	if (ScreenWidth >= 640)
 	{
@@ -1047,7 +1063,7 @@ void CHudAmmo::DrawDynCrosshair()
 		target = g_DynamicCrosshairWeapon;
 		target.spanner += g_DynamicCrosshairTarget.spanner;
 		target.length += g_DynamicCrosshairTarget.length;
-		dyndest = BlendTo( target, g_DynamicCrosshairWeapon, g_mCBlend, 0.15f );
+		dyndest = BlendTo( target, g_DynamicCrosshairWeapon, g_mCBlend, g_mCBlendTime );
 	}
 	else
 	{
@@ -1077,6 +1093,64 @@ void CHudAmmo::DrawDynCrosshair()
 	// Bottom
 	y = tall_half + dyndest.spanner;
 	FillRGBA( x, y, size, dyndest.length, r, g, b, a );
+
+	// If hit an enemy (if enabled)
+	bool bHitCrosshair = atoi( hud_dyncrosshair_hitmarker->string ) <= 0 ? true : false;
+	if ( bHitCrosshair )
+	{
+		int yl = dyndest.spanner;
+		DynamicCrosshairTarget target;
+		target.spanner = 0;
+		dyndest = BlendTo( g_DynamicCrosshairHit, target, g_mCHit, 0.35f );
+		r = g = b = 255;
+		a = dyndest.spanner;
+		float flSpanner = yl - 5;
+		float flSize = 5;
+
+		// Next to the dynamic / static crosshair
+		{
+			// Left
+			y = tall_half - (size / 2);
+			x = wide_half - flSpanner;
+			FillRGBA( x, y, -flSize, size, r, g, b, a );
+
+			// Right
+			x = wide_half + flSpanner;
+			FillRGBA( x, y, flSize, size, r, g, b, a );
+
+			// Top
+			y = tall_half - flSpanner;
+			x = wide_half - (size / 2);
+			FillRGBA( x, y, size, -flSize, r, g, b, a );
+
+			// Bottom
+			y = tall_half + flSpanner;
+			FillRGBA( x, y, size, flSize, r, g, b, a );
+		}
+
+		// Decrease it a few more
+		{
+			flSpanner = flSpanner - 8;
+
+			// Left
+			y = tall_half - (size / 2);
+			x = wide_half - flSpanner;
+			FillRGBA( x, y, -flSize, size, r, g, b, a );
+
+			// Right
+			x = wide_half + flSpanner;
+			FillRGBA( x, y, flSize, size, r, g, b, a );
+
+			// Top
+			y = tall_half - flSpanner;
+			x = wide_half - (size / 2);
+			FillRGBA( x, y, size, -flSize, r, g, b, a );
+
+			// Bottom
+			y = tall_half + flSpanner;
+			FillRGBA( x, y, size, flSize, r, g, b, a );
+		}
+	}
 }
 
 DynamicCrosshairTarget BlendTo( const DynamicCrosshairTarget& blend_from, const DynamicCrosshairTarget& blend_to, float &flLastTimeCheck, float blend_time )

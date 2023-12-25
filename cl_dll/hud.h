@@ -107,7 +107,8 @@ struct DynamicCrosshairTarget
 DynamicCrosshairTarget BlendTo( const DynamicCrosshairTarget &blend_from, const DynamicCrosshairTarget &blend_to, float &flLastTimeCheck, float blend_time );
 void BlendMA( const DynamicCrosshairTarget &start, float scale, const DynamicCrosshairTarget &direction, DynamicCrosshairTarget &dest );
 void BlendScale( const DynamicCrosshairTarget& in, float scale, DynamicCrosshairTarget& result );
-void UpdateDynamicCrosshair( int spanner, int length );
+void UpdateDynamicCrosshair( int spanner, int length, float dyntime );
+void OnCrosshairHit();
 
 //
 //-----------------------------------------------------
@@ -633,6 +634,7 @@ public:
 	bool MsgFunc_RainData(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_Weapons(const char* pszName, int iSize, void* pbuf);
 	bool MsgFunc_ScritSeq(const char* pszName, int iSize, void* pbuf);
+	bool MsgFunc_DynCrosshair(const char* pszName, int iSize, void* pbuf);
 
 	// Screen information
 	SCREENINFO m_scrinfo;

@@ -105,6 +105,12 @@ static WeaponSlots weapon_slots[] = {
 	// SLOT 5
 };
 
+enum DynCrosshair_e
+{
+	DCROSS_JUMP = 1,
+	DCROSS_HIT
+};
+
 WeaponSlots GetWeaponSlotInfo( WeaponId WeaponID );
 
 // constant items

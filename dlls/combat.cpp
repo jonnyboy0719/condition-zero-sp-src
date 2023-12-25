@@ -29,6 +29,7 @@
 #include "animation.h"
 #include "weapons.h"
 #include "monsters.h"
+#include "player.h"
 #include "func_break.h"
 
 extern Vector VecBModelOrigin(entvars_t* pevBModel);
@@ -859,6 +860,15 @@ bool CBaseMonster::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, f
 	if (!IsAlive())
 	{
 		return DeadTakeDamage(pevInflictor, pevAttacker, flDamage, bitsDamageType);
+	}
+
+	// If pev attack is valid, and is player, call UpdateDynCrosshair(DCROSS_HIT);
+	if ( !FNullEnt( pevAttacker ) )
+	{
+		UTIL_GetLocalPlayer();
+		CBaseEntity* pAttacker = CBaseEntity::Instance( pevAttacker );
+		if ( pAttacker && pAttacker->IsPlayer() )
+			((CBasePlayer *)pAttacker)->UpdateDynCrosshair( DCROSS_HIT );
 	}
 
 	if (pev->deadflag == DEAD_NO)

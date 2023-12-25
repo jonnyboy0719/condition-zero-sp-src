@@ -393,7 +393,7 @@ void EV_HLDM_FireBullets(int idx, float* forward, float* right, float* up, int c
 			}
 			break;
 		}
-		UpdateDynamicCrosshair( dyn[0], dyn[1] );
+		UpdateDynamicCrosshair( dyn[0], dyn[1], 0.15f );
 	}
 
 	int i;

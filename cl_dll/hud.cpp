@@ -243,6 +243,11 @@ int __MsgFunc_WorldMap(const char* pszName, int iSize, void* pbuf)
 	return 0;
 }
 
+int __MsgFunc_DCross(const char* pszName, int iSize, void* pbuf)
+{
+	return static_cast<int>(gHUD.MsgFunc_DynCrosshair(pszName, iSize, pbuf));
+}
+
 int __MsgFunc_BuildSt(const char* pszName, int iSize, void* pbuf)
 {
 	if (gViewPort)
@@ -364,6 +369,7 @@ void CHud::Init()
 
 	HOOK_MESSAGE(ScritSeq);
 	HOOK_MESSAGE(WorldMap);
+	HOOK_MESSAGE(DCross);
 
 	CVAR_CREATE("hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO); // controls whether or not to suicide immediately on TF class switch
 	CVAR_CREATE("hud_takesshots", "0", FCVAR_ARCHIVE);					   // controls whether or not to automatically take screenshots at the end of a round

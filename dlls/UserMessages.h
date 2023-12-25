@@ -57,6 +57,7 @@ inline int gmsgWeapons = 0;
 inline int gmsgFog = 0;
 inline int gmsgScriptedSequence = 0;
 inline int gmsgObjective = 0;
+inline int gmsgDynCrosshair = 0;
 inline int gmsgRainData = 0;
 inline int gmsgWorldMap = 0;
 

@@ -208,6 +208,8 @@ public:
 	void Spawn() override;
 	void Pain();
 
+	void UpdateDynCrosshair( int flag );
+
 	//	void Think() override;
 	virtual void Jump();
 	virtual void Duck();

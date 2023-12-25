@@ -69,6 +69,8 @@ void LinkUserMessages()
 	gmsgScriptedSequence = REG_USER_MSG("ScritSeq", -1);
 	gmsgObjective = REG_USER_MSG("OBJ", -1);
 
+	gmsgDynCrosshair = REG_USER_MSG("DCross", 1);
+
 	gmsgRainData = REG_USER_MSG("RainData", 16);
 	gmsgWorldMap = REG_USER_MSG("WorldMap", 0);
 }

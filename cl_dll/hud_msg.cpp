@@ -184,3 +184,16 @@ bool CHud::MsgFunc_ScritSeq(const char* pszName, int iSize, void* pbuf)
 	ScriptedSequence::SetCommandLine( text_file, text_message );
 	return true;
 }
+
+bool CHud::MsgFunc_DynCrosshair(const char* pszName, int iSize, void* pbuf)
+{
+	BEGIN_READ(pbuf, iSize);
+
+	switch ( READ_BYTE() )
+	{
+		case 1: UpdateDynamicCrosshair( 5, 5, 0.2 ); break;
+		case 2: OnCrosshairHit(); break;
+	}
+
+	return true;
+}

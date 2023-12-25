@@ -1513,6 +1513,13 @@ void CBasePlayer::PlayerUse()
 }
 
 
+void CBasePlayer::UpdateDynCrosshair( int flag )
+{
+	MESSAGE_BEGIN( MSG_ONE, gmsgDynCrosshair, NULL, pev );
+		WRITE_BYTE( flag );
+	MESSAGE_END();
+}
+
 
 void CBasePlayer::Jump()
 {
@@ -1546,6 +1553,7 @@ void CBasePlayer::Jump()
 	// ClearBits(pev->flags, FL_ONGROUND);		// don't stairwalk
 
 	SetAnimation(PLAYER_JUMP);
+	UpdateDynCrosshair(DCROSS_JUMP);
 
 	if (m_fLongJump &&
 		(pev->button & IN_DUCK) != 0 &&
