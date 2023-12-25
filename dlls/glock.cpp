@@ -26,6 +26,7 @@ enum GlockState_e
 {
 	STATE_SINGLE = 0,
 	STATE_BURST,
+	STATE_BURST_SINGLE
 };
 
 void CGlock::Spawn()
@@ -111,11 +112,20 @@ void CGlock::PrimaryAttack()
 	switch (m_iWeaponState)
 	{
 		case GlockState_e::STATE_SINGLE: m_iBullets = 1; break;
-		case GlockState_e::STATE_BURST: m_iBullets = 3; break;
+		case GlockState_e::STATE_BURST:
+		{
+			m_iBullets = 3;
+			if ( m_iClip == 1 )
+			{
+				m_iBullets = 1;
+				m_iWeaponState = GlockState_e::STATE_BURST_SINGLE;
+			}
+		}
+		break;
 	}
-	if ( m_iClip == 1 )
-		m_iBullets = 1;
 	GlockFire();
+	if ( m_iWeaponState == GlockState_e::STATE_BURST_SINGLE )
+		m_iWeaponState = GlockState_e::STATE_BURST;
 }
 
 void CGlock::SecondaryAttack()
@@ -130,6 +140,7 @@ void CGlock::SecondaryAttack()
 		}
 		break;
 		case GlockState_e::STATE_BURST:
+		case GlockState_e::STATE_BURST_SINGLE:
 		{
 			m_iWeaponState = GlockState_e::STATE_SINGLE;
 			ClientPrint( m_pPlayer->pev, HUD_PRINTCENTER, "#Switch_To_SemiAuto" );
