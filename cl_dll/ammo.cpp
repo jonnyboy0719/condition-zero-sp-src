@@ -1095,7 +1095,7 @@ void CHudAmmo::DrawDynCrosshair()
 	FillRGBA( x, y, size, dyndest.length, r, g, b, a );
 
 	// If hit an enemy (if enabled)
-	bool bHitCrosshair = atoi( hud_dyncrosshair_hitmarker->string ) <= 0 ? true : false;
+	bool bHitCrosshair = atoi( hud_dyncrosshair_hitmarker->string ) > 0 ? true : false;
 	if ( bHitCrosshair )
 	{
 		int yl = dyndest.spanner;
